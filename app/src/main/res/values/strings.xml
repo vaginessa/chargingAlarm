@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ChargingAlarm</string>
+    <string name="base_api_url">http://private-e8a06-feprofile.apiary-mock.com</string>
+    <string name="retry">Retry</string>
+    <string name="unknown_error">unknown error</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
