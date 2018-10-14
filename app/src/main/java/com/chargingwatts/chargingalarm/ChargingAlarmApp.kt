@@ -3,16 +3,21 @@ package com.chargingwatts.chargingalarm
 import com.chargingwatts.chargingalarm.di.AppInjector
 import android.app.Activity
 import android.app.Application
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import android.app.Fragment
+import android.content.BroadcastReceiver
+import androidx.work.Worker
+import dagger.android.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class ChargingAlarmApp : Application(), HasActivityInjector {
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+class ChargingAlarmApp : Application(), HasActivityInjector, HasBroadcastReceiverInjector {
 
+
+    @Inject
+    lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
+
+    @Inject
+    lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
 
     override fun onCreate() {
         super.onCreate()
@@ -23,5 +28,10 @@ class ChargingAlarmApp : Application(), HasActivityInjector {
     }
 
     override fun activityInjector(): AndroidInjector<Activity> =
-            dispatchingAndroidInjector
+            dispatchingActivityInjector
+
+    override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver> =
+            dispatchingBroadcastReceiverInjector
+
+
 }

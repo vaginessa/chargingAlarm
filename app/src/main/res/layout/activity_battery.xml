@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chargingwatts.chargingalarm.BatteryActivity">
+    tools:context="com.chargingwatts.chargingalarm.BatteryAlarmActivity">
 
     <fragment
 
@@ -15,5 +15,17 @@
         app:navGraph="@navigation/nav_battery_activity_graph"
         app:defaultNavHost="true"
         />
+    <TextView
+        android:id="@+id/tv_battery_level"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dcdf1d"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:textStyle="bold"/>
 
 </android.support.constraint.ConstraintLayout>

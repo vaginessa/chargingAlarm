@@ -1,8 +1,8 @@
 package com.chargingwatts.chargingalarm.di.component
 
-import com.chargingwatts.chargingalarm.BatteryActivity
+import com.chargingwatts.chargingalarm.BatteryAlarmActivity
 import com.chargingwatts.chargingalarm.MainActivity
-import com.chargingwatts.chargingalarm.di.module.BatteryActivityModule
+import com.chargingwatts.chargingalarm.di.module.BatteryAlarmActivityModule
 import com.chargingwatts.chargingalarm.di.module.MainActivityModule
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
@@ -17,11 +17,11 @@ interface MainActivitySubComponent : AndroidInjector<MainActivity> {
 
 }
 
-@Subcomponent(modules = [BatteryActivityModule::class])
-interface BatteryActivitySubComponent : AndroidInjector<BatteryActivity>{
+@Subcomponent(modules = [BatteryAlarmActivityModule::class])
+interface BatteryAlarmActivitySubComponent : AndroidInjector<BatteryAlarmActivity>{
     @Subcomponent.Builder
-    abstract class Builder: AndroidInjector.Builder<BatteryActivity>(){
-        override fun seedInstance(instance: BatteryActivity?) {
+    abstract class Builder: AndroidInjector.Builder<BatteryAlarmActivity>(){
+        override fun seedInstance(instance: BatteryAlarmActivity?) {
         }
     }
 }

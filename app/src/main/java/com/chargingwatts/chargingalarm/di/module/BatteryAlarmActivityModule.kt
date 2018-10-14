@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module(includes = [ActivityCommonModule::class])
-abstract class BatteryActivityModule{
+abstract class BatteryAlarmActivityModule{
     @ContributesAndroidInjector
     abstract fun contributeBatteryLevelFragment(): BatteryProfileFragment
 }

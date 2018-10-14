@@ -57,4 +57,7 @@ class AppModule {
     fun provideBatteryProfileDao(db: ChargingAlarmDb): BatteryProfileDao {
         return db.batteryProfileDao()
     }
+
+
+
 }

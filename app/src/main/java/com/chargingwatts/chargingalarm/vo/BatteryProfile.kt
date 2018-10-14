@@ -9,7 +9,7 @@ import android.arch.persistence.room.PrimaryKey
 data class BatteryProfile(
         @PrimaryKey
         @ColumnInfo(name = "time_stamp")
-        val currentTimeStamp: Long? ,
+        val currentTimeStamp: Long? = 1,
 
         @ColumnInfo(name = "status")
         val batteryStatusType: Int?,

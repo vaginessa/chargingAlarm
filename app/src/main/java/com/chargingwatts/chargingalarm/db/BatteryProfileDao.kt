@@ -13,7 +13,9 @@ interface BatteryProfileDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(batteryProfile: BatteryProfile)
 
-    @Query("SELECT * FROM battery_profile WHERE time_stamp = (SELECT MAX(time_stamp) FROM battery_profile)")
-    fun findRecentBatteryProfile(): LiveData<BatteryProfile>
+   // @Query("SELECT * FROM battery_profile WHERE time_stamp = (SELECT MAX(time_stamp) FROM battery_profile)")
+
+   @Query("SELECT * FROM battery_profile WHERE time_stamp = 1")
+   fun findRecentBatteryProfile(): LiveData<BatteryProfile>
 
 }

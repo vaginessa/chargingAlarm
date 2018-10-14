@@ -12,7 +12,7 @@ allOpen {
 }
 android {
     compileSdkVersion build_versions.target_sdk
-    buildToolsVersion build_versions.build_tools
+    buildToolsVersion '28.0.2'
     defaultConfig {
         applicationId "com.chargingwatts.chargingalarm"
         minSdkVersion build_versions.min_sdk
@@ -28,7 +28,6 @@ android {
         }
         release {
             minifyEnabled false
-
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -100,6 +99,11 @@ dependencies {
     implementation deps.dagger.android_support
     implementation deps.constraint_layout
     implementation deps.kotlin.stdlib
+    implementation deps.kotlin.reflect
+
+    implementation deps.work.runtime
+    implementation deps.work.firebase
+    implementation deps.work.runtime_ktx
 
     implementation deps.timber
 
