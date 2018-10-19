@@ -9,7 +9,6 @@ import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import dagger.android.AndroidInjection
-import dagger.android.DaggerBroadcastReceiver
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,7 +25,7 @@ class PowerConnectionReceiver @Inject constructor() : BroadcastReceiver() {
         if (intent?.action != Intent.ACTION_POWER_CONNECTED && intent?.action != Intent.ACTION_POWER_DISCONNECTED) {
             return
         }
-        val batteryProfile: BatteryProfile? = BatteryProfileIntentExtractor.extractBatteryProfileFromIntent(intent)
+        val batteryProfile: BatteryProfile? = BatteryProfileUtils.extractBatteryProfileFromIntent(intent)
 
 
         val isCharging: Boolean = batteryProfile?.batteryStatusType == BatteryManager.BATTERY_STATUS_CHARGING
@@ -41,7 +40,7 @@ class PowerConnectionReceiver @Inject constructor() : BroadcastReceiver() {
         }
 
         intent?.let { batteryIntent ->
-            val batteryProfile = BatteryProfileIntentExtractor.extractBatteryProfileFromIntent(batteryIntent)
+            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent)
             batteryProfile?.let {
                 appExecutors.diskIO().execute { batteryProfileDao.insert(it) }
             }

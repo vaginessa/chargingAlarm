@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChargingAlarm</string>
+    <string name="app_name">Otex Opm</string>
     <string name="base_api_url">http://private-e8a06-feprofile.apiary-mock.com</string>
     <string name="retry">Retry</string>
     <string name="unknown_error">unknown error</string>

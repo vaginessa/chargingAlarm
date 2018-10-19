@@ -1,65 +1,115 @@
 package com.chargingwatts.chargingalarm.util.battery
 
-import android.content.Context
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
-import androidx.work.Worker
-import java.util.concurrent.TimeUnit
-import com.chargingwatts.chargingalarm.MainActivity
-import android.content.Intent
-import android.content.IntentFilter
-import android.os.BatteryManager
-import androidx.work.WorkerParameters
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
+import android.util.Log
+import androidx.work.*
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
-import com.chargingwatts.chargingalarm.vo.BatteryProfile
-import java.lang.IllegalArgumentException
-import javax.inject.Inject
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+const val BATTERY_WORKER_REQUEST_TAG = "battery_worker_request_tag";
+
+
 @Singleton
-class PeriodicBatteryUpdater @Inject constructor(val batteryProfileDao: BatteryProfileDao,
-                                                 val appExecutors: AppExecutors) {
-    fun startPeriodicBatteryUpdate(repeatInterval: Long) {
-        if (repeatInterval < PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS) {
-            throw IllegalArgumentException("repeatInterval = $repeatInterval which is less than PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS} = ${PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS} is not allowed")
-        }
+object PeriodicBatteryUpdater {
 
-        WorkManager.getInstance().enqueue(createPeriodicRequest(repeatInterval))
-    }
-
-    fun createPeriodicRequest(repeatInterval: Long): PeriodicWorkRequest {
-        val periodicBatteryUpdateRequest = PeriodicWorkRequest.Builder(BatteryUpdateBackgroundWorker::class.java, repeatInterval
-                , TimeUnit.MILLISECONDS)
-        val periodicWorkRequest = periodicBatteryUpdateRequest.build()
-        return periodicWorkRequest
-    }
+    private var mBatteryProfileDao: BatteryProfileDao? = null
+    private var mAppExecutors: AppExecutors? = null
+    private var mPeriodicWorkRequest: PeriodicWorkRequest? = null
+    private var mTag: String? = null
+    private var mWorkStatusLiveData: LiveData<WorkStatus>? = null
 
 
-    inner class BatteryUpdateBackgroundWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
-        override fun doWork(): Result {
-            val sendIntent = Intent(applicationContext, MainActivity::class.java)
-            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            getApplicationContext().startActivity(sendIntent)
+    val mWorkStatusObserver = Observer<WorkStatus> { workStatus ->
+        Log.d("AAJ", " Battery Profile Status Change" + workStatus?.state.toString())
 
-            updateBatteryProfile()
-            return Result.SUCCESS
+        workStatus?.let {
+            val isWorkRunning = workStatus.state == State.RUNNING
+            if (isWorkRunning) {
+                val batteryProfileData = workStatus.outputData
+                val batteryProfileMap = batteryProfileData.keyValueMap
+                val batteryProfile = BatteryProfileUtils.convertMapToBatteryProfile(batteryProfileMap)
+                Log.d("AAJ", " Battery Profile Observed" + batteryProfile.toString())
 
-        }
-
-        fun updateBatteryProfile() {
-            val intent: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
-                applicationContext.registerReceiver(null, ifilter)
-            }
-
-            intent?.let { batteryIntent ->
-                val batteryProfile = BatteryProfileIntentExtractor.extractBatteryProfileFromIntent(batteryIntent)
-                batteryProfile?.let {
-                    appExecutors.diskIO().execute { batteryProfileDao.insert(it) }
+                mAppExecutors?.diskIO()?.execute {
+                    mBatteryProfileDao?.insert(batteryProfile)
                 }
             }
         }
 
     }
+
+    fun initiate(batteryProfileDao: BatteryProfileDao,
+                 appExecutors: AppExecutors): PeriodicBatteryUpdater {
+        mBatteryProfileDao = batteryProfileDao;
+        mAppExecutors = appExecutors
+        return this
+
+    }
+
+    fun checkIfInitialized(): Boolean {
+        return !(mBatteryProfileDao == null || mAppExecutors == null)
+    }
+
+    fun startPeriodicBatteryUpdate(repeatIntervalInMillis: Long, tag: String) {
+        if (!checkIfInitialized()) {
+            throw Exception(" Please call initialize method before using instance of ${PeriodicBatteryUpdater::class.qualifiedName}")
+        }
+        if (repeatIntervalInMillis < PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS) {
+            throw IllegalArgumentException("repeatIntervalInMillis = $repeatIntervalInMillis which is less than PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS} = ${PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS} is not allowed")
+        }
+
+        mTag?.let {
+            WorkManager.getInstance().cancelAllWorkByTag(it)
+            removeBatteryUpdateObserver()
+            stopPeriodicBatteryUpdate()
+
+        }
+        mTag = tag
+
+        mTag?.let {
+            mPeriodicWorkRequest = createPeriodicRequest(repeatIntervalInMillis, it);
+            mPeriodicWorkRequest?.let { periodicRequest ->
+                WorkManager.getInstance().enqueueUniquePeriodicWork(it,ExistingPeriodicWorkPolicy.REPLACE,periodicRequest)
+                setBatteryUpdateObserver()
+            }
+        }
+    }
+
+    fun stopPeriodicBatteryUpdate() {
+        mTag?.let {
+            removeBatteryUpdateObserver()
+            WorkManager.getInstance().cancelAllWorkByTag(it)
+        }
+    }
+
+
+    fun createPeriodicRequest(repeatIntervalInMillis: Long, tag: String): PeriodicWorkRequest =
+            PeriodicWorkRequest.Builder(BatteryUpdateBackgroundWorker::class.java, repeatIntervalInMillis
+                    , TimeUnit.MILLISECONDS).addTag(tag).build()
+
+    fun setBatteryUpdateObserver() {
+        if (!checkIfInitialized()) {
+            throw Exception(" Please call initialize method before using instance of ${PeriodicBatteryUpdater::class.qualifiedName}")
+        }
+        mPeriodicWorkRequest?.let {
+            mWorkStatusLiveData =
+                    WorkManager.getInstance().getStatusByIdLiveData(it.id)
+            mWorkStatusLiveData?.observeForever(mWorkStatusObserver)
+        }
+
+    }
+
+    fun removeBatteryUpdateObserver() {
+        mWorkStatusLiveData?.removeObserver(mWorkStatusObserver)
+    }
+
+
 }
+
+
+
+
 
