@@ -40,7 +40,7 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
             applicationContext.registerReceiver(null, ifilter)
         }
         intent?.let { batteryIntent ->
-            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent)
+            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent,applicationContext)
             batteryProfile?.let{
                 mAppExecutors.diskIO().execute {
                     Log.d(LOG_CHARGING_ALARM, "BatteryProfile Updated in Worker"+ batteryProfile.toString())

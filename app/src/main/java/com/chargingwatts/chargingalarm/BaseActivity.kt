@@ -13,9 +13,9 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-//
-//    @Inject
-//    protected lateinit var mPreferenceHelper:PreferenceHelper
+
+    @Inject
+    protected lateinit var mPreferenceHelper:PreferenceHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

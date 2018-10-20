@@ -1,12 +1,15 @@
 package com.chargingwatts.chargingalarm.util.battery
 
+import android.content.Context
 import android.content.Intent
 import android.os.BatteryManager
 import com.chargingwatts.chargingalarm.vo.*
+import android.os.Build
+
 
 object BatteryProfileUtils {
 
-    fun extractBatteryProfileFromIntent(intent: Intent): BatteryProfile? {
+    fun extractBatteryProfileFromIntent(intent: Intent, context: Context?): BatteryProfile? {
         if (!isBatteryIntent(intent)) {
             return null
         }
@@ -21,6 +24,13 @@ object BatteryProfileUtils {
         val lRecentBatteryVoltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1)
         val lRecentBatteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)
         val lBatteryTechnology = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY)
+        var lBatteryTotalCapacity = -1
+        var lBatteryRemainingCapacity = -1
+        context?.let{
+            lBatteryTotalCapacity = getTotalCapacity(context)
+            lBatteryRemainingCapacity = getBatteryRemainingCapacity(context)
+
+        }
 
         val batteryProfile = BatteryProfile(
 //                currentTimeStamp = lCurrentTimeStamp,
@@ -30,10 +40,69 @@ object BatteryProfileUtils {
                 batteryScale = lBatteryScale,
                 recentBatteryVoltage = lRecentBatteryVoltage,
                 recentBatteryTemperature = lRecentBatteryTemperature,
-                batteryTechnology = lBatteryTechnology)
+                batteryTechnology = lBatteryTechnology,
+                totalCapacity = lBatteryTotalCapacity,
+                remainingCapacity = lBatteryRemainingCapacity)
 
         return batteryProfile
 
+
+    }
+
+    fun getTotalCapacity(context: Context): Int{
+        val primaryTotalCapacity = getPrimaryTotalCapacity(context)
+
+        if(primaryTotalCapacity > 0){
+            return  primaryTotalCapacity
+        }
+        else{
+            return getSecondaryTotalCapacity(context)
+        }
+
+    }
+
+    fun getSecondaryTotalCapacity(ctx: Context): Int {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val mBatteryManager = ctx.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+            val chargeCounter = mBatteryManager.getLongProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER)
+            val capacity = mBatteryManager.getLongProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+
+            return ((chargeCounter / capacity * 100f)/1000).toInt()
+        }
+
+        return -1
+    }
+
+    fun getPrimaryTotalCapacity(context: Context): Int {
+        val mPowerProfile: Any
+        var batteryCapacity = -1
+        val POWER_PROFILE_CLASS = "com.android.internal.os.PowerProfile"
+
+        try {
+            mPowerProfile = Class.forName(POWER_PROFILE_CLASS)
+                    .getConstructor(Context::class.java)
+                    .newInstance(context)
+
+            batteryCapacity = (Class
+                    .forName(POWER_PROFILE_CLASS)
+                    .getMethod("getBatteryCapacity")
+                    .invoke(mPowerProfile) as Double).toInt()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
+        return batteryCapacity
+
+    }
+    fun getBatteryRemainingCapacity(context: Context): Int {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val mBatteryManager = context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+            val percentRemainingBattery = mBatteryManager.getLongProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+            return ((percentRemainingBattery/100f)* getTotalCapacity(context)).toInt()
+        }
+        return -1
 
     }
 
@@ -53,7 +122,9 @@ object BatteryProfileUtils {
                     CN_SCALE to batteryProfile.batteryScale,
                     CN_VOLTAGE to batteryProfile.recentBatteryVoltage,
                     CN_TEMPERATURE to batteryProfile.recentBatteryTemperature,
-                    CN_TECHNOLOGY to batteryProfile.batteryTechnology)
+                    CN_TECHNOLOGY to batteryProfile.batteryTechnology,
+                    CN_TOTAL_CAPACITY to batteryProfile.totalCapacity,
+                    CN_REMAINING_CAPACITY to batteryProfile.remainingCapacity)
 
     fun convertMapToBatteryProfile(map: Map<String?, Any?>) =
             BatteryProfile(
@@ -66,7 +137,9 @@ object BatteryProfileUtils {
                     batteryScale = map.get(CN_SCALE) as Int?,
                     recentBatteryVoltage = map.get(CN_VOLTAGE) as Int?,
                     recentBatteryTemperature = map.get(CN_TEMPERATURE) as Int?,
-                    batteryTechnology = map.get(CN_TECHNOLOGY) as String?)
+                    batteryTechnology = map.get(CN_TECHNOLOGY) as String?,
+                    totalCapacity = map.get(CN_TOTAL_CAPACITY) as Int?,
+                    remainingCapacity = map.get(CN_REMAINING_CAPACITY) as Int?)
 
 }
 

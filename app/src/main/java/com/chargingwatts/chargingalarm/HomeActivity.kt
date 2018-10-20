@@ -19,10 +19,7 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.work.PeriodicWorkRequest
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
-import com.chargingwatts.chargingalarm.util.battery.BATTERY_WORKER_REQUEST_TAG
-import com.chargingwatts.chargingalarm.util.battery.BatteryChangeReciever
-import com.chargingwatts.chargingalarm.util.battery.PeriodicBatteryUpdater
-import com.chargingwatts.chargingalarm.util.battery.PowerConnectionReceiver
+import com.chargingwatts.chargingalarm.util.battery.*
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity() {
@@ -46,11 +43,12 @@ class HomeActivity : BaseActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        BatteryProfileUtils.getPrimaryTotalCapacity(this)
         
-//        mPreferenceHelper?.let{
-//            Log.d(LOG_CHARGING_ALARM, " Pref Helper not null")
-//
-//        }
+        mPreferenceHelper?.let{
+            Log.d(LOG_CHARGING_ALARM, "Pref_Helper_not_null")
+
+        }
         batteryChangeReciever.apply {
             Log.d(batteryChangeReciever::class.simpleName, "app not null")
         }

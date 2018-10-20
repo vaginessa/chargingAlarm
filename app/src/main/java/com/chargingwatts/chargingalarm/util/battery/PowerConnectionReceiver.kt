@@ -20,18 +20,20 @@ class PowerConnectionReceiver @Inject constructor() : BroadcastReceiver() {
     @Inject
     lateinit var appExecutors: AppExecutors
 
-    override fun onReceive(context: Context, intent: Intent?) {
+    override fun onReceive(context: Context?, intent: Intent?) {
          AndroidInjection.inject(this, context)
         if (intent?.action != Intent.ACTION_POWER_CONNECTED && intent?.action != Intent.ACTION_POWER_DISCONNECTED) {
             return
         }
-        val batteryProfile: BatteryProfile? = BatteryProfileUtils.extractBatteryProfileFromIntent(intent)
+        val batteryProfile: BatteryProfile? = BatteryProfileUtils.extractBatteryProfileFromIntent(intent,context)
 
 
         val isCharging: Boolean = batteryProfile?.batteryStatusType == BatteryManager.BATTERY_STATUS_CHARGING
                 || batteryProfile?.batteryStatusType == BatteryManager.BATTERY_STATUS_FULL
 
-        updateBatteryProfile(context)
+        context?.let {
+            updateBatteryProfile(context)
+        }
     }
 
     fun updateBatteryProfile(context: Context) {
@@ -40,7 +42,7 @@ class PowerConnectionReceiver @Inject constructor() : BroadcastReceiver() {
         }
 
         intent?.let { batteryIntent ->
-            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent)
+            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
             batteryProfile?.let {
                 appExecutors.diskIO().execute { batteryProfileDao.insert(it) }
             }

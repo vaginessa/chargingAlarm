@@ -33,4 +33,6 @@ object AppConstants {
     @JvmField
     val LOG_CHARGING_ALARM = "LOG_CHARGING_ALARM"
 
+
+
 }

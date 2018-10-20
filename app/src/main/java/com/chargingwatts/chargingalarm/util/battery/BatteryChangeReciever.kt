@@ -12,7 +12,7 @@ import javax.inject.Singleton
 class BatteryChangeReciever @Inject constructor(val batteryProfileDao: BatteryProfileDao, val appExecutors: AppExecutors) : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.let { batteryIntent ->
-            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent)
+            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
             appExecutors.diskIO().execute {
                 batteryProfile?.let { batteryProfileDao.insert(it) }
             }

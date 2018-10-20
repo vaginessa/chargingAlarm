@@ -14,6 +14,8 @@ const  val CN_SCALE: String = "scale"
 const  val CN_VOLTAGE: String = "voltage"
 const  val CN_TEMPERATURE: String = "temperature"
 const  val CN_TECHNOLOGY: String = "technology"
+const val CN_TOTAL_CAPACITY: String = "total_capacity"
+const val CN_REMAINING_CAPACITY:String = "remaining_capacity"
 
 
 @Entity(tableName = "battery_profile")
@@ -49,6 +51,13 @@ data class BatteryProfile(
         val recentBatteryTemperature: Int?,
 
         @ColumnInfo(name = CN_TECHNOLOGY)
-        val batteryTechnology: String?
+        val batteryTechnology: String?,
+
+        @ColumnInfo(name = CN_TOTAL_CAPACITY)
+        val totalCapacity: Int?,
+
+        @ColumnInfo(name = CN_REMAINING_CAPACITY)
+        val remainingCapacity:Int?
+
 
 )

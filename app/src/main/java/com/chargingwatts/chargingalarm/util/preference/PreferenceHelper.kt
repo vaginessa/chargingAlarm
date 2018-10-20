@@ -6,14 +6,15 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.chargingwatts.chargingalarm.ChargingAlarmApp
 import javax.inject.Inject
 
 
 class PreferenceHelper @Inject constructor(
-        private val mContext: Context, private val appPreferenceName: String =
-                "in.cashify.logistic"
+        private val mContext: Context
 ) {
-
+    private val appPreferenceName: String =
+            "ChargingAlarm"
     private var preferences: SharedPreferences
 
     init {
