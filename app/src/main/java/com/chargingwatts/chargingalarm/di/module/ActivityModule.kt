@@ -1,7 +1,7 @@
 package com.chargingwatts.chargingalarm.di.module
 
 import android.app.Activity
-import com.chargingwatts.chargingalarm.BatteryAlarmActivity
+import com.chargingwatts.chargingalarm.HomeActivity
 import com.chargingwatts.chargingalarm.MainActivity
 import com.chargingwatts.chargingalarm.di.component.BatteryAlarmActivitySubComponent
 import com.chargingwatts.chargingalarm.di.component.MainActivitySubComponent
@@ -25,7 +25,7 @@ abstract class ActivityModule {
 
     @Binds
     @IntoMap
-    @ActivityKey(BatteryAlarmActivity::class)
+    @ActivityKey(HomeActivity::class)
     internal abstract fun bindBatteryActivitySubComponent(builder: BatteryAlarmActivitySubComponent.Builder):AndroidInjector.Factory<out Activity>
 
 

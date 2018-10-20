@@ -1,5 +1,6 @@
 package com.chargingwatts.chargingalarm
 
+import AppConstants.LOG_CHARGING_ALARM
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,6 +14,7 @@ import android.support.v4.app.NotificationCompat
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.work.PeriodicWorkRequest
@@ -23,7 +25,7 @@ import com.chargingwatts.chargingalarm.util.battery.PeriodicBatteryUpdater
 import com.chargingwatts.chargingalarm.util.battery.PowerConnectionReceiver
 import javax.inject.Inject
 
-class BatteryAlarmActivity : BaseActivity() {
+class HomeActivity : BaseActivity() {
     val NOTIFICATION_ID = 1
     private var mNotificationManager: NotificationManager? = null
     private val CHANNEL_ID = "channel_01"
@@ -41,9 +43,14 @@ class BatteryAlarmActivity : BaseActivity() {
     lateinit var appExecutors: AppExecutors
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_battery)
-
+        setContentView(R.layout.activity_home)
+        
+//        mPreferenceHelper?.let{
+//            Log.d(LOG_CHARGING_ALARM, " Pref Helper not null")
+//
+//        }
         batteryChangeReciever.apply {
             Log.d(batteryChangeReciever::class.simpleName, "app not null")
         }
@@ -84,8 +91,13 @@ class BatteryAlarmActivity : BaseActivity() {
         intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
         registerReceiver(batteryChangeReciever, intentFilter)
 
-        batterProfileDao.findRecentBatteryProfile().observe(this, Observer {
-            findViewById<TextView>(R.id.tv_battery_level).setText(it?.batteryLevel?.toString())
+        batterProfileDao.findRecentBatteryProfile().observe(this, Observer { batteryProfile ->
+            val lBatteryLevel = batteryProfile?.batteryLevel
+            lBatteryLevel?.let {
+                findViewById<TextView>(R.id.tv_battery_level).text = "${lBatteryLevel}%"
+                findViewById<ProgressBar>(R.id.pb_battery_level).progress = lBatteryLevel
+            }
+
         })
 
         Log.d("MyBackgroundWorker", "BackgroundWorker is Running")
@@ -129,7 +141,7 @@ class BatteryAlarmActivity : BaseActivity() {
     private fun sendNotification() {
         mNotificationManager = applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        val sendIntent = Intent(applicationContext, BatteryAlarmActivity::class.java)
+        val sendIntent = Intent(applicationContext, HomeActivity::class.java)
 
 
         //        mBuilder.setContentIntent(contentIntent);

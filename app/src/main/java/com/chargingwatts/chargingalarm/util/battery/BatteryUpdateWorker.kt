@@ -5,11 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
-import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.chargingwatts.chargingalarm.AppExecutors
-import com.chargingwatts.chargingalarm.BatteryAlarmActivity
+import com.chargingwatts.chargingalarm.HomeActivity
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
 import com.chargingwatts.chargingalarm.di.component.DaggerAppComponent
 import com.chargingwatts.chargingalarm.di.module.BatteryUpdateWorkerModule
@@ -22,10 +21,11 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
     @Inject
     lateinit var mAppExecutors: AppExecutors
     override fun doWork(): Result {
-        DaggerAppComponent.builder().application(applicationContext = applicationContext).build().
+
+        DaggerAppComponent.builder().applicationContext(applicationContext = applicationContext).build().
                 newBatteryUpdateWorkerComponent(BatteryUpdateWorkerModule()).inject(this)
 
-        val sendIntent = Intent(applicationContext, BatteryAlarmActivity::class.java)
+        val sendIntent = Intent(applicationContext, HomeActivity::class.java)
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         getApplicationContext().startActivity(sendIntent)
 

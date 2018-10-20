@@ -14,8 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BatteryAlarmActivity"
-            android:launchMode="singleInstance">
+        <activity android:name=".HomeActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

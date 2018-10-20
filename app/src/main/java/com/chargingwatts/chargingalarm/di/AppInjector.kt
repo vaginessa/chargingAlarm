@@ -18,7 +18,7 @@ import dagger.android.support.HasSupportFragmentInjector
  */
 object AppInjector {
     fun init(chargingAlarmApp: ChargingAlarmApp) {
-        DaggerAppComponent.builder().application(chargingAlarmApp)
+        DaggerAppComponent.builder().applicationContext(chargingAlarmApp)
                 .build().inject(chargingAlarmApp)
         chargingAlarmApp
                 .registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {

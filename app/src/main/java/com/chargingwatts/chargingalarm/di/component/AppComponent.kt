@@ -1,5 +1,6 @@
 package com.chargingwatts.chargingalarm.di.component
 
+import android.app.Application
 import android.content.Context
 import com.chargingwatts.chargingalarm.ChargingAlarmApp
 import com.chargingwatts.chargingalarm.di.module.ActivityModule
@@ -27,8 +28,12 @@ interface AppComponent {
     @Component.Builder
     interface Builder {
 
+        // this method was necessary as application could not be provided from inside the Worker
         @BindsInstance
-        fun application(applicationContext: Context): Builder
+        fun applicationContext(applicationContext: Context): Builder
+
+//        @BindsInstance
+//        fun application(application: Application):Builder
 
         fun build(): AppComponent
     }
@@ -36,6 +41,5 @@ interface AppComponent {
     fun inject(chargingAlarmApp: ChargingAlarmApp)
 
     fun newBatteryUpdateWorkerComponent(batteryUpdateWorkerModule: BatteryUpdateWorkerModule): BatteryUpdateWorkerComponent
-//    fun inject(batteryUpdateWorker: BatteryUpdateWorker)
 
 }

@@ -6,19 +6,18 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.chargingwatts.chargingalarm.ChargingAlarmApp
 import javax.inject.Inject
 
 
 class PreferenceHelper @Inject constructor(
-        private val application: ChargingAlarmApp, private val appPreferenceName: String =
+        private val mContext: Context, private val appPreferenceName: String =
                 "in.cashify.logistic"
 ) {
 
     private var preferences: SharedPreferences
 
     init {
-        preferences = application.applicationContext.getSharedPreferences(
+        preferences = mContext.applicationContext.getSharedPreferences(
                 appPreferenceName,
                 Context.MODE_PRIVATE
         )
@@ -26,7 +25,7 @@ class PreferenceHelper @Inject constructor(
     }
 
     fun getNewSharedPreference(preferenceName: String) =
-            application.applicationContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
+            mContext.applicationContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
 
 
     //--------------------------APP LEVEL SHARED PREFERENCES --------------------------------------//

@@ -33,10 +33,16 @@ class AppModule {
                 .create(AlarmApiService::class.java)
     }
 
+//    @Singleton
+//    @Provides
+//    fun provideApplicationContext(application: Application):Context{
+//        return application.applicationContext
+//    }
+
     @Singleton
     @Provides
-    fun provideDb(applicationContext: Context): ChargingAlarmDb {
-        return Room.databaseBuilder(applicationContext, ChargingAlarmDb::class.java, "logistics.db")
+    fun provideDb(context: Context): ChargingAlarmDb {
+        return Room.databaseBuilder(context.applicationContext, ChargingAlarmDb::class.java, "logistics.db")
                 .fallbackToDestructiveMigration()
                 .build()
 
@@ -45,8 +51,8 @@ class AppModule {
     @Singleton
     @Provides
     @Named
-    fun provideApiBaseUrl(applicationContext: Context) =
-            applicationContext.getString(R.string.base_api_url)
+    fun provideApiBaseUrl(context: Context) =
+            context.applicationContext.getString(R.string.base_api_url)
 
 
     @Singleton
