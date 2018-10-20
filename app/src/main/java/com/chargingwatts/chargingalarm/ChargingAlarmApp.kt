@@ -1,12 +1,13 @@
 package com.chargingwatts.chargingalarm
 
-import com.chargingwatts.chargingalarm.di.AppInjector
 import android.app.Activity
 import android.app.Application
-import android.app.Fragment
 import android.content.BroadcastReceiver
-import androidx.work.Worker
-import dagger.android.*
+import com.chargingwatts.chargingalarm.di.AppInjector
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import dagger.android.HasBroadcastReceiverInjector
 import timber.log.Timber
 import javax.inject.Inject
 

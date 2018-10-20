@@ -3,6 +3,7 @@ package com.chargingwatts.chargingalarm.di.module
 
 import android.app.Application
 import android.arch.persistence.room.Room
+import android.content.Context
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.api.AlarmApiService
@@ -34,8 +35,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideDb(application: Application): ChargingAlarmDb {
-        return Room.databaseBuilder(application, ChargingAlarmDb::class.java, "logistics.db")
+    fun provideDb(applicationContext: Context): ChargingAlarmDb {
+        return Room.databaseBuilder(applicationContext, ChargingAlarmDb::class.java, "logistics.db")
                 .fallbackToDestructiveMigration()
                 .build()
 
@@ -44,8 +45,8 @@ class AppModule {
     @Singleton
     @Provides
     @Named
-    fun provideApiBaseUrl(application: Application) =
-            application.getString(R.string.base_api_url)
+    fun provideApiBaseUrl(applicationContext: Context) =
+            applicationContext.getString(R.string.base_api_url)
 
 
     @Singleton
@@ -63,7 +64,7 @@ class AppModule {
     @Singleton
     @Provides
     fun providePeriodicBatteryUpdater(batteryProfileDao: BatteryProfileDao, appExecutors: AppExecutors): PeriodicBatteryUpdater{
-        return PeriodicBatteryUpdater.initiate(batteryProfileDao = batteryProfileDao, appExecutors = appExecutors)
+        return PeriodicBatteryUpdater
     }
 
 

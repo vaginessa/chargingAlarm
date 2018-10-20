@@ -29,7 +29,8 @@ object AppConstants {
     @JvmField
     val START_SETTINGS_ACTIVITY_REQUEST_CODE: Int = 101
 
-    //--------------------------DATABASE TABLE NAMES----------------------------------------------//
-
+    //--------------------------------LOG CONSTANTS----------------------------------------------//
+    @JvmField
+    val LOG_CHARGING_ALARM = "LOG_CHARGING_ALARM"
 
 }

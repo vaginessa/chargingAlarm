@@ -100,7 +100,7 @@ class BatteryAlarmActivity : BaseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = applicationContext.getString(R.string.app_name)
             val mChannel = NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT)
-            mNotificationManager?.createNotificationChannel(mChannel)
+            mNotificationManager.createNotificationChannel(mChannel)
         }
     }
 
