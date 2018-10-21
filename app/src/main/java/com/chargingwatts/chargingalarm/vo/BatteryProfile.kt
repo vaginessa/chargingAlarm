@@ -45,10 +45,10 @@ data class BatteryProfile(
         val batteryScale: Int?,
 
         @ColumnInfo(name = CN_VOLTAGE)
-        val recentBatteryVoltage: Int?,
+        val recentBatteryVoltage: Float?,
 
         @ColumnInfo(name = CN_TEMPERATURE)
-        val recentBatteryTemperature: Int?,
+        val recentBatteryTemperature: Float?,
 
         @ColumnInfo(name = CN_TECHNOLOGY)
         val batteryTechnology: String?,
