@@ -52,6 +52,7 @@ class HomeActivity : BaseActivity() {
 //        notificationHelper.apply {
 //            notify(NotificationHelper.BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID,getHighBatteryNotification("LEVEL", "ASFASFASF",50))
 //        }
+        BatteryMonitoringService.startInForeground(this)
 
         mPreferenceHelper?.let{
             Log.d(LOG_CHARGING_ALARM, "Pref_Helper_not_null")
@@ -68,6 +69,12 @@ class HomeActivity : BaseActivity() {
             Log.d(periodicBatteryUpdater::class.simpleName, "app not null")
         }
         periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
+
+
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
+        registerReceiver(batteryChangeReciever, intentFilter)
+
 
         findViewById<Button>(R.id.btn_stop_battery_update).setOnClickListener({
             PeriodicBatteryUpdater.stopPeriodicBatteryUpdate()
@@ -93,10 +100,6 @@ class HomeActivity : BaseActivity() {
         super.onResume()
 
 
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
-        registerReceiver(batteryChangeReciever, intentFilter)
-
         batterProfileDao.findRecentBatteryProfile().observe(this, Observer { batteryProfile ->
             val lBatteryPercent = batteryProfile?.remainingPercent
             lBatteryPercent?.let {
@@ -107,64 +110,24 @@ class HomeActivity : BaseActivity() {
         })
 
         Log.d("MyBackgroundWorker", "BackgroundWorker is Running")
-        createNotificationChannel()
-        sendNotification()
 //        startVibration()
     }
 
-    private fun createNotificationChannel() {
-        val mNotificationManager = applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = applicationContext.getString(R.string.app_name)
-            val mChannel = NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT)
-            mNotificationManager.createNotificationChannel(mChannel)
-        }
-    }
-
-    private fun getNotification(): Notification {
-        val text = "Background work being tested"
-        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-                .setContentText(text)
-                .setContentTitle("Background worker")
-                .setOngoing(true)
-                .setPriority(Notification.PRIORITY_LOW)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setTicker(text)
-                .setWhen(System.currentTimeMillis())
-                .setVisibility(Notification.VISIBILITY_PUBLIC)
-
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder.setChannelId(CHANNEL_ID)
-        }
-
-        return builder.build()
-    }
-
-    // Post a notification indicating whether a doodle was found.
-    private fun sendNotification() {
-        mNotificationManager = applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-        val sendIntent = Intent(applicationContext, HomeActivity::class.java)
-
-
-        //        mBuilder.setContentIntent(contentIntent);
-        mNotificationManager?.notify(NOTIFICATION_ID, getNotification())
-        //       startVibration()
-        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//        applicationContext.startActivity(sendIntent)
-    }
 
     override fun onPause() {
         super.onPause()
-        unregisterReceiver(batteryChangeReciever)
     }
 
 
     override fun onSupportNavigateUp(): Boolean {
         return Navigation.findNavController(this, R.id.battery_activity_nav_host_fragment).navigateUp()
+    }
+
+    override fun onDestroy() {
+        unregisterReceiver(batteryChangeReciever)
+        super.onDestroy()
+
     }
 
 }

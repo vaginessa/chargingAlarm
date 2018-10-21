@@ -141,7 +141,7 @@ object BatteryProfileUtils {
                     remainingCapacity = map[CN_REMAINING_CAPACITY] as Int?,
                     remainingPercent = map[CN_REMAINING_PERCENT] as Int?)
 
-    fun getBatteryStatusString(intStatus: Int?, context: Context): String? {
+    fun getBatteryStatusString( context: Context,intStatus: Int?): String? {
 
         return when (intStatus) {
             BatteryManager.BATTERY_STATUS_CHARGING -> context.getString(R.string.BATTERY_STATUS_CHARGING)

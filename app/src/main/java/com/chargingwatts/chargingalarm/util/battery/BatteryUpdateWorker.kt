@@ -27,8 +27,7 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
 
     override fun doWork(): Result {
 
-        DaggerAppComponent.builder().applicationContext(applicationContext = applicationContext).build().
-                newBatteryUpdateWorkerComponent(BatteryUpdateWorkerModule()).inject(this)
+        DaggerAppComponent.builder().applicationContext(applicationContext = applicationContext).build().newBatteryUpdateWorkerComponent(BatteryUpdateWorkerModule()).inject(this)
 
         val sendIntent = Intent(applicationContext, HomeActivity::class.java)
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -40,21 +39,18 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
         return Result.SUCCESS
     }
 
-    fun updateBatteryProfile(){
+    fun updateBatteryProfile() {
         val intent: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
             applicationContext.registerReceiver(null, ifilter)
         }
         intent?.let { batteryIntent ->
-            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent,applicationContext)
-            batteryProfile?.let{
-                batteryProfile.remainingPercent?.let{batteryPercent ->
-                    mNotificationHelper.apply {
-                        notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID,getBatteryLevelNotification("Charging Alarm", "Level:"+batteryPercent,batteryPercent))
-                    }
+            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, applicationContext)
+            batteryProfile?.let {
+                mNotificationHelper.apply {
+                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
                 }
 
                 mAppExecutors.diskIO().execute {
-                    Log.d(LOG_CHARGING_ALARM, "BatteryProfile Updated in Worker"+ batteryProfile.toString())
                     mBatteryProfileDao.insert(batteryProfile)
                 }
             }

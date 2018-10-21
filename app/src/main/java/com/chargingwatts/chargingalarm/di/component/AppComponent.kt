@@ -1,13 +1,8 @@
 package com.chargingwatts.chargingalarm.di.component
 
-import android.app.Application
 import android.content.Context
 import com.chargingwatts.chargingalarm.ChargingAlarmApp
-import com.chargingwatts.chargingalarm.di.module.ActivityModule
-import com.chargingwatts.chargingalarm.di.module.AppModule
-import com.chargingwatts.chargingalarm.di.module.BatteryUpdateWorkerModule
-import com.chargingwatts.chargingalarm.di.module.BroadcastRecieverModule
-import com.chargingwatts.chargingalarm.util.battery.BatteryUpdateWorker
+import com.chargingwatts.chargingalarm.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -19,7 +14,8 @@ import javax.inject.Singleton
             AndroidInjectionModule::class,
             AppModule::class,
             ActivityModule::class,
-            BroadcastRecieverModule::class
+            BroadcastRecieversModule::class,
+            ServicesModule::class
         ]
 )
 

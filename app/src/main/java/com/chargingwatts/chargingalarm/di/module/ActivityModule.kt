@@ -3,7 +3,7 @@ package com.chargingwatts.chargingalarm.di.module
 import android.app.Activity
 import com.chargingwatts.chargingalarm.HomeActivity
 import com.chargingwatts.chargingalarm.MainActivity
-import com.chargingwatts.chargingalarm.di.component.BatteryAlarmActivitySubComponent
+import com.chargingwatts.chargingalarm.di.component.HomeActivitySubComponent
 import com.chargingwatts.chargingalarm.di.component.MainActivitySubComponent
 import dagger.Binds
 import dagger.Module
@@ -11,7 +11,7 @@ import dagger.android.ActivityKey
 import dagger.android.AndroidInjector
 import dagger.multibindings.IntoMap
 
-@Module(subcomponents = [MainActivitySubComponent::class, BatteryAlarmActivitySubComponent::class])
+@Module(subcomponents = [MainActivitySubComponent::class, HomeActivitySubComponent::class])
 abstract class ActivityModule {
 
 //    @ContributesAndroidInjector(modules = [MainActivityModule::class])
@@ -26,7 +26,7 @@ abstract class ActivityModule {
     @Binds
     @IntoMap
     @ActivityKey(HomeActivity::class)
-    internal abstract fun bindBatteryActivitySubComponent(builder: BatteryAlarmActivitySubComponent.Builder):AndroidInjector.Factory<out Activity>
+    internal abstract fun bindBatteryActivitySubComponent(builder: HomeActivitySubComponent.Builder):AndroidInjector.Factory<out Activity>
 
 
 }

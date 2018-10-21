@@ -14,16 +14,14 @@ class BatteryChangeReciever @Inject constructor(val batteryProfileDao: BatteryPr
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.let { batteryIntent ->
             val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
-            batteryProfile?.remainingPercent?.let{batteryPercent ->
+            batteryProfile?.let {
                 notificationHelper.apply {
-                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID,getBatteryLevelNotification("Charging Alarm", "Level:"+batteryPercent,batteryPercent))
+                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
                 }
-            }
-            appExecutors.diskIO().execute {
-                batteryProfile?.let { batteryProfileDao.insert(it) }
+                appExecutors.diskIO().execute {
+                    batteryProfileDao.insert(it)
+                }
             }
         }
     }
-
-
 }

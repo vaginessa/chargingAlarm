@@ -36,4 +36,7 @@
     <string name="BATTERY_LEVEL_CHANNEL_DESCRIPTION">This Notification notifies user when the battery level of the device changes</string>
     <string name="BATTERY_LEVEL_LOW_CHANNEL_DESCRIPTION">This notification notifies use when the battery level of the device is below the low battery level set by the user in the app</string>
 
+
+    <string name="description_battery_monitoring_service">This service updates the battery Level shown in the notification</string>
+    <string name="default_notification_body">Fetching Battery Information</string>
 </resources>

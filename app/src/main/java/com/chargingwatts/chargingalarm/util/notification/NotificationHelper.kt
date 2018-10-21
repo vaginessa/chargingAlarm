@@ -17,17 +17,15 @@ import android.content.Intent
 import android.provider.Settings
 import android.support.annotation.RequiresApi
 import com.chargingwatts.chargingalarm.HomeActivity
+import com.chargingwatts.chargingalarm.util.battery.BatteryProfileUtils
+import com.chargingwatts.chargingalarm.vo.BatteryProfile
 
 
 /**
  * Helper class to manage notification channels, and create notifications.
  */
 class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(context) {
-    /**
-     * Registers notification channels, which can be used later by individual notifications.
-     *
-     * @param ctx The application context
-     */
+
     private var manager: NotificationManagerCompat? = null
 
 
@@ -50,6 +48,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
             batteryLevelChannel.description = getString(R.string.BATTERY_LEVEL_CHANNEL_DESCRIPTION)
             batteryLevelChannel.lightColor = Color.BLUE
             batteryLevelChannel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+            batteryLevelChannel.enableVibration(false)
             notificationManager.createNotificationChannel(batteryLevelChannel)
 
             val batteryLevelLowChannel = NotificationChannel(BATTERY_LEVEL_LOW_CHANNEL,
@@ -93,7 +92,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
      * @param body the body text for the notification
      * @return the builder as it keeps a reference to the notification (since API 24)
      */
-    fun getHighBatteryNotification(title: String, body: String, batteryLevel:Int): NotificationCompat.Builder {
+    fun getHighBatteryNotificationBuilder(title: String, body: String): NotificationCompat.Builder {
         return NotificationCompat.Builder(this, BATTERY_LEVEL_HIGH_CHANNEL)
                 .setSmallIcon(smallIcon)
                 .setContentTitle(title)
@@ -101,13 +100,14 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 //                .setStyle(NotificationCompat.BigTextStyle()
 //                        .bigText("Much longer text that cannot fit one line..."))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setProgress(100, batteryLevel,false)
+//                .setProgress(100, batteryLevel, false)
                 .setContentIntent(getTapIntent())
                 .setAutoCancel(true)
+
     }
 
 
-    fun getBatteryLevelNotification(title: String, body: String, batteryLevel: Int): NotificationCompat.Builder {
+    fun getBatteryLevelNotificationBuilder(title: String, body: String): NotificationCompat.Builder {
         return NotificationCompat.Builder(this, BATTERY_LEVEL_CHANNEL)
                 .setSmallIcon(smallIcon)
                 .setContentTitle(title)
@@ -115,12 +115,14 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 //                .setStyle(NotificationCompat.BigTextStyle()
 //                        .bigText("Much longer text that cannot fit one line..."))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setProgress(100, batteryLevel,false)
+//                .setProgress(100, batteryLevel, false)
                 .setContentIntent(getTapIntent())
                 .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
+
     }
 
-    fun getLowBatteryNotification(title: String, body: String, batteryLevel: Int): NotificationCompat.Builder {
+    fun getLowBatteryNotificationBuilder(title: String, body: String): NotificationCompat.Builder {
         return NotificationCompat.Builder(this, BATTERY_LEVEL_LOW_CHANNEL)
                 .setSmallIcon(smallIcon)
                 .setContentTitle(title)
@@ -128,7 +130,6 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 //                .setStyle(NotificationCompat.BigTextStyle()
 //                        .bigText("Much longer text that cannot fit one line..."))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setProgress(100, batteryLevel,false)
                 .setContentIntent(getTapIntent())
                 .setAutoCancel(true)
     }
@@ -195,5 +196,34 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
         val BATTERY_LEVEL_LOW_CHANNEL_NOTIFICATION_ID = 222
         @JvmStatic
         val BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID = 333
+
+
+        @JvmStatic
+        fun createBatteryNotificationTitleString(context: Context, batteryProfile: BatteryProfile?): String {
+            var bodyString: String = context.getString(R.string.default_notification_body)
+
+            batteryProfile?.let {
+                bodyString = "Battery Status"
+
+                batteryProfile.remainingPercent?.let { batteryPercent ->
+                    bodyString = "$bodyString - $batteryPercent%"
+                }
+
+                batteryProfile.recentBatteryTemperature?.let { batteryTemperature ->
+                    bodyString = "$bodyString ($batteryTemperature\u2103)"
+                }
+
+                batteryProfile.batteryStatusType?.let { batteryStatusType ->
+
+                    BatteryProfileUtils.getBatteryStatusString(context, batteryStatusType)?.let { batteryStatusString ->
+                        if (batteryStatusString != context.getString(R.string.BATTERY_STATUS_UNKNOWN)) {
+                            bodyString = "$bodyString - $batteryStatusString"
+                        }
+                    }
+                }
+            }
+
+            return bodyString
+        }
     }
 }

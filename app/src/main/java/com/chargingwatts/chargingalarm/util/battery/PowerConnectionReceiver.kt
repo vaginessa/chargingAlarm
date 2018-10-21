@@ -1,6 +1,5 @@
 package com.chargingwatts.chargingalarm.util.battery
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -9,12 +8,12 @@ import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
-import dagger.android.AndroidInjection
+import dagger.android.DaggerBroadcastReceiver
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PowerConnectionReceiver @Inject constructor() : BroadcastReceiver() {
+class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() {
 
     @Inject
     lateinit var batteryProfileDao: BatteryProfileDao;
@@ -25,11 +24,11 @@ class PowerConnectionReceiver @Inject constructor() : BroadcastReceiver() {
     lateinit var mNotificationHelper: NotificationHelper
 
     override fun onReceive(context: Context?, intent: Intent?) {
-         AndroidInjection.inject(this, context)
+        super.onReceive(context, intent)
         if (intent?.action != Intent.ACTION_POWER_CONNECTED && intent?.action != Intent.ACTION_POWER_DISCONNECTED) {
             return
         }
-        val batteryProfile: BatteryProfile? = BatteryProfileUtils.extractBatteryProfileFromIntent(intent,context)
+        val batteryProfile: BatteryProfile? = BatteryProfileUtils.extractBatteryProfileFromIntent(intent, context)
 
 
         val isCharging: Boolean = batteryProfile?.batteryStatusType == BatteryManager.BATTERY_STATUS_CHARGING
@@ -48,10 +47,8 @@ class PowerConnectionReceiver @Inject constructor() : BroadcastReceiver() {
         intent?.let { batteryIntent ->
             val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
             batteryProfile?.let {
-                batteryProfile.remainingPercent?.let{batteryPercent ->
-                    mNotificationHelper.apply {
-                        notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID,getBatteryLevelNotification("Charging Alarm", "Level:"+batteryPercent,batteryPercent))
-                    }
+                mNotificationHelper.apply {
+                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
                 }
                 appExecutors.diskIO().execute { batteryProfileDao.insert(it) }
             }

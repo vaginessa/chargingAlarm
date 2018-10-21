@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
 
     <application
@@ -31,6 +32,11 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
+        <service
+            android:name=".util.battery.BatteryMonitoringService"
+            android:exported="false"
+            android:description="@string/description_battery_monitoring_service" />
+
     </application>
 
 </manifest>
