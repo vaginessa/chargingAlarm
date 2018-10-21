@@ -12,6 +12,7 @@ import com.chargingwatts.chargingalarm.db.ChargingAlarmDb
 import com.chargingwatts.chargingalarm.db.UserDetailDao
 import com.chargingwatts.chargingalarm.util.LiveDataCallAdapterFactory
 import com.chargingwatts.chargingalarm.util.battery.PeriodicBatteryUpdater
+import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -73,6 +74,11 @@ class AppModule {
         return PeriodicBatteryUpdater
     }
 
+    @Singleton
+    @Provides
+    fun provideNotificationHelper(context: Context): NotificationHelper{
+        return NotificationHelper(context)
+    }
 
 
 

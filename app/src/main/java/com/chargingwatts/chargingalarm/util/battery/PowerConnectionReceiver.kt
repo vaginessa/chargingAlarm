@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.os.BatteryManager
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
+import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -19,6 +20,9 @@ class PowerConnectionReceiver @Inject constructor() : BroadcastReceiver() {
     lateinit var batteryProfileDao: BatteryProfileDao;
     @Inject
     lateinit var appExecutors: AppExecutors
+
+    @Inject
+    lateinit var mNotificationHelper: NotificationHelper
 
     override fun onReceive(context: Context?, intent: Intent?) {
          AndroidInjection.inject(this, context)
@@ -44,6 +48,11 @@ class PowerConnectionReceiver @Inject constructor() : BroadcastReceiver() {
         intent?.let { batteryIntent ->
             val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
             batteryProfile?.let {
+                batteryProfile.remainingPercent?.let{batteryPercent ->
+                    mNotificationHelper.apply {
+                        notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID,getBatteryLevelNotification("Charging Alarm", "Level:"+batteryPercent,batteryPercent))
+                    }
+                }
                 appExecutors.diskIO().execute { batteryProfileDao.insert(it) }
             }
         }

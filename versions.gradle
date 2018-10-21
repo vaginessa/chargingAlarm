@@ -9,7 +9,7 @@ def versions = [:]
 versions.arch_core = "1.1.1"
 versions.room = "1.1.1"
 versions.lifecycle = "1.1.1"
-versions.support = "27.1.1"
+versions.support = "28.0.0"
 versions.dagger = "2.15"
 versions.junit = "4.12"
 versions.espresso = "3.0.1"
@@ -37,12 +37,14 @@ def deps = [:]
 
 def support = [:]
 support.annotations = "com.android.support:support-annotations:$versions.support"
-support.app_compat = "com.android.support:appcompat-v7:$versions.support"
+support.app_compat_v7 = "com.android.support:appcompat-v7:$versions.support"
 support.recyclerview = "com.android.support:recyclerview-v7:$versions.support"
 support.cardview = "com.android.support:cardview-v7:$versions.support"
 support.design = "com.android.support:design:$versions.support"
 support.v4 = "com.android.support:support-v4:$versions.support"
 support.core_utils = "com.android.support:support-core-utils:$versions.support"
+support.compat = "com.android.support:support-compat:$versions.support"
+
 deps.support = support
 
 def room = [:]

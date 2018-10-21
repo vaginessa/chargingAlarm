@@ -20,6 +20,7 @@ import androidx.navigation.Navigation
 import androidx.work.PeriodicWorkRequest
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
 import com.chargingwatts.chargingalarm.util.battery.*
+import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity() {
@@ -39,12 +40,19 @@ class HomeActivity : BaseActivity() {
     @Inject
     lateinit var appExecutors: AppExecutors
 
+    @Inject
+    lateinit var notificationHelper: NotificationHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         BatteryProfileUtils.getPrimaryTotalCapacity(this)
-        
+
+//        notificationHelper.apply {
+//            notify(NotificationHelper.BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID,getHighBatteryNotification("LEVEL", "ASFASFASF",50))
+//        }
+
         mPreferenceHelper?.let{
             Log.d(LOG_CHARGING_ALARM, "Pref_Helper_not_null")
 
@@ -90,10 +98,10 @@ class HomeActivity : BaseActivity() {
         registerReceiver(batteryChangeReciever, intentFilter)
 
         batterProfileDao.findRecentBatteryProfile().observe(this, Observer { batteryProfile ->
-            val lBatteryLevel = batteryProfile?.batteryLevel
-            lBatteryLevel?.let {
-                findViewById<TextView>(R.id.tv_battery_level).text = "${lBatteryLevel}%"
-                findViewById<ProgressBar>(R.id.pb_battery_level).progress = lBatteryLevel
+            val lBatteryPercent = batteryProfile?.remainingPercent
+            lBatteryPercent?.let {
+                findViewById<TextView>(R.id.tv_battery_level).text = "${lBatteryPercent}%"
+                findViewById<ProgressBar>(R.id.pb_battery_level).progress = lBatteryPercent
             }
 
         })

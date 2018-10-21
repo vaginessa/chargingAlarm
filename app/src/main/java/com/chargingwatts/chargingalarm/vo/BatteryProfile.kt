@@ -16,11 +16,12 @@ const  val CN_TEMPERATURE: String = "temperature"
 const  val CN_TECHNOLOGY: String = "technology"
 const val CN_TOTAL_CAPACITY: String = "total_capacity"
 const val CN_REMAINING_CAPACITY:String = "remaining_capacity"
+const val CN_REMAINING_PERCENT:String = "remaining_percent"
+
 
 
 @Entity(tableName = "battery_profile")
 data class BatteryProfile(
-
 
         @PrimaryKey
         @ColumnInfo(name = CN_TIME_STAMP )
@@ -38,12 +39,6 @@ data class BatteryProfile(
         @ColumnInfo(name = CN_PRESENT)
         val batteryPresent: Boolean?,
 
-        @ColumnInfo(name = CN_LEVEL )
-        val batteryLevel: Int?,
-
-        @ColumnInfo(name = CN_SCALE)
-        val batteryScale: Int?,
-
         @ColumnInfo(name = CN_VOLTAGE)
         val recentBatteryVoltage: Float?,
 
@@ -57,7 +52,10 @@ data class BatteryProfile(
         val totalCapacity: Int?,
 
         @ColumnInfo(name = CN_REMAINING_CAPACITY)
-        val remainingCapacity:Int?
+        val remainingCapacity:Int?,
+
+        @ColumnInfo(name = CN_REMAINING_PERCENT)
+        val remainingPercent:Int?
 
 
 )

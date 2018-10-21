@@ -23,6 +23,7 @@ object BatteryProfileUtils {
         val lBatteryPresent = intent.getBooleanExtra(BatteryManager.EXTRA_PRESENT, false)
         val lBatteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
         val lBatteryScale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+        val lBatteryRemainingPercent = (lBatteryLevel.toFloat()/lBatteryScale.toFloat()*100).toInt()
         val lRecentBatteryVoltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1)
         val lRecentBatteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)
         val lBatteryTechnology = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY)
@@ -38,13 +39,13 @@ object BatteryProfileUtils {
 //                currentTimeStamp = lCurrentTimeStamp,
                 batteryStatusType = lBatteryStatusType,
                 batteryHealthType = lBatteryHealthType, batteryPlugType = lBatteryPlugType,
-                batteryPresent = lBatteryPresent, batteryLevel = lBatteryLevel,
-                batteryScale = lBatteryScale,
+                batteryPresent = lBatteryPresent,
                 recentBatteryVoltage = lRecentBatteryVoltage/1000f,
                 recentBatteryTemperature = lRecentBatteryTemperature/10f,
                 batteryTechnology = lBatteryTechnology,
                 totalCapacity = lBatteryTotalCapacity,
-                remainingCapacity = lBatteryRemainingCapacity)
+                remainingCapacity = lBatteryRemainingCapacity,
+                remainingPercent = lBatteryRemainingPercent)
 
 
     }
@@ -119,13 +120,12 @@ object BatteryProfileUtils {
                     CN_HEALTH to batteryProfile.batteryHealthType,
                     CN_PLUGGED to batteryProfile.batteryPlugType,
                     CN_PRESENT to batteryProfile.batteryPresent,
-                    CN_LEVEL to batteryProfile.batteryLevel,
-                    CN_SCALE to batteryProfile.batteryScale,
                     CN_VOLTAGE to batteryProfile.recentBatteryVoltage,
                     CN_TEMPERATURE to batteryProfile.recentBatteryTemperature,
                     CN_TECHNOLOGY to batteryProfile.batteryTechnology,
                     CN_TOTAL_CAPACITY to batteryProfile.totalCapacity,
-                    CN_REMAINING_CAPACITY to batteryProfile.remainingCapacity)
+                    CN_REMAINING_CAPACITY to batteryProfile.remainingCapacity,
+                    CN_REMAINING_PERCENT to batteryProfile.remainingPercent)
 
     fun convertMapToBatteryProfile(map: Map<String?, Any?>) =
             BatteryProfile(
@@ -134,13 +134,12 @@ object BatteryProfileUtils {
                     batteryHealthType = map[CN_HEALTH] as Int?,
                     batteryPlugType = map[CN_PLUGGED] as Int?,
                     batteryPresent = map[CN_PRESENT] as Boolean?,
-                    batteryLevel = map[CN_LEVEL] as Int?,
-                    batteryScale = map[CN_SCALE] as Int?,
                     recentBatteryVoltage = map[CN_VOLTAGE] as Float?,
                     recentBatteryTemperature = map[CN_TEMPERATURE] as Float?,
                     batteryTechnology = map[CN_TECHNOLOGY] as String?,
                     totalCapacity = map[CN_TOTAL_CAPACITY] as Int?,
-                    remainingCapacity = map[CN_REMAINING_CAPACITY] as Int?)
+                    remainingCapacity = map[CN_REMAINING_CAPACITY] as Int?,
+                    remainingPercent = map[CN_REMAINING_PERCENT] as Int?)
 
     fun getBatteryStatusString(intStatus: Int?, context: Context): String? {
 

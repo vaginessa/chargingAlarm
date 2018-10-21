@@ -12,6 +12,7 @@ import com.chargingwatts.chargingalarm.HomeActivity
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
 import com.chargingwatts.chargingalarm.di.component.DaggerAppComponent
 import com.chargingwatts.chargingalarm.di.module.BatteryUpdateWorkerModule
+import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import javax.inject.Inject
 
 class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
@@ -20,6 +21,10 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
 
     @Inject
     lateinit var mAppExecutors: AppExecutors
+
+    @Inject
+    lateinit var mNotificationHelper: NotificationHelper
+
     override fun doWork(): Result {
 
         DaggerAppComponent.builder().applicationContext(applicationContext = applicationContext).build().
@@ -42,9 +47,15 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
         intent?.let { batteryIntent ->
             val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent,applicationContext)
             batteryProfile?.let{
+                batteryProfile.remainingPercent?.let{batteryPercent ->
+                    mNotificationHelper.apply {
+                        notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID,getBatteryLevelNotification("Charging Alarm", "Level:"+batteryPercent,batteryPercent))
+                    }
+                }
+
                 mAppExecutors.diskIO().execute {
                     Log.d(LOG_CHARGING_ALARM, "BatteryProfile Updated in Worker"+ batteryProfile.toString())
-                    mBatteryProfileDao.insert(it)
+                    mBatteryProfileDao.insert(batteryProfile)
                 }
             }
         }
