@@ -8,6 +8,10 @@ import com.chargingwatts.chargingalarm.di.AppInjector
 import dagger.android.*
 import timber.log.Timber
 import javax.inject.Inject
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
+
+
 
 class ChargingAlarmApp : Application(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
 
@@ -24,6 +28,7 @@ class ChargingAlarmApp : Application(), HasActivityInjector, HasBroadcastReceive
 
     override fun onCreate() {
         super.onCreate()
+        Fabric.with(this, Crashlytics())
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }

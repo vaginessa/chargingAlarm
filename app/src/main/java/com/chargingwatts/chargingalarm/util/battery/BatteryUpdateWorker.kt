@@ -29,11 +29,14 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
 
         DaggerAppComponent.builder().applicationContext(applicationContext = applicationContext).build().newBatteryUpdateWorkerComponent(BatteryUpdateWorkerModule()).inject(this)
 
-        val sendIntent = Intent(applicationContext, HomeActivity::class.java)
-        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        getApplicationContext().startActivity(sendIntent)
+//        val sendIntent = Intent(applicationContext, HomeActivity::class.java)
+//        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        getApplicationContext().startActivity(sendIntent)
+
+        BatteryMonitoringService.startInForeground(applicationContext)
 
         updateBatteryProfile()
+
 //        outputData = getBatteryProfileData()
         Log.d(LOG_CHARGING_ALARM, " DO WORK CALLLED")
         return Result.SUCCESS

@@ -52,7 +52,7 @@ class HomeActivity : BaseActivity() {
 //        notificationHelper.apply {
 //            notify(NotificationHelper.BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID,getHighBatteryNotification("LEVEL", "ASFASFASF",50))
 //        }
-        BatteryMonitoringService.startInForeground(this)
+//        BatteryMonitoringService.startInForeground(this)
 
         mPreferenceHelper?.let{
             Log.d(LOG_CHARGING_ALARM, "Pref_Helper_not_null")
