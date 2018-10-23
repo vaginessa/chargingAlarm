@@ -35,32 +35,25 @@ android {
         }
     }
 
-    flavorDimensions "server"
+    flavorDimensions "fees"
 
     productFlavors {
 
-        dev {
-            dimension "server"
-            applicationIdSuffix ".dev"
-            versionNameSuffix "-dev"
+        free {
+            dimension "fees"
+            applicationIdSuffix ".free"
+            versionNameSuffix "-free"
+//            resValue "string", "app_name", "Otex Opm Dev"
         }
 
-        rgtest {
-            dimension "server"
-            applicationIdSuffix ".rgtest"
-            versionNameSuffix "-rgtest"
+        paid {
+            dimension "fees"
+            applicationIdSuffix ".paid"
+            versionNameSuffix "-paid"
+//            resValue "string", "app_name", "Otex Opm Test"
+
         }
 
-        stage {
-            dimension "server"
-            applicationIdSuffix ".stage"
-            versionNameSuffix "-stage"
-        }
-        prod {
-            dimension "server"
-            applicationIdSuffix ".prod"
-            versionNameSuffix "-prod"
-        }
     }
 
     dataBinding {

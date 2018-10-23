@@ -4,21 +4,22 @@ package com.chargingwatts.chargingalarm.util.notification
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
-import com.chargingwatts.chargingalarm.R
-import javax.inject.Inject
-import android.app.PendingIntent
-import android.content.Intent
 import android.provider.Settings
 import android.support.annotation.RequiresApi
+import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import com.chargingwatts.chargingalarm.HomeActivity
+import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.util.battery.BatteryProfileUtils
+import com.chargingwatts.chargingalarm.util.logging.EventLogger
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
+import javax.inject.Inject
 
 
 /**
@@ -200,6 +201,10 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 
         @JvmStatic
         fun createBatteryNotificationTitleString(context: Context, batteryProfile: BatteryProfile?): String {
+            batteryProfile?.let {
+                EventLogger.logBatteryNotificationUpdatedEvent(it)
+            }
+
             var bodyString: String = context.getString(R.string.default_notification_body)
 
             batteryProfile?.let {

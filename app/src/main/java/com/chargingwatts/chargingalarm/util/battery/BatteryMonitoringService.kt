@@ -34,7 +34,7 @@ class BatteryMonitoringService : DaggerService() {
 
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(LOG_CHARGING_ALARM, "onStartCommand")
 
         val intentFilter = IntentFilter()
