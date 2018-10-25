@@ -71,16 +71,25 @@ class BatteryMonitoringService : DaggerService() {
     companion object {
         @JvmStatic
         fun startInForeground(context: Context) {
-            val serviceIntent = Intent(context.applicationContext, BatteryMonitoringService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(serviceIntent)
-            } else {
-                context.startService(serviceIntent)
+            context.applicationContext?.apply{
+                val serviceIntent = Intent(this, BatteryMonitoringService::class.java)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(serviceIntent)
+                } else {
+                    startService(serviceIntent)
 
+                }
             }
 
-
         }
+
+        @JvmStatic
+        fun stopService(context: Context) {
+            context.applicationContext?.apply{
+                stopService(Intent(this,BatteryMonitoringService::class.java))
+            }
+        }
+
     }
 
 

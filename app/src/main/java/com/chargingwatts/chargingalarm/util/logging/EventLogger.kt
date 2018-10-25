@@ -17,4 +17,9 @@ object EventLogger {
                 .putCustomAttribute("battery_status", BatteryProfileUtils.getBatteryStatusString(getContext(),batteryProfile.batteryStatusType)))
     }
 
+    fun logPowerConnectionEvent(){
+        getAnswersInstance().logCustom(CustomEvent("power_connecttion_event"))
+
+    }
+
 }

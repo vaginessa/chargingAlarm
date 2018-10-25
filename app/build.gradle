@@ -15,7 +15,7 @@ allOpen {
 }
 android {
     compileSdkVersion build_versions.target_sdk
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.chargingwatts.chargingalarm"
         minSdkVersion build_versions.min_sdk
@@ -27,6 +27,7 @@ android {
     }
     buildTypes {
         debug {
+            debuggable = true
 //            testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
         }
         release {
