@@ -34,7 +34,10 @@ versions.paging = "1.0.1"
 versions.navigation = "1.0.0-alpha05"
 versions.work = "1.0.0-alpha10"
 versions.fabric = "1.25.4"
-versions.crashlytics = "2.6.8@aar"
+versions.crashlytics = "2.9.5"
+versions.google = "4.0.1"
+versions.firebase = "16.0.4"
+versions.multidex = "1.0.3"
 def deps = [:]
 
 def support = [:]
@@ -155,10 +158,24 @@ def crashlytics = [:]
 crashlytics.sdk = "com.crashlytics.sdk.android:crashlytics:$versions.crashlytics"
 deps.crashlytics = crashlytics
 
+def google = [:]
+google.services = "com.google.gms:google-services:$versions.google"
+deps.google = google
+
+def firebase = [:]
+firebase.core = "com.google.firebase:firebase-core:$versions.firebase"
+deps.firebase = firebase
+
+def multidex = [:]
+multidex.support = "com.android.support:multidex:$versions.multidex"
+deps.multidex = multidex
+
 ext.deps = deps
 
 def addRepos(RepositoryHandler handler) {
-    handler.google()
+    handler.maven {
+        url 'https://maven.google.com'
+    }
     handler.jcenter()
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     handler.maven { url 'https://maven.fabric.io/public' }

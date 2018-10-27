@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "1083452981080",
+    "firebase_url": "https://chargingalarm-d8dbb.firebaseio.com",
+    "project_id": "chargingalarm-d8dbb",
+    "storage_bucket": "chargingalarm-d8dbb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083452981080:android:9be197d31017a674",
+        "android_client_info": {
+          "package_name": "com.chargingwatts.chargingalarm.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083452981080-hs3ssiomecq87kpauq4blprhafuojjv1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chargingwatts.chargingalarm.free",
+            "certificate_hash": "34dc3370ba5eaa025efc4c810fcf47d759334d30"
+          }
+        },
+        {
+          "client_id": "1083452981080-ar38788dtujb9fb6s03sdhl2lgg3qiek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK3-sqUKcu-_EFm3g9ANYicjKJHmjUyI0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083452981080-ar38788dtujb9fb6s03sdhl2lgg3qiek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083452981080:android:2f2eed796b2a25d7",
+        "android_client_info": {
+          "package_name": "com.chargingwatts.chargingalarm.paid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083452981080-8s0e093hr7rlse32335p96mpm026agu6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chargingwatts.chargingalarm.paid",
+            "certificate_hash": "34dc3370ba5eaa025efc4c810fcf47d759334d30"
+          }
+        },
+        {
+          "client_id": "1083452981080-ar38788dtujb9fb6s03sdhl2lgg3qiek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK3-sqUKcu-_EFm3g9ANYicjKJHmjUyI0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083452981080-ar38788dtujb9fb6s03sdhl2lgg3qiek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

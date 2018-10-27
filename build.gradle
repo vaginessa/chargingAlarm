@@ -12,6 +12,7 @@ buildscript {
         classpath deps.kotlin.allopen
         classpath deps.navigation.safe_args_plugin
         classpath deps.fabric.tools
+        classpath deps.google.services
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
