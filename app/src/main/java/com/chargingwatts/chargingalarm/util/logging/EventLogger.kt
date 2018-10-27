@@ -1,5 +1,12 @@
 package com.chargingwatts.chargingalarm.util.logging
 
+import android.content.Context
+import android.os.Bundle
+import com.chargingwatts.chargingalarm.util.battery.BatteryProfileUtils
+import com.chargingwatts.chargingalarm.util.BATTERY_NOTIFICATION_UPDATED
+import com.chargingwatts.chargingalarm.util.BATTERY_PERCENT
+import com.chargingwatts.chargingalarm.util.BATTERY_STATUS
+import com.chargingwatts.chargingalarm.util.POWER_CONNECTED
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -7,18 +14,35 @@ import com.google.firebase.analytics.FirebaseAnalytics
 object EventLogger {
 
 
-//    private fun getAnswersInstance() = FirebaseAnalytics.getInstance(getContext())
-//    private fun getContext() = FirebaseApp.getInstance()?.applicationContext
+    private fun getFirebaseAnalyticsInstance(): FirebaseAnalytics? =
+            getContext()?.let {
 
-     fun logBatteryNotificationUpdatedEvent(batteryProfile:BatteryProfile){
-//        getAnswersInstance().logCustom(CustomEvent("battery_notification_updated").
-//                putCustomAttribute("battery_level",batteryProfile.remainingPercent)
-//                .putCustomAttribute("battery_status", BatteryProfileUtils.getBatteryStatusString(getContext(),batteryProfile.batteryStatusType)))
+                FirebaseAnalytics.getInstance(it)
+            }
+
+    private fun getContext(): Context? = FirebaseApp.getInstance()?.applicationContext
+
+    private fun logEvent(eventName: String, params: Bundle?) {
+        getFirebaseAnalyticsInstance()?.logEvent(eventName, params)
+
     }
 
-    fun logPowerConnectionEvent(){
-//        getAnswersInstance().logCustom(CustomEvent("power_connecttion_event"))
-
+    fun logBatteryNotificationUpdatedEvent(batteryProfile: BatteryProfile) {
+        val params = Bundle()
+        batteryProfile.remainingPercent?.let {
+            params.putInt(BATTERY_PERCENT, it)
+        }
+        getContext()?.let { context ->
+            BatteryProfileUtils.getBatteryStatusString(context, batteryProfile.batteryStatusType)?.let { batteryStatusString ->
+                params.putString(BATTERY_STATUS, batteryStatusString)
+            }
+        }
+        logEvent(BATTERY_NOTIFICATION_UPDATED, params)
     }
 
+    fun logPowerConnectionEvent() {
+        logEvent(POWER_CONNECTED, null)
+
+    }
 }
+

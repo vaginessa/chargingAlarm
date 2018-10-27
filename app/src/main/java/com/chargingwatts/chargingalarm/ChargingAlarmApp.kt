@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.support.multidex.MultiDexApplication
 import com.chargingwatts.chargingalarm.di.AppInjector
 import com.crashlytics.android.Crashlytics
-import com.google.firebase.FirebaseApp
 import dagger.android.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -26,7 +25,6 @@ class ChargingAlarmApp : MultiDexApplication(), HasActivityInjector, HasBroadcas
     lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
 
     override fun onCreate() {
-        Crashlytics.getInstance().crash()
         super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
