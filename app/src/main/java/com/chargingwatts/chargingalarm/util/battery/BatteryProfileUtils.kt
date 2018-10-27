@@ -61,6 +61,8 @@ object BatteryProfileUtils {
 
     }
 
+
+
     fun getSecondaryTotalCapacity(ctx: Context): Int {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val mBatteryManager = ctx.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
@@ -106,6 +108,23 @@ object BatteryProfileUtils {
         }
         return -1
 
+    }
+
+    fun checkIfPowerConnected(batteryProfile: BatteryProfile): Boolean {
+        var isPlugged = false
+        batteryProfile.batteryPlugType?.let { plugType ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                isPlugged = plugType.equals(BatteryManager.BATTERY_PLUGGED_AC) or
+                        plugType.equals(BatteryManager.BATTERY_PLUGGED_USB) or
+                        plugType.equals(BatteryManager.BATTERY_PLUGGED_WIRELESS)
+            } else {
+                isPlugged = plugType.equals(BatteryManager.BATTERY_PLUGGED_AC) or
+                        plugType.equals(BatteryManager.BATTERY_PLUGGED_USB)
+            }
+
+        }
+
+        return isPlugged
     }
 
     fun isBatteryIntent(intent: Intent) =

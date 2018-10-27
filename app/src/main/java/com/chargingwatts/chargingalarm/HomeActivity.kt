@@ -24,61 +24,19 @@ import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity() {
-    val NOTIFICATION_ID = 1
-    private var mNotificationManager: NotificationManager? = null
-    private val CHANNEL_ID = "channel_01"
-
-
-    @Inject
-    lateinit var batteryChangeReciever: BatteryChangeReciever
-    @Inject
-    lateinit var powerConnectionReceiver: PowerConnectionReceiver
-    @Inject
-    lateinit var periodicBatteryUpdater: PeriodicBatteryUpdater
-    @Inject
-    lateinit var batterProfileDao: BatteryProfileDao
     @Inject
     lateinit var appExecutors: AppExecutors
 
-    @Inject
-    lateinit var notificationHelper: NotificationHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        BatteryProfileUtils.getPrimaryTotalCapacity(this)
-
-//        notificationHelper.apply {
-//            notify(NotificationHelper.BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID,getHighBatteryNotification("LEVEL", "ASFASFASF",50))
-//        }
-//        BatteryMonitoringService.startInForeground(this)
-
-        mPreferenceHelper?.let{
-            Log.d(LOG_CHARGING_ALARM, "Pref_Helper_not_null")
-
-        }
-        batteryChangeReciever.apply {
-            Log.d(batteryChangeReciever::class.simpleName, "app not null")
-        }
-
-        powerConnectionReceiver.apply {
-            Log.d(powerConnectionReceiver::class.simpleName, "app not null")
-        }
-        periodicBatteryUpdater.apply {
-            Log.d(periodicBatteryUpdater::class.simpleName, "app not null")
-        }
-        periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
 
 
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
-        registerReceiver(batteryChangeReciever, intentFilter)
 
 
-        findViewById<Button>(R.id.btn_stop_battery_update).setOnClickListener({
-            PeriodicBatteryUpdater.stopPeriodicBatteryUpdate()
-        })
+
     }
 
     private fun startVibration() {
@@ -98,19 +56,6 @@ class HomeActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-
-
-        batterProfileDao.findRecentBatteryProfile().observe(this, Observer { batteryProfile ->
-            val lBatteryPercent = batteryProfile?.remainingPercent
-            lBatteryPercent?.let {
-                findViewById<TextView>(R.id.tv_battery_level).text = "${lBatteryPercent}%"
-                findViewById<ProgressBar>(R.id.pb_battery_level).progress = lBatteryPercent
-            }
-
-        })
-
-        Log.d("MyBackgroundWorker", "BackgroundWorker is Running")
-//        startVibration()
     }
 
 
@@ -125,7 +70,6 @@ class HomeActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
-        unregisterReceiver(batteryChangeReciever)
         super.onDestroy()
 
     }
