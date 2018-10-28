@@ -23,10 +23,11 @@ object BatteryProfileUtils {
         val lBatteryPresent = intent.getBooleanExtra(BatteryManager.EXTRA_PRESENT, false)
         val lBatteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
         val lBatteryScale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-        val lBatteryRemainingPercent = (lBatteryLevel.toFloat()/lBatteryScale.toFloat()*100).toInt()
+        val lBatteryRemainingPercent = (lBatteryLevel.toFloat() / lBatteryScale.toFloat() * 100).toInt()
         val lRecentBatteryVoltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1)
         val lRecentBatteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)
         val lBatteryTechnology = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY)
+        val lIsCharging = checkIfPowerConnected(lBatteryPlugType)
         var lBatteryTotalCapacity = -1
         var lBatteryRemainingCapacity = -1
         context?.let {
@@ -40,12 +41,13 @@ object BatteryProfileUtils {
                 batteryStatusType = lBatteryStatusType,
                 batteryHealthType = lBatteryHealthType, batteryPlugType = lBatteryPlugType,
                 batteryPresent = lBatteryPresent,
-                recentBatteryVoltage = lRecentBatteryVoltage/1000f,
-                recentBatteryTemperature = lRecentBatteryTemperature/10f,
+                recentBatteryVoltage = lRecentBatteryVoltage / 1000f,
+                recentBatteryTemperature = lRecentBatteryTemperature / 10f,
                 batteryTechnology = lBatteryTechnology,
                 totalCapacity = lBatteryTotalCapacity,
                 remainingCapacity = lBatteryRemainingCapacity,
-                remainingPercent = lBatteryRemainingPercent)
+                remainingPercent = lBatteryRemainingPercent,
+                isCharging = lIsCharging)
 
 
     }
@@ -60,7 +62,6 @@ object BatteryProfileUtils {
         }
 
     }
-
 
 
     fun getSecondaryTotalCapacity(ctx: Context): Int {
@@ -110,9 +111,10 @@ object BatteryProfileUtils {
 
     }
 
-    fun checkIfPowerConnected(batteryProfile: BatteryProfile): Boolean {
-        var isPlugged = false
-        batteryProfile.batteryPlugType?.let { plugType ->
+    fun checkIfPowerConnected(batteryPlugType: Int?): Boolean? {
+        var isPlugged: Boolean? = null
+
+        batteryPlugType?.let { plugType ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 isPlugged = plugType.equals(BatteryManager.BATTERY_PLUGGED_AC) or
                         plugType.equals(BatteryManager.BATTERY_PLUGGED_USB) or
@@ -144,7 +146,8 @@ object BatteryProfileUtils {
                     CN_TECHNOLOGY to batteryProfile.batteryTechnology,
                     CN_TOTAL_CAPACITY to batteryProfile.totalCapacity,
                     CN_REMAINING_CAPACITY to batteryProfile.remainingCapacity,
-                    CN_REMAINING_PERCENT to batteryProfile.remainingPercent)
+                    CN_REMAINING_PERCENT to batteryProfile.remainingPercent,
+                    CN_IS_CHARGING to batteryProfile.isCharging)
 
     fun convertMapToBatteryProfile(map: Map<String?, Any?>) =
             BatteryProfile(
@@ -158,9 +161,10 @@ object BatteryProfileUtils {
                     batteryTechnology = map[CN_TECHNOLOGY] as String?,
                     totalCapacity = map[CN_TOTAL_CAPACITY] as Int?,
                     remainingCapacity = map[CN_REMAINING_CAPACITY] as Int?,
-                    remainingPercent = map[CN_REMAINING_PERCENT] as Int?)
+                    remainingPercent = map[CN_REMAINING_PERCENT] as Int?,
+                    isCharging = map[CN_IS_CHARGING]as Boolean?)
 
-    fun getBatteryStatusString( context: Context,intStatus: Int?): String? {
+    fun getBatteryStatusString(context: Context, intStatus: Int?): String? {
 
         return when (intStatus) {
             BatteryManager.BATTERY_STATUS_CHARGING -> context.getString(R.string.BATTERY_STATUS_CHARGING)
@@ -192,20 +196,20 @@ object BatteryProfileUtils {
     fun getHealthStatusString(inthealthStatus: Int?, context: Context): String? {
 
         return when (inthealthStatus) {
-            BatteryManager.BATTERY_HEALTH_COLD ->  context.getString(R.string.BATTERY_HEALTH_COLD)
+            BatteryManager.BATTERY_HEALTH_COLD -> context.getString(R.string.BATTERY_HEALTH_COLD)
 
-            BatteryManager.BATTERY_HEALTH_DEAD ->  context.getString(R.string.BATTERY_HEALTH_DEAD)
+            BatteryManager.BATTERY_HEALTH_DEAD -> context.getString(R.string.BATTERY_HEALTH_DEAD)
 
-            BatteryManager.BATTERY_HEALTH_GOOD ->  context.getString(R.string.BATTERY_HEALTH_GOOD)
+            BatteryManager.BATTERY_HEALTH_GOOD -> context.getString(R.string.BATTERY_HEALTH_GOOD)
 
-            BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE ->  context.getString(R.string.BATTERY_HEALTH_OVER_VOLTAGE)
+            BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE -> context.getString(R.string.BATTERY_HEALTH_OVER_VOLTAGE)
 
-            BatteryManager.BATTERY_HEALTH_OVERHEAT ->  context.getString(R.string.BATTERY_HEALTH_OVERHEAT)
+            BatteryManager.BATTERY_HEALTH_OVERHEAT -> context.getString(R.string.BATTERY_HEALTH_OVERHEAT)
 
-            BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE ->  context.getString(R.string.BATTERY_HEALTH_UNSPECIFIED_FAILURE)
+            BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE -> context.getString(R.string.BATTERY_HEALTH_UNSPECIFIED_FAILURE)
 
-            BatteryManager.BATTERY_HEALTH_UNKNOWN ->  context.getString(R.string.BATTERY_HEALTH_UNKNOWN)
-            else ->  null
+            BatteryManager.BATTERY_HEALTH_UNKNOWN -> context.getString(R.string.BATTERY_HEALTH_UNKNOWN)
+            else -> null
         }
     }
 }

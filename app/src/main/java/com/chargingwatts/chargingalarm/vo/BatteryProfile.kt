@@ -17,6 +17,7 @@ const  val CN_TECHNOLOGY: String = "technology"
 const val CN_TOTAL_CAPACITY: String = "total_capacity"
 const val CN_REMAINING_CAPACITY:String = "remaining_capacity"
 const val CN_REMAINING_PERCENT:String = "remaining_percent"
+const val CN_IS_CHARGING:String = "is_charging"
 
 
 
@@ -55,7 +56,10 @@ data class BatteryProfile(
         val remainingCapacity:Int?,
 
         @ColumnInfo(name = CN_REMAINING_PERCENT)
-        val remainingPercent:Int?
+        val remainingPercent:Int?,
+
+        @ColumnInfo(name = CN_IS_CHARGING)
+        val isCharging:Boolean?
 
 
 )

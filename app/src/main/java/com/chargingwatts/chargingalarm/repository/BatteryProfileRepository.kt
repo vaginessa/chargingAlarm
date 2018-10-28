@@ -31,7 +31,7 @@ class BatteryProfileRepository @Inject constructor(
     }
 
     fun getBatteryProfile(): LiveData<BatteryProfile> {
-        return batteryProfileDao.findRecentBatteryProfile()
+            return batteryProfileDao.findRecentBatteryProfile()
 
     }
 
