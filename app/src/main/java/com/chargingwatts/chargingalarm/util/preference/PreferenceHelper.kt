@@ -28,6 +28,8 @@ class PreferenceHelper @Inject constructor(
     fun getNewSharedPreference(preferenceName: String) =
             mContext.applicationContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
 
+    fun getNewSharedPreference() =
+            mContext.applicationContext.getSharedPreferences(appPreferenceName, Context.MODE_PRIVATE)
 
     //--------------------------APP LEVEL SHARED PREFERENCES --------------------------------------//
 

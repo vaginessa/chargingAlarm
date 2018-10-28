@@ -3,7 +3,10 @@ package com.chargingwatts.chargingalarm.repository
 import AppConstants.USER_ALARM_PREFERENCE
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.content.SharedPreferences
 import com.chargingwatts.chargingalarm.AppExecutors
+import com.chargingwatts.chargingalarm.util.preference.*
+
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
 import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
@@ -16,18 +19,17 @@ class BatteryProfileRepository @Inject constructor(
         private val batteryProfileDao: BatteryProfileDao,
         private val preferenceHelper: PreferenceHelper
 ) {
-    private val _userAlarmPreferenceLiveData = MutableLiveData<Boolean>()
 
 
-    fun getUserAlarmPreference():LiveData<Boolean>{
-        _userAlarmPreferenceLiveData.value = preferenceHelper.getBoolean(USER_ALARM_PREFERENCE)
-        return _userAlarmPreferenceLiveData
+    fun getUserAlarmPreference(): LiveData<Boolean> {
+        return preferenceHelper.getNewSharedPreference().booleanLiveData(USER_ALARM_PREFERENCE, false)
+
     }
 
-    fun setUserAlarmPreference(pUserAlarmPreference:Boolean){
-        preferenceHelper.putBoolean(USER_ALARM_PREFERENCE,pUserAlarmPreference)
-        _userAlarmPreferenceLiveData.value = pUserAlarmPreference
+    fun setUserAlarmPreference(pUserAlarmPreference: Boolean) {
+        preferenceHelper.putBoolean(USER_ALARM_PREFERENCE, pUserAlarmPreference)
     }
+
     fun getBatteryProfile(): LiveData<BatteryProfile> {
         return batteryProfileDao.findRecentBatteryProfile()
 
