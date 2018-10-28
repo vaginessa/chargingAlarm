@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.work.PeriodicWorkRequest
 import com.chargingwatts.chargingalarm.BaseFragment
 import com.chargingwatts.chargingalarm.R
+import com.chargingwatts.chargingalarm.ui.vibrate.VibrationManager
 import com.chargingwatts.chargingalarm.util.battery.BATTERY_WORKER_REQUEST_TAG
 import com.chargingwatts.chargingalarm.util.battery.BatteryChangeReciever
 import com.chargingwatts.chargingalarm.util.battery.BatteryMonitoringService
@@ -46,6 +47,8 @@ class BatteryProfileFragment : BaseFragment() {
 
         mBtnStart.setOnClickListener {
             context?.let { lContext ->
+                VibrationManager.init(lContext)
+                VibrationManager.makePattern().beat(2000).rest(1000).playPattern(5)
                 batteryProfileViewModel.setUserAlarmPreference(true)
                 BatteryMonitoringService.startInForeground(lContext)
                 periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
@@ -53,6 +56,7 @@ class BatteryProfileFragment : BaseFragment() {
         }
         mBtnStop.setOnClickListener {
             context?.let { lContext ->
+                VibrationManager.stop()
                 batteryProfileViewModel.setUserAlarmPreference(false)
                 BatteryMonitoringService.stopService(lContext)
                 periodicBatteryUpdater.stopPeriodicBatteryUpdate()
