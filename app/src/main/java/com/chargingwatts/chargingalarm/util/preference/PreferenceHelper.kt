@@ -21,7 +21,6 @@ class PreferenceHelper @Inject constructor(
                 appPreferenceName,
                 Context.MODE_PRIVATE
         )
-        Log.d(LOG_CHARGING_ALARM, "spef loaded")
     }
 
     fun getNewSharedPreference(preferenceName: String) =

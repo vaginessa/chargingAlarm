@@ -6,9 +6,10 @@ import android.content.IntentFilter
 import android.os.BatteryManager
 import android.util.Log
 import com.chargingwatts.chargingalarm.AppExecutors
-import com.chargingwatts.chargingalarm.db.BatteryProfileDao
+import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.logging.EventLogger
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
+import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import dagger.android.DaggerBroadcastReceiver
 import javax.inject.Inject
@@ -18,17 +19,16 @@ import javax.inject.Singleton
 class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() {
 
     @Inject
-    lateinit var batteryProfileDao: BatteryProfileDao;
+    lateinit var batteryProfileDaoWrapper: BatteryProfileDaoWrapper;
     @Inject
     lateinit var appExecutors: AppExecutors
-
-
+    @Inject
+    lateinit var preferenceHelper: PreferenceHelper
     @Inject
     lateinit var mNotificationHelper: NotificationHelper
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
-        Log.d("ACTIONAA", "clled")
         if(intent == null){
             return
         }
@@ -37,11 +37,13 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
             context?.let{
                 BatteryMonitoringService.startInForeground(it)
             }
+            preferenceHelper.putBoolean(AppConstants.IS_CHARGING_PREFERENCE,true)
         }
         else if(intent.action == Intent.ACTION_POWER_DISCONNECTED){
             context?.let{
                 BatteryMonitoringService.stopService(it)
             }
+            preferenceHelper.putBoolean(AppConstants.IS_CHARGING_PREFERENCE,false)
         }
 
         val batteryProfile: BatteryProfile? = BatteryProfileUtils.extractBatteryProfileFromIntent(intent, context)
@@ -66,7 +68,7 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
                 mNotificationHelper.apply {
                     notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
                 }
-                appExecutors.diskIO().execute { batteryProfileDao.insert(it) }
+                appExecutors.diskIO().execute { batteryProfileDaoWrapper.insert(it) }
             }
         }
     }

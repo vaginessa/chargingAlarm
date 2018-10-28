@@ -29,11 +29,16 @@ object AppConstants {
     @JvmField
     val START_SETTINGS_ACTIVITY_REQUEST_CODE: Int = 101
 
-    //--------------------------------LOG CONSTANTS----------------------------------------------//
+    //--------------------------------LOG CONSTANTS-----------------------------------------------//
     @JvmField
     val LOG_CHARGING_ALARM = "LOG_CHARGING_ALARM"
 
+    //---------------------------SHARED PREFERENCE CONSTANTS--------------------------------------//
+
     @JvmField
     val USER_ALARM_PREFERENCE = "user_alarm_preference"
+
+    @JvmField
+    val IS_CHARGING_PREFERENCE = "is_charging_preference"
 
 }

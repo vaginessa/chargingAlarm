@@ -9,7 +9,7 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import com.chargingwatts.chargingalarm.AppExecutors
-import com.chargingwatts.chargingalarm.db.BatteryProfileDao
+import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import dagger.android.DaggerService
 import javax.inject.Inject
@@ -24,7 +24,7 @@ class BatteryMonitoringService : DaggerService() {
     lateinit var mNotificationHelper: NotificationHelper
 
     @Inject
-    lateinit var mBatteryProfileDao: BatteryProfileDao
+    lateinit var mBatteryProfileDaoWrapper: BatteryProfileDaoWrapper
 
     @Inject
     lateinit var mAppExecutors: AppExecutors
@@ -35,8 +35,6 @@ class BatteryMonitoringService : DaggerService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(LOG_CHARGING_ALARM, "onStartCommand")
-
         val intentFilter = IntentFilter()
         intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
         val lBatteryProfileIntent = registerReceiver(mBatteryChangeReciever, intentFilter)
@@ -47,7 +45,7 @@ class BatteryMonitoringService : DaggerService() {
                     startForeground(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, mNotificationHelper.getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), "").build())
                 }
                 mAppExecutors.diskIO().execute {
-                     mBatteryProfileDao.insert(batteryProfile)
+                     mBatteryProfileDaoWrapper.insert(batteryProfile)
                 }
             }
         }

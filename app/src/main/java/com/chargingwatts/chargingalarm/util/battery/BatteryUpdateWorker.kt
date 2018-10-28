@@ -8,7 +8,7 @@ import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.chargingwatts.chargingalarm.AppExecutors
-import com.chargingwatts.chargingalarm.db.BatteryProfileDao
+import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.di.component.DaggerAppComponent
 import com.chargingwatts.chargingalarm.di.module.BatteryUpdateWorkerModule
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
     @Inject
-    lateinit var mBatteryProfileDao: BatteryProfileDao
+    lateinit var mBatteryProfileDaoWrapper: BatteryProfileDaoWrapper
 
     @Inject
     lateinit var mAppExecutors: AppExecutors
@@ -37,7 +37,6 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
         updateBatteryProfile()
 
 //        outputData = getBatteryProfileData()
-        Log.d(LOG_CHARGING_ALARM, " DO WORK CALLLED")
         return Result.SUCCESS
     }
 
@@ -53,7 +52,7 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
                 }
 
                 mAppExecutors.diskIO().execute {
-                    mBatteryProfileDao.insert(batteryProfile)
+                    mBatteryProfileDaoWrapper.insert(batteryProfile)
                 }
             }
         }
@@ -69,7 +68,6 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
 //            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent)
 //            batteryProfile?.let {
 //                dataBuilder.putAll(BatteryProfileUtils.convertBatteryProfileToMap(it))
-//                Log.d(LOG_CHARGING_ALARM, " Battery Profile Data created")
 //            }
 //        }
 //        return dataBuilder.build()

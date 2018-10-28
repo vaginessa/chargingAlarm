@@ -24,7 +24,6 @@ object PeriodicBatteryUpdater {
 
 
 //    val mWorkStatusObserver = Observer<WorkStatus> { workStatus ->
-//        Log.d(LOG_CHARGING_ALARM, " Battery Profile Status Change" + workStatus?.state.toString())
 //
 //        workStatus?.let {
 //            val isWorkRunning = workStatus.state == State.RUNNING
@@ -32,7 +31,6 @@ object PeriodicBatteryUpdater {
 //                val batteryProfileData = workStatus.outputData
 //                val batteryProfileMap = batteryProfileData.keyValueMap
 //                val batteryProfile = BatteryProfileUtils.convertMapToBatteryProfile(batteryProfileMap)
-//                Log.d(LOG_CHARGING_ALARM, " Battery Profile Observed" + batteryProfile.toString())
 //
 //                mAppExecutors?.diskIO()?.execute {
 //                    mBatteryProfileDao?.insert(batteryProfile)

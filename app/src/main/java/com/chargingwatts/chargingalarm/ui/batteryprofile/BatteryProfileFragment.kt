@@ -83,12 +83,15 @@ class BatteryProfileFragment : BaseFragment() {
 
         batteryProfileViewModel.batteryProfileLiveData.observe(this, Observer { batteryProfile ->
             batteryProfile?.apply {
-                mTvConnectionStatus.text = batteryProfile.isCharging.toString()
                 remainingPercent?.let {
                     mTvBatteryLevel.text = "${it}%"
                     mPbBatteryLevel.progress = it
                 }
             }
+        })
+
+        batteryProfileViewModel.isChargingPreference.observe(this, Observer {
+            mTvConnectionStatus.text = it.toString()
         })
     }
 }
