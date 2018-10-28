@@ -5,7 +5,6 @@ import android.app.Service
 import android.content.BroadcastReceiver
 import android.support.multidex.MultiDexApplication
 import com.chargingwatts.chargingalarm.di.AppInjector
-import com.crashlytics.android.Crashlytics
 import dagger.android.*
 import timber.log.Timber
 import javax.inject.Inject

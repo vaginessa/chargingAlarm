@@ -3,7 +3,6 @@ package com.chargingwatts.chargingalarm.ui.batteryprofile
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +14,8 @@ import androidx.work.PeriodicWorkRequest
 import com.chargingwatts.chargingalarm.BaseFragment
 import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.util.battery.BATTERY_WORKER_REQUEST_TAG
+import com.chargingwatts.chargingalarm.util.battery.BatteryChangeReciever
 import com.chargingwatts.chargingalarm.util.battery.BatteryMonitoringService
-import com.chargingwatts.chargingalarm.util.battery.BatteryProfileUtils
 import com.chargingwatts.chargingalarm.util.battery.PeriodicBatteryUpdater
 import javax.inject.Inject
 
@@ -26,6 +25,8 @@ class BatteryProfileFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     lateinit var periodicBatteryUpdater: PeriodicBatteryUpdater
+    @Inject
+    lateinit var batteryChangeReciever: BatteryChangeReciever
     private lateinit var batteryProfileViewModel: BatteryProfileViewModel
 
     private lateinit var mBtnStart: Button
@@ -59,6 +60,20 @@ class BatteryProfileFragment : BaseFragment() {
         }
         return view
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        context?.let{
+            batteryChangeReciever.registerReciever(it)
+        }
+     }
+
+    override fun onPause() {
+        super.onPause()
+        context?.let {
+            batteryChangeReciever.unregisterReciever(it)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

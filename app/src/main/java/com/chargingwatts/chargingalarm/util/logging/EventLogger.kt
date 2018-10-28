@@ -2,11 +2,11 @@ package com.chargingwatts.chargingalarm.util.logging
 
 import android.content.Context
 import android.os.Bundle
-import com.chargingwatts.chargingalarm.util.battery.BatteryProfileUtils
 import com.chargingwatts.chargingalarm.util.BATTERY_NOTIFICATION_UPDATED
 import com.chargingwatts.chargingalarm.util.BATTERY_PERCENT
 import com.chargingwatts.chargingalarm.util.BATTERY_STATUS
 import com.chargingwatts.chargingalarm.util.POWER_CONNECTED
+import com.chargingwatts.chargingalarm.util.battery.BatteryProfileUtils
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics

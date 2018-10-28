@@ -1,14 +1,14 @@
 package com.chargingwatts.chargingalarm.di.module
 
-import com.chargingwatts.chargingalarm.ui.profile.FEProfileViewModel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.chargingwatts.chargingalarm.di.ViewModelKey
 import com.chargingwatts.chargingalarm.ui.batteryprofile.BatteryProfileViewModel
+import com.chargingwatts.chargingalarm.ui.profile.FEProfileViewModel
+import com.chargingwatts.chargingalarm.viewmodel.ChargingAlarmViewModelFactory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import com.chargingwatts.chargingalarm.viewmodel.ChargingAlarmViewModelFactory
 
 
 @Module

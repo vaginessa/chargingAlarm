@@ -1,6 +1,5 @@
 package com.chargingwatts.chargingalarm.di.module
 
-import com.chargingwatts.chargingalarm.di.module.ActivityCommonModule
 import com.chargingwatts.chargingalarm.ui.profile.FEProfileFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

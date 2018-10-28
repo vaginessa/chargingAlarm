@@ -1,11 +1,8 @@
 package com.chargingwatts.chargingalarm.util.logging
 
-import android.util.Log
-import android.os.Bundle
-import android.support.v4.app.NotificationCompat.getExtras
-import java.lang.Package.getPackage
 import android.content.Intent
-
+import android.os.Bundle
+import android.util.Log
 
 
 /**

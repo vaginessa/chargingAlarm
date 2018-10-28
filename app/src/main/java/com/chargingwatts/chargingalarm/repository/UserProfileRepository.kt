@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.api.AlarmApiService
 import com.chargingwatts.chargingalarm.api.ApiResponse
-import com.chargingwatts.chargingalarm.db.BatteryProfileDao
 import com.chargingwatts.chargingalarm.db.UserDetailDao
 import com.chargingwatts.chargingalarm.vo.Resource
 import com.chargingwatts.chargingalarm.vo.UserDetail

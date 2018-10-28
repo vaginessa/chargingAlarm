@@ -1,12 +1,9 @@
 package com.chargingwatts.chargingalarm.util.image
 
 import android.graphics.Bitmap
-import android.graphics.Paint.Align
-import android.databinding.adapters.TextViewBindingAdapter.setTextSize
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Paint.ANTI_ALIAS_FLAG
-
 
 
 object ImageUtil {

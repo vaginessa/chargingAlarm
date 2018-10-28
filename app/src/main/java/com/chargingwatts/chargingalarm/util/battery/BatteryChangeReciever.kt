@@ -3,6 +3,7 @@ package com.chargingwatts.chargingalarm.util.battery
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
@@ -24,4 +25,21 @@ class BatteryChangeReciever @Inject constructor(val batteryProfileDao: BatteryPr
             }
         }
     }
+
+
+        fun registerReciever(context: Context) {
+            context.apply{
+                val intentFilter = IntentFilter()
+                intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
+                registerReceiver(this@BatteryChangeReciever, intentFilter)
+            }
+
+        }
+
+        fun unregisterReciever(context: Context) {
+            context.apply{
+                unregisterReceiver(this@BatteryChangeReciever)
+            }
+        }
+
 }

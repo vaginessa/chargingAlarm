@@ -1,10 +1,10 @@
 package com.chargingwatts.chargingalarm.util.battery
 
-import AppConstants.LOG_CHARGING_ALARM
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
-import android.util.Log
-import androidx.work.*
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
+import androidx.work.WorkStatus
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDao
 import java.util.concurrent.TimeUnit
