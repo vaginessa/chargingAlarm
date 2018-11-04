@@ -16,9 +16,9 @@ class BatteryChangeReciever @Inject constructor(val batteryProfileDaoWrapper: Ba
         intent?.let { batteryIntent ->
             val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
             batteryProfile?.let {
-//                notificationHelper.apply {
-//                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
-//                }
+                notificationHelper.apply {
+                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
+                }
                 appExecutors.diskIO().execute {
                     batteryProfileDaoWrapper.insert(it)
                 }

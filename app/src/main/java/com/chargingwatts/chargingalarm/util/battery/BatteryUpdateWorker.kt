@@ -12,6 +12,7 @@ import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.di.component.DaggerAppComponent
 import com.chargingwatts.chargingalarm.di.module.BatteryUpdateWorkerModule
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
+import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import javax.inject.Inject
 
 class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
@@ -32,30 +33,42 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
 //        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 //        getApplicationContext().startActivity(sendIntent)
 
-        BatteryMonitoringService.startInForeground(applicationContext)
 
-        updateBatteryProfile()
+        val lBatteryProfile = updateBatteryProfile()
+        lBatteryProfile?.isCharging?.apply {
+            when (this) {
+                true -> {
+        BatteryMonitoringService.startInForeground(applicationContext)
+                }
+                false ->{
+                    BatteryMonitoringService.stopService(applicationContext)
+                }
+            }
+        }
 
 //        outputData = getBatteryProfileData()
         return Result.SUCCESS
     }
 
-    fun updateBatteryProfile() {
+    fun updateBatteryProfile(): BatteryProfile? {
         val intent: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
             applicationContext.registerReceiver(null, ifilter)
         }
+        var lBatteryProfile: BatteryProfile? = null
         intent?.let { batteryIntent ->
-            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, applicationContext)
-            batteryProfile?.let {
+            lBatteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, applicationContext)
+
+            lBatteryProfile?.let {
                 mNotificationHelper.apply {
-                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
+                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, it), ""))
                 }
 
                 mAppExecutors.diskIO().execute {
-                    mBatteryProfileDaoWrapper.insert(batteryProfile)
+                    mBatteryProfileDaoWrapper.insert(it)
                 }
             }
         }
+        return lBatteryProfile
     }
 
 //    fun getBatteryProfileData(): Data  {

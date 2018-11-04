@@ -3,6 +3,7 @@ package com.chargingwatts.chargingalarm.ui.batteryprofile
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,22 +45,31 @@ class BatteryProfileFragment : BaseFragment() {
         mTvConnectionStatus = view.findViewById(R.id.tv_power_connection_status)
         mTvBatteryLevel = view.findViewById(R.id.tv_battery_level)
         mPbBatteryLevel = view.findViewById(R.id.pb_battery_level)
+        val mediaPlayer = MediaPlayer.create(context,R.raw.ultra_alarm)
+        mediaPlayer.isLooping = true
+
+        mediaPlayer.setOnCompletionListener { MediaPlayer.OnCompletionListener{
+            mediaPlayer.stop()
+//            mediaPlayer.reset()
+//            mediaPlayer.release()
+        } }
 
         mBtnStart.setOnClickListener {
             context?.let { lContext ->
-                VibrationManager.init(lContext)
-                VibrationManager.makePattern().beat(2000).rest(1000).playPattern(5)
+//                mediaPlayer.start()
+//                VibrationManager.init(lContext)
+//                VibrationManager.makePattern().beat(2000).rest(1000).playPattern(60)
                 batteryProfileViewModel.setUserAlarmPreference(true)
                 BatteryMonitoringService.startInForeground(lContext)
-                periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
             }
         }
         mBtnStop.setOnClickListener {
             context?.let { lContext ->
-                VibrationManager.stop()
+//                mediaPlayer.stop()
+//                mediaPlayer.prepare()
+//                VibrationManager.stop()
                 batteryProfileViewModel.setUserAlarmPreference(false)
                 BatteryMonitoringService.stopService(lContext)
-                periodicBatteryUpdater.stopPeriodicBatteryUpdate()
             }
         }
         return view
@@ -68,6 +78,7 @@ class BatteryProfileFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
         context?.let{
             batteryChangeReciever.registerReciever(it)
         }
@@ -75,6 +86,7 @@ class BatteryProfileFragment : BaseFragment() {
 
     override fun onPause() {
         super.onPause()
+        periodicBatteryUpdater.stopPeriodicBatteryUpdate()
         context?.let {
             batteryChangeReciever.unregisterReciever(it)
         }

@@ -2,6 +2,8 @@ package com.chargingwatts.chargingalarm.util.battery
 
 import AppConstants.LOG_CHARGING_ALARM
 import android.app.Service
+import android.arch.lifecycle.LifecycleService
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -11,11 +13,12 @@ import android.util.Log
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
+import dagger.android.AndroidInjection
 import dagger.android.DaggerService
 import javax.inject.Inject
 
 
-class BatteryMonitoringService : DaggerService() {
+class BatteryMonitoringService : LifecycleService() {
 
     @Inject
     lateinit var mBatteryChangeReciever: BatteryChangeReciever
@@ -30,32 +33,39 @@ class BatteryMonitoringService : DaggerService() {
     lateinit var mAppExecutors: AppExecutors
 
     override fun onCreate() {
+        AndroidInjection.inject(this)
         super.onCreate()
-
+        applicationContext?.let {
+            mBatteryChangeReciever.registerReciever(it)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
-        val lBatteryProfileIntent = registerReceiver(mBatteryChangeReciever, intentFilter)
-        lBatteryProfileIntent?.let { it ->
-            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(it, this)
-            batteryProfile?.let {
-                mNotificationHelper.apply {
-                    startForeground(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, mNotificationHelper.getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), "").build())
+        super.onStartCommand(intent, flags, startId)
+//        val intentFilter = IntentFilter()
+//        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
+//        val lBatteryProfileIntent = registerReceiver(mBatteryChangeReciever, intentFilter)
+        mBatteryProfileDaoWrapper.findRecentBatteryProfile().observe(this, Observer { lbatteryProfile ->
+            lbatteryProfile?.let {
+                startForeground(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, mNotificationHelper.getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, lbatteryProfile), "").build())
                 }
-                mAppExecutors.diskIO().execute {
-                     mBatteryProfileDaoWrapper.insert(batteryProfile)
-                }
-            }
-        }
-
-
-
+        })
+//        lBatteryProfileIntent?.let { it ->
+//            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(it, this)
+//            batteryProfile?.let {
+//                mNotificationHelper.apply {
+//                    startForeground(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, mNotificationHelper.getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), "").build())
+//                }
+//                mAppExecutors.diskIO().execute {
+//                     mBatteryProfileDaoWrapper.insert(batteryProfile)
+//                }
+//            }
+//        }
         return Service.START_STICKY
     }
 
     override fun onBind(intent: Intent): IBinder? {
+        super.onBind(intent)
         // There are Bound an Unbound Services - you should read something about
         // that. This one is an Unbounded Service.
         return null
@@ -63,8 +73,11 @@ class BatteryMonitoringService : DaggerService() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(mBatteryChangeReciever)
+        applicationContext?.let {
+            mBatteryChangeReciever.unregisterReciever(it)
     }
+    }
+
 
     companion object {
         @JvmStatic
