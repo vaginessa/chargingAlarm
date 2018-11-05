@@ -1,7 +1,7 @@
 package com.chargingwatts.chargingalarm.db
 
+import AppConstants
 import android.arch.lifecycle.LiveData
-import android.util.Log
 import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import javax.inject.Inject

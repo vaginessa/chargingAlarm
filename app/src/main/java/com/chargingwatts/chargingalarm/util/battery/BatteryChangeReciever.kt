@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BatteryChangeReciever @Inject constructor(val batteryProfileDaoWrapper: BatteryProfileDaoWrapper, val appExecutors: AppExecutors, val notificationHelper: NotificationHelper) : BroadcastReceiver() {
+class BatteryChangeReciever  @Inject constructor(val batteryProfileDaoWrapper: BatteryProfileDaoWrapper, val appExecutors: AppExecutors, val notificationHelper: NotificationHelper) : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.let { batteryIntent ->
             val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
@@ -33,7 +33,6 @@ class BatteryChangeReciever @Inject constructor(val batteryProfileDaoWrapper: Ba
                 intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
                 registerReceiver(this@BatteryChangeReciever, intentFilter)
             }
-
         }
 
         fun unregisterReciever(context: Context) {

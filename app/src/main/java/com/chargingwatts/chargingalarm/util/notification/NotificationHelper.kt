@@ -20,11 +20,13 @@ import com.chargingwatts.chargingalarm.util.battery.BatteryProfileUtils
 import com.chargingwatts.chargingalarm.util.logging.EventLogger
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
 /**
  * Helper class to manage notification channels, and create notifications.
  */
+@Singleton
 class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(context) {
 
     private var manager: NotificationManagerCompat? = null

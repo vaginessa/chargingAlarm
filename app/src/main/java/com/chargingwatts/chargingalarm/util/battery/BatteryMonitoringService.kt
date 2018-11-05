@@ -1,20 +1,16 @@
 package com.chargingwatts.chargingalarm.util.battery
 
-import AppConstants.LOG_CHARGING_ALARM
 import android.app.Service
 import android.arch.lifecycle.LifecycleService
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import dagger.android.AndroidInjection
-import dagger.android.DaggerService
 import javax.inject.Inject
 
 

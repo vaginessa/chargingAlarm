@@ -1,10 +1,8 @@
 package com.chargingwatts.chargingalarm.util.battery
 
-import AppConstants.LOG_CHARGING_ALARM
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.chargingwatts.chargingalarm.AppExecutors
@@ -38,9 +36,9 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
         lBatteryProfile?.isCharging?.apply {
             when (this) {
                 true -> {
-        BatteryMonitoringService.startInForeground(applicationContext)
+                    BatteryMonitoringService.startInForeground(applicationContext)
                 }
-                false ->{
+                false -> {
                     BatteryMonitoringService.stopService(applicationContext)
                 }
             }

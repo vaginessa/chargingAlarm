@@ -1,11 +1,9 @@
 package com.chargingwatts.chargingalarm.util.preference
 
-import AppConstants.LOG_CHARGING_ALARM
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 
