@@ -180,6 +180,7 @@ object BatteryProfileUtils {
         }
     }
 
+    @JvmStatic
     fun getPlugTypeString(intPlugType: Int?, context: Context): String? {
 
         return when (intPlugType) {

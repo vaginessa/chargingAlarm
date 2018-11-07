@@ -21,12 +21,4 @@ class FragmentBindingAdapters @Inject constructor(val fragment: Fragment) {
 
 
 
-    companion object {
-
-        @JvmStatic
-        @BindingAdapter("cpv_value")
-        fun bindBatteryLevel(circleProgressView: CircleProgressView, value:Float){
-            circleProgressView.setValue(value)
-        }
-    }
 }
