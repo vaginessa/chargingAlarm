@@ -4,4 +4,16 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="color_bat_progress_text">#FDBE03</color>
+    <color name="color_bat_progress_unit">#FDBE03</color>
+    <color name="color_bat_progress_fill">#000000</color>
+    <color name="color_bat_progress_rim">#D4D4D4</color>
+    <color name="color_bat_progress_bar">#FDBE03</color>
+
+    <color name="royal_blue_1">#2980b9</color>
+
+    <color name="color_white">#FFFFFF</color>
+
+    <color name="royal_yellow_1">#FDBE03</color>
 </resources>

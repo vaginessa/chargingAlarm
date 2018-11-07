@@ -17,7 +17,7 @@
     <!-- Battery Plug Type Strings -->
     <string name="BATTERY_PLUGGED_WIRELESS">Wireless</string>
     <string name="BATTERY_PLUGGED_USB">USB</string>
-    <string name="BATTERY_PLUGGED_AC">AC</string>
+    <string name="BATTERY_PLUGGED_AC">Power Adapter</string>
 
     <!-- Battery Health Status Strings -->
     <string name="BATTERY_HEALTH_COLD">Cold</string>
@@ -39,4 +39,10 @@
 
     <string name="description_battery_monitoring_service">This service updates the battery Level shown in the notification</string>
     <string name="default_notification_body">Fetching Battery Information</string>
+    <string name="show_total_capacity_label">Battery Capacity:</string>
+    <string name="show_remaining_capacity_label">Remaining Capacity:</string>
+
+
+    <string name="show_capacity_unit">mAh</string>
+
 </resources>
