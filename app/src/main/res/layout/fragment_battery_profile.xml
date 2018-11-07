@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:CircleProgressView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <data>
 
@@ -15,40 +18,69 @@
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.chargingwatts.chargingalarm.ui.batteryprofile.BatteryProfileFragment">
 
 
-        <ProgressBar
-            android:id="@+id/pb_battery_level"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="@dimen/dimen_32dp"
-            android:background="@drawable/circle_shape"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="@{batteryProfile.remainingPercent }"
-            android:progressDrawable="@drawable/circular_progress_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <!--<ProgressBar-->
+            <!--android:id="@+id/pb_battery_level"-->
+            <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="200dp"-->
+            <!--android:layout_marginTop="@dimen/dimen_32dp"-->
+            <!--android:background="@drawable/circle_shape"-->
+            <!--android:indeterminate="false"-->
+            <!--android:max="100"-->
+            <!--android:progress="@{batteryProfile.remainingPercent }"-->
+            <!--android:progressDrawable="@drawable/circular_progress_bar"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-        <TextView
-            android:id="@+id/tv_battery_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text='@{batteryProfile.remainingPercent.toString() ?? "NA"}'
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="32sp"
-            app:layout_constraintBottom_toBottomOf="@id/pb_battery_level"
-            app:layout_constraintEnd_toEndOf="@id/pb_battery_level"
-            app:layout_constraintStart_toStartOf="@id/pb_battery_level"
-            app:layout_constraintTop_toTopOf="@id/pb_battery_level" />
+        <com.chargingwatts.chargingalarm.ui.circleprogress.CircleProgressView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/dimen_32dp"
+            android:id="@+id/pb_battery_level"
+            android:layout_width="277dp"
+            android:layout_height="277dp"
+            CircleProgressView:cpv_autoTextSize="true"
+            CircleProgressView:cpv_barColor="@color/colorPrimary"
+            CircleProgressView:cpv_barWidth="35dp"
+            CircleProgressView:cpv_innerContourSize="0dp"
+            CircleProgressView:cpv_maxValue="100"
+            CircleProgressView:cpv_outerContourSize="0dp"
+            CircleProgressView:cpv_rimColor="@color/colorPrimaryLight"
+            CircleProgressView:cpv_rimWidth="35dp"
+            CircleProgressView:cpv_showUnit="true"
+            CircleProgressView:cpv_spinColor="@color/colorPrimary"
+            CircleProgressView:cpv_textColor="@color/colorPrimaryDark"
+            CircleProgressView:cpv_textScale="1"
+            CircleProgressView:cpv_unit="%"
+            CircleProgressView:cpv_unitColor="@color/colorPrimaryLight"
+            CircleProgressView:cpv_unitPosition="right_top"
+            CircleProgressView:cpv_unitScale="1"
+            CircleProgressView:cpv_value="@{batteryProfile.remainingPercent }"
+            CircleProgressView:cpv_blockCount="100"
+            CircleProgressView:cpv_blockScale="0.8"
+            CircleProgressView:cpv_seekMode="false"
+            />
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_battery_level"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:gravity="center"-->
+            <!--android:text='@{batteryProfile.remainingPercent.toString() ?? "NA"}'-->
+            <!--android:textColor="@color/colorPrimaryDark"-->
+            <!--android:textSize="32sp"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/pb_battery_level"-->
+            <!--app:layout_constraintEnd_toEndOf="@id/pb_battery_level"-->
+            <!--app:layout_constraintStart_toStartOf="@id/pb_battery_level"-->
+            <!--app:layout_constraintTop_toTopOf="@id/pb_battery_level" />-->
 
         <TextView
             android:id="@+id/tv_power_connection_status"
