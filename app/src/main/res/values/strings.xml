@@ -15,7 +15,7 @@
     <string name="BATTERY_STATUS_NOT_CHARGING">Not Charging</string>
 
     <!-- Battery Plug Type Strings -->
-    <string name="BATTERY_PLUGGED_WIRELESS">Wireless</string>
+    <string name="BATTERY_PLUGGED_WIRELESS">Wireless Charger</string>
     <string name="BATTERY_PLUGGED_USB">USB</string>
     <string name="BATTERY_PLUGGED_AC">Power Adapter</string>
 
@@ -44,5 +44,7 @@
 
 
     <string name="show_capacity_unit">mAh</string>
+    <string name="show_settings">settings</string>
+    <string name="show_start">start</string>
 
 </resources>
