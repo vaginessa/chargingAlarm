@@ -1,5 +1,6 @@
 package com.chargingwatts.chargingalarm.util.ui
 
+import android.content.Context
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Toast
@@ -7,9 +8,9 @@ import com.chargingwatts.chargingalarm.ChargingAlarmApp
 import javax.inject.Inject
 
 
-class UIHelper @Inject constructor(private val application: ChargingAlarmApp) {
+class UIHelper @Inject constructor(private val context: Context) {
 
-    val applicationContext = application.applicationContext
+    val applicationContext = context.applicationContext
 
     //--------------------------TOAST HELPER FUNCTIONS -------------------------------------------//
 

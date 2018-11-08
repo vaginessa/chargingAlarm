@@ -11,9 +11,9 @@
             name="batteryProfile"
             type="com.chargingwatts.chargingalarm.vo.BatteryProfile" />
 
-        <!--<variable-->
-            <!--name="userAlarmPreference"-->
-            <!--type="B"/>-->
+        <variable
+            name="userAlarmPreference"
+            type="boolean"/>
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
@@ -228,14 +228,16 @@
                 android:background="#ff212121"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/dimen_18dp"
-                android:paddingBottom="@dimen/dimen_14dp">
+                android:paddingBottom="@dimen/dimen_14dp"
+                android:onClick="@{(view)-> clickListener.onClick(view)}"
+                >
 
                 <ImageView
                     android:id="@+id/iv_start_stop_service"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_play_circle_outline_green" />
+                    android:src="@{userAlarmPreference ? @drawable/ic_play_circle_outline_green : @drawable/ic_stop_white}" />
 
                 <TextView
                     android:id="@+id/tv_start_stop_service"
@@ -289,7 +291,9 @@
                 android:orientation="vertical"
                 android:weightSum="1.0"
                 android:paddingTop="@dimen/dimen_18dp"
-                android:paddingBottom="@dimen/dimen_14dp">
+                android:paddingBottom="@dimen/dimen_14dp"
+                android:onClick="@{(view)-> clickListener.onClick(view)}"
+                >
 
                 <ImageView
                     android:id="@+id/iv_settings"

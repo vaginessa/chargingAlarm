@@ -29,6 +29,7 @@ class BatteryProfileFragment : BaseFragment() {
     @Inject
     lateinit var batteryChangeReciever: BatteryChangeReciever
 
+
     private lateinit var batteryProfileViewModel: BatteryProfileViewModel
 
     var binding by autoCleared<FragmentBatteryProfileBinding>()
@@ -38,28 +39,49 @@ class BatteryProfileFragment : BaseFragment() {
     val callback = object : View.OnClickListener {
         override fun onClick(view: View?) {
             when (view?.id) {
-                R.id.btn_start_service -> {
-                    context?.let { lContext ->
-                        mediaPlayer?.start()
-                        VibrationManager.init(lContext)
-                        VibrationManager.makePattern().beat(2000).rest(1000).playPattern(60)
-                        batteryProfileViewModel.setUserAlarmPreference(true)
-                        BatteryMonitoringService.startInForeground(lContext)
+                R.id.ll_start_stop_service -> {
+                    val earlierPreference = batteryProfileViewModel.userAlarmPreferenceLiveData.value
+                            ?: false
+                    val newPreference = !earlierPreference
+                    batteryProfileViewModel.setUserAlarmPreference(newPreference)
+
+                    if (newPreference) {
+                        startAlarm()
+                    } else {
+                        stopAlarm()
                     }
                 }
 
-                R.id.btn_stop_service -> {
-                    context?.let { lContext ->
-                        mediaPlayer?.stop()
-                        mediaPlayer?.prepare()
-                        VibrationManager.stop()
-                        batteryProfileViewModel.setUserAlarmPreference(false)
-                        BatteryMonitoringService.stopService(lContext)
-                    }
+                R.id.ll_settings -> {
+
+                }
+
+                else -> {
+
                 }
             }
         }
 
+    }
+
+
+    fun startAlarm() {
+        context?.let { lContext ->
+            BatteryMonitoringService.startInForeground(lContext)
+            mediaPlayer?.start()
+            VibrationManager.init(lContext)
+            VibrationManager.makePattern().beat(2000).rest(1000).playPattern(60)
+        }
+    }
+
+    fun stopAlarm() {
+        context?.let { lContext ->
+            BatteryMonitoringService.stopService(lContext)
+            mediaPlayer?.stop()
+            mediaPlayer?.prepare()
+            VibrationManager.stop()
+            batteryProfileViewModel.setUserAlarmPreference(false)
+        }
     }
 
 
@@ -71,8 +93,15 @@ class BatteryProfileFragment : BaseFragment() {
         binding = FragmentBatteryProfileBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
         val lBatteryProfileLiveData = batteryProfileViewModel.batteryProfileLiveData
+        val lUserAlarmPreferenceLiveData = batteryProfileViewModel.userAlarmPreferenceLiveData
         lBatteryProfileLiveData.observe(this, Observer { lBatteryProfile ->
             binding.batteryProfile = lBatteryProfile
+        })
+
+        lUserAlarmPreferenceLiveData.observe(this, Observer { lUserAlarmPreference ->
+
+            binding.userAlarmPreference = lUserAlarmPreference ?: false
+
         })
         binding.clickListener = callback
 
