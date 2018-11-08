@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.work.PeriodicWorkRequest
 import com.chargingwatts.chargingalarm.BaseFragment
 import com.chargingwatts.chargingalarm.R
@@ -18,6 +19,7 @@ import com.chargingwatts.chargingalarm.util.battery.BATTERY_WORKER_REQUEST_TAG
 import com.chargingwatts.chargingalarm.util.battery.BatteryChangeReciever
 import com.chargingwatts.chargingalarm.util.battery.BatteryMonitoringService
 import com.chargingwatts.chargingalarm.util.battery.PeriodicBatteryUpdater
+import com.chargingwatts.chargingalarm.util.ui.UIHelper
 import javax.inject.Inject
 
 
@@ -28,6 +30,8 @@ class BatteryProfileFragment : BaseFragment() {
     lateinit var periodicBatteryUpdater: PeriodicBatteryUpdater
     @Inject
     lateinit var batteryChangeReciever: BatteryChangeReciever
+    @Inject
+    lateinit var uiHelper: UIHelper
 
 
     private lateinit var batteryProfileViewModel: BatteryProfileViewModel
@@ -68,6 +72,7 @@ class BatteryProfileFragment : BaseFragment() {
     fun startAlarm() {
         context?.let { lContext ->
             BatteryMonitoringService.startInForeground(lContext)
+            uiHelper.showToast(R.string.toast_alarm_start,Toast.LENGTH_SHORT)
             mediaPlayer?.start()
             VibrationManager.init(lContext)
             VibrationManager.makePattern().beat(2000).rest(1000).playPattern(60)
@@ -77,6 +82,8 @@ class BatteryProfileFragment : BaseFragment() {
     fun stopAlarm() {
         context?.let { lContext ->
             BatteryMonitoringService.stopService(lContext)
+            uiHelper.showToast(R.string.toast_alarm_stop,Toast.LENGTH_SHORT)
+
             mediaPlayer?.stop()
             mediaPlayer?.prepare()
             VibrationManager.stop()

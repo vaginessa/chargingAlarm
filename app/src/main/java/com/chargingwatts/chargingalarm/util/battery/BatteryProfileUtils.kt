@@ -164,6 +164,7 @@ object BatteryProfileUtils {
                     remainingPercent = map[CN_REMAINING_PERCENT] as Int?,
                     isCharging = map[CN_IS_CHARGING]as Boolean?)
 
+    @JvmStatic
     fun getBatteryStatusString(context: Context, intStatus: Int?): String? {
 
         return when (intStatus) {
@@ -194,6 +195,7 @@ object BatteryProfileUtils {
         }
     }
 
+    @JvmStatic
     fun getHealthStatusString(inthealthStatus: Int?, context: Context): String? {
 
         return when (inthealthStatus) {

@@ -46,5 +46,13 @@
     <string name="show_capacity_unit">mAh</string>
     <string name="show_settings">settings</string>
     <string name="show_start">start</string>
+    <string name="show_stop">stop</string>
+    <string name="toast_alarm_start">Full battery alarm is ON</string>
+    <string name="toast_alarm_stop">Full battery alarm is OFF</string>
+    <string name="show_temperature">Temperature</string>
+    <string name="show_voltage">Voltage</string>
+    <string name="show_battery_health">Battery Health</string>
+    <string name="show_degree"> \u2103</string>
+
 
 </resources>
