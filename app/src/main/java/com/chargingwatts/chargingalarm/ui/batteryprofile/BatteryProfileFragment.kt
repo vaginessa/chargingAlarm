@@ -1,10 +1,14 @@
 package com.chargingwatts.chargingalarm.ui.batteryprofile
 
+import android.Manifest
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +23,8 @@ import com.chargingwatts.chargingalarm.util.battery.BATTERY_WORKER_REQUEST_TAG
 import com.chargingwatts.chargingalarm.util.battery.BatteryChangeReciever
 import com.chargingwatts.chargingalarm.util.battery.BatteryMonitoringService
 import com.chargingwatts.chargingalarm.util.battery.PeriodicBatteryUpdater
+import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerDialog
+import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerListener
 import com.chargingwatts.chargingalarm.util.ui.UIHelper
 import javax.inject.Inject
 
@@ -57,7 +63,7 @@ class BatteryProfileFragment : BaseFragment() {
                 }
 
                 R.id.ll_settings -> {
-
+                    openRingtonPickerDialog()
                 }
 
                 else -> {
@@ -138,6 +144,65 @@ class BatteryProfileFragment : BaseFragment() {
         periodicBatteryUpdater.stopPeriodicBatteryUpdate()
         context?.let {
             batteryChangeReciever.unregisterReciever(it)
+        }
+    }
+
+     fun openRingtonPickerDialog(){
+        if (ActivityCompat.checkSelfPermission(context!!,
+                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+            val ringtonePickerBuilder = RingtonePickerDialog.Builder(getContext()!!, activity!!.getSupportFragmentManager())
+
+                    //Set title of the dialog.
+                    //If set null, no title will be displayed.
+                    .setTitle("Select ringtone")
+
+                    //set the currently selected uri, to mark that ringtone as checked by default.
+                    //If no ringtone is currently selected, pass null.
+//                    .setCurrentRingtoneUri(mCurrentSelectedUri)
+
+                    //Allow user to select default ringtone set in phone settings.
+                    .displayDefaultRingtone(true)
+
+                    //Allow user to select silent (i.e. No ringtone.).
+                    .displaySilentRingtone(true)
+
+                    //set the text to display of the positive (ok) button.
+                    //If not set OK will be the default text.
+                    .setPositiveButtonText("SET RINGTONE")
+
+                    //set text to display as negative button.
+                    //If set null, negative button will not be displayed.
+                    .setCancelButtonText("CANCEL")
+
+                    //Set flag true if you want to play the sample of the clicked tone.
+                    .setPlaySampleWhileSelection(true)
+
+                    //Set the callback listener.
+                    .setListener(object :RingtonePickerListener{
+                        override fun OnRingtoneSelected(ringtoneName: String, ringtoneUri: Uri?) {
+                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        }
+
+                    })
+
+
+            //Add the desirable ringtone types.
+//            if (musicCb.isChecked())
+//                ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_MUSIC)
+//            if (notificationCb.isChecked())
+//                ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_NOTIFICATION)
+//            if (ringtoneCb.isChecked())
+//                ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_RINGTONE)
+//            if (alarmCb.isChecked())
+                ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_ALARM)
+
+            //Display the dialog.
+            ringtonePickerBuilder.show()
+        } else {
+            ActivityCompat.requestPermissions(activity!!,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    123)
         }
     }
 

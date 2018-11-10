@@ -3,11 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_battery_graph"
-    app:startDestination="@id/batteryLevelFragment">
+    app:startDestination="@id/battery_level_fragment">
 
     <fragment
-        android:id="@+id/batteryLevelFragment"
+        android:id="@+id/battery_level_fragment"
         android:name="com.chargingwatts.chargingalarm.ui.batteryprofile.BatteryProfileFragment"
         android:label="fragment_battery_level"
-        tools:layout="@layout/fragment_battery_profile" />
+        tools:layout="@layout/fragment_battery_profile" >
+        <action
+            android:id="@+id/action_battery_level_fragment_to_battery_detail_fragment"
+            app:destination="@id/battery_detail_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/battery_detail_fragment"
+        android:name="com.chargingwatts.chargingalarm.ui.batterydetail.BatteryDetailFragment"
+        android:label="fragment_battery_detail"
+        tools:layout="@layout/fragment_battery_detail" />
 </navigation>

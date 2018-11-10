@@ -1,5 +1,6 @@
 package com.chargingwatts.chargingalarm.di.module
 
+import com.chargingwatts.chargingalarm.ui.batterydetail.BatteryDetailFragment
 import com.chargingwatts.chargingalarm.ui.batteryprofile.BatteryProfileFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -8,4 +9,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class HomeActivityModule{
     @ContributesAndroidInjector
     abstract fun contributeBatteryLevelFragment(): BatteryProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeBatteryDetailFragment(): BatteryDetailFragment
 }
