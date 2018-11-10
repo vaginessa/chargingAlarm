@@ -1,8 +1,8 @@
 package com.chargingwatts.chargingalarm.vo
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 const  val CN_TIME_STAMP: String = "time_stamp"
 const  val CN_STATUS: String = "status"

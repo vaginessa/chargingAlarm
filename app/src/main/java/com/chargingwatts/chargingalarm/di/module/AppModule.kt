@@ -1,8 +1,8 @@
 package com.chargingwatts.chargingalarm.di.module
 
 
-import android.arch.persistence.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.api.AlarmApiService

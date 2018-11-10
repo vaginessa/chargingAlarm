@@ -1,7 +1,7 @@
 package com.chargingwatts.chargingalarm.util.preference;
 
-import android.arch.lifecycle.LiveData
 import android.content.SharedPreferences
+import androidx.lifecycle.LiveData
 
 abstract class SharedPreferenceLiveData<T>(val sharedPrefs: SharedPreferences,
                                            val key: String,

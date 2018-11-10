@@ -1,10 +1,9 @@
 package com.chargingwatts.chargingalarm.util.ui
 
 import android.content.Context
-import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Toast
-import com.chargingwatts.chargingalarm.ChargingAlarmApp
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 

@@ -1,6 +1,6 @@
 package com.chargingwatts.chargingalarm.repository
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.api.AlarmApiService
 import com.chargingwatts.chargingalarm.api.ApiResponse

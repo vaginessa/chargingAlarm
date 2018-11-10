@@ -1,6 +1,6 @@
 package com.chargingwatts.chargingalarm.vo
 
-import android.arch.persistence.room.Entity
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "user_detail",

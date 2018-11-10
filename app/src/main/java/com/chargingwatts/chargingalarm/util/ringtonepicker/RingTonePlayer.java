@@ -16,12 +16,13 @@ package com.chargingwatts.chargingalarm.util.ringtonepicker;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.Closeable;
 import java.io.IOException;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Created by Keval on 29-Mar-17.

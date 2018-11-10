@@ -3,7 +3,7 @@ package com.chargingwatts.chargingalarm
 import android.app.Activity
 import android.app.Service
 import android.content.BroadcastReceiver
-import android.support.multidex.MultiDexApplication
+import androidx.multidex.MultiDexApplication
 import com.chargingwatts.chargingalarm.di.AppInjector
 import dagger.android.*
 import timber.log.Timber

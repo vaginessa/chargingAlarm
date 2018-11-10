@@ -25,7 +25,7 @@
         <!--type="Boolean"/>-->
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/royal_blue_1"
@@ -431,5 +431,5 @@
         <!--app:layout_constraintEnd_toEndOf="@id/pb_battery_level"-->
         <!--app:layout_constraintStart_toStartOf="@id/pb_battery_level"-->
         <!--app:layout_constraintTop_toTopOf="@id/pb_battery_level" />-->
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

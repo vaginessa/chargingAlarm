@@ -14,10 +14,11 @@
 package com.chargingwatts.chargingalarm.util.ringtonepicker;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.io.Serializable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Created by Keval on 29-Mar-17.

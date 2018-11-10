@@ -2,7 +2,7 @@ package com.chargingwatts.chargingalarm.repository
 
 import AppConstants.IS_CHARGING_PREFERENCE
 import AppConstants.USER_ALARM_PREFERENCE
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper

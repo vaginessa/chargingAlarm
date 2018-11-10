@@ -1,15 +1,16 @@
 package com.chargingwatts.chargingalarm.util.battery
 
 import android.app.Service
-import android.arch.lifecycle.LifecycleService
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
+import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.Observer
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
+import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -41,7 +42,7 @@ class BatteryMonitoringService : LifecycleService() {
 //        val intentFilter = IntentFilter()
 //        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
 //        val lBatteryProfileIntent = registerReceiver(mBatteryChangeReciever, intentFilter)
-        mBatteryProfileDaoWrapper.findRecentBatteryProfile().observe(this, Observer { lbatteryProfile ->
+        mBatteryProfileDaoWrapper.findRecentBatteryProfile().observe(this, Observer<BatteryProfile> { lbatteryProfile ->
             lbatteryProfile?.let {
                 startForeground(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, mNotificationHelper.getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, lbatteryProfile), "").build())
                 }

@@ -1,8 +1,7 @@
 package com.chargingwatts.chargingalarm.util
 
 import android.os.SystemClock
-import android.support.v4.util.ArrayMap
-
+import androidx.collection.ArrayMap
 import java.util.concurrent.TimeUnit
 
 /**

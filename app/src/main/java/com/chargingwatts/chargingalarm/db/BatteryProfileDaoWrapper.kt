@@ -1,7 +1,7 @@
 package com.chargingwatts.chargingalarm.db
 
 import AppConstants
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class BatteryProfileDaoWrapper @Inject constructor( val batteryProfileDao: Batte
         }
     }
 
-    fun findRecentBatteryProfile(): LiveData<BatteryProfile>{
+    fun findRecentBatteryProfile(): LiveData<BatteryProfile> {
         return batteryProfileDao.findRecentBatteryProfile()
     }
 

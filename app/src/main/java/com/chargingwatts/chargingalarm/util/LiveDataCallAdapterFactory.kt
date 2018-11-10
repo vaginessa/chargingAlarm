@@ -1,6 +1,6 @@
 package com.chargingwatts.chargingalarm.util
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.chargingwatts.chargingalarm.api.ApiResponse
 import retrofit2.CallAdapter
 import retrofit2.CallAdapter.Factory

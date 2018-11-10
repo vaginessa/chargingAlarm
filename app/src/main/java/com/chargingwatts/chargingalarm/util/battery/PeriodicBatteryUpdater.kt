@@ -1,6 +1,6 @@
 package com.chargingwatts.chargingalarm.util.battery
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager

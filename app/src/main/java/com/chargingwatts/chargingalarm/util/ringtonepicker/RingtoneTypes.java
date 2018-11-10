@@ -13,10 +13,10 @@
 
 package com.chargingwatts.chargingalarm.util.ringtonepicker;
 
-import android.support.annotation.IntDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 /**
  * Created by Kevalpatel2106 on 28-Mar-18.

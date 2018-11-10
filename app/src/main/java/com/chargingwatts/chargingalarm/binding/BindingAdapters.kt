@@ -1,6 +1,6 @@
 package com.chargingwatts.chargingalarm.binding
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.view.View
 import com.chargingwatts.chargingalarm.ui.circleprogress.CircleProgressView
 

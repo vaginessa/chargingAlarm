@@ -1,7 +1,7 @@
 package com.chargingwatts.chargingalarm.api
 
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.chargingwatts.chargingalarm.vo.UserDetail
 import retrofit2.http.GET
 import retrofit2.http.Query

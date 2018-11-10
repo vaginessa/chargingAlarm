@@ -1,8 +1,8 @@
 @file:JvmName("AppConstants")
 
 
-import android.support.design.widget.Snackbar
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 
 object AppConstants {
     //--------------------------SNACKBAR CONSTANTS------------------------------------------------//

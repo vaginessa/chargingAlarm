@@ -1,7 +1,7 @@
 package com.chargingwatts.chargingalarm.ui.batteryprofile
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import com.chargingwatts.chargingalarm.repository.BatteryProfileRepository
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import javax.inject.Inject
