@@ -66,6 +66,12 @@
     <string name="show_charging_status">Charging Status</string>
     <string name="show_technology">Technology</string>
     <string name="show_mAH">mAH</string>
+    <string name="menu_item_how_to_use">How to use</string>
+    <string name="show_full_battery_alarm">Full Battery Alarm</string>
+    <string name="alphabet_A_dot">A.</string>
+    <string name="show_fba_instruction_a">Once the application is installed, full battery alarm is activated.</string>
+    <string name="show_fba_instruction_b">While charging, once the battery is fully charged at 100%, the app will sound an alarm which can be stopped by either clicking the dismiss alarm button or by unplugging the charger.</string>
+    <string name="show_how_to_use">How To Use</string>
 
 
 </resources>

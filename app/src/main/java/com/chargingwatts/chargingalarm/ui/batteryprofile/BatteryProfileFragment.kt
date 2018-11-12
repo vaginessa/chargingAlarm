@@ -27,6 +27,7 @@ import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerDialog
 import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerListener
 import com.chargingwatts.chargingalarm.util.ui.UIHelper
 import javax.inject.Inject
+import kotlin.Exception
 
 
 class BatteryProfileFragment : BaseFragment() {
@@ -131,21 +132,33 @@ class BatteryProfileFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
         context?.let {
-            batteryChangeReciever.registerReciever(it)
+            try {
+                batteryChangeReciever.registerReciever(it)
+            }
+            catch (exception:Exception){
+
+            }
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         periodicBatteryUpdater.stopPeriodicBatteryUpdate()
         context?.let {
-            batteryChangeReciever.unregisterReciever(it)
+            try {
+                batteryChangeReciever.unregisterReciever(it)
+
+            }
+            catch (exception: Exception){
+
+            }
         }
     }
+
 
      fun openRingtonPickerDialog(){
         if (ActivityCompat.checkSelfPermission(context!!,

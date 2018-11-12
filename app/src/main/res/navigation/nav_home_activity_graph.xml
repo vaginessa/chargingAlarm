@@ -13,10 +13,17 @@
         <action
             android:id="@+id/action_battery_level_fragment_to_battery_detail_fragment"
             app:destination="@id/battery_detail_fragment" />
+        <action
+            android:id="@+id/action_battery_level_fragment_to_howToUseActivity"
+            app:destination="@id/how_to_use_activity" />
     </fragment>
     <fragment
         android:id="@+id/battery_detail_fragment"
         android:name="com.chargingwatts.chargingalarm.ui.batterydetail.BatteryDetailFragment"
         android:label="fragment_battery_detail"
         tools:layout="@layout/fragment_battery_detail" />
+    <activity
+        android:id="@+id/how_to_use_activity"
+        android:name="com.chargingwatts.chargingalarm.HowToUseActivity"
+        android:label="HowToUseActivity" />
 </navigation>

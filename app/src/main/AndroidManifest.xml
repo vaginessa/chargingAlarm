@@ -4,10 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ChargingAlarmApp"
@@ -17,12 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".HomeActivity"
+        <activity android:name=".HowToUseActivity"
+            android:theme="@style/AppActivityDialogTheme"
+            android:excludeFromRecents="true"
+            ></activity>
+        <activity
+            android:name=".HomeActivity"
             android:launchMode="singleInstance"
-            android:theme="@style/SplashTheme"
             android:screenOrientation="portrait"
-            >
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,11 +39,11 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
+
         <service
             android:name=".util.battery.BatteryMonitoringService"
-            android:exported="false"
-            android:description="@string/description_battery_monitoring_service" />
-
+            android:description="@string/description_battery_monitoring_service"
+            android:exported="false" />
     </application>
 
 </manifest>

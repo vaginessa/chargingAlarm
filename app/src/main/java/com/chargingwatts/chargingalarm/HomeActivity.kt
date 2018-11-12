@@ -1,6 +1,7 @@
 package com.chargingwatts.chargingalarm
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import androidx.appcompat.widget.Toolbar
@@ -80,4 +81,15 @@ class HomeActivity : BaseActivity() {
         return super.onSupportNavigateUp()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_options_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        navController?.let {
+            return item.onNavDestinationSelected(it) || super.onOptionsItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }
