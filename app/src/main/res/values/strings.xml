@@ -53,12 +53,19 @@
     <string name="show_voltage">Voltage</string>
     <string name="show_battery_health">Battery Health</string>
     <string name="show_degree"> \u2103</string>
+    <string name="show_percent">\u0025</string>
+
 
     <!--rington picker-->
     <string name="ringtone_picker_default_title">Select ringtone</string>
     <string name="title_default_list_item">Default</string>
     <string name="title_silent_list_item">Silent</string>
     <string name="show_battery_detail">Battery Detail</string>
+    <string name="show_battery_level">Battery Level</string>
+    <string name="show_plugged">Plugged</string>
+    <string name="show_charging_status">Charging Status</string>
+    <string name="show_technology">Technology</string>
+    <string name="show_mAH">mAH</string>
 
 
 </resources>

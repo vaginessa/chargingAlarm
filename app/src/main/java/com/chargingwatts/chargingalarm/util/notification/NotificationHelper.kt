@@ -222,7 +222,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 
                 batteryProfile.batteryStatusType?.let { batteryStatusType ->
 
-                    BatteryProfileUtils.getBatteryStatusString(context, batteryStatusType)?.let { batteryStatusString ->
+                    BatteryProfileUtils.getBatteryStatusString( batteryStatusType,context)?.let { batteryStatusString ->
                         if (batteryStatusString != context.getString(R.string.BATTERY_STATUS_UNKNOWN)) {
                             bodyString = "$bodyString - $batteryStatusString"
                         }

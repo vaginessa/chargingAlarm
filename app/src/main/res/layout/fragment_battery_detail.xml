@@ -13,24 +13,505 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/statisticsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_white"
-        tools:context="com.chargingwatts.chargingalarm.ui.batteryprofile.BatteryProfileFragment">
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:padding="15dp">
 
-        <TextView
-            android:id="@+id/tv_temperature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen_12dp"
-            android:text='@{batteryProfile.recentBatteryTemperature.toString().concat(" ").concat(@string/show_degree) }'
-            android:textColor="@color/royal_yellow_1"
-            android:textSize="@dimen/text_size_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7">
+
+                        <ImageView
+                            android:id="@+id/backPress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="15dp"
+                            android:src="@android:drawable/ic_menu_revert"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3">
+
+                        <TextView
+                            android:id="@+id/statistics"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="@string/show_battery_detail"
+                            android:textColor="#ffffff"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#212121" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.8"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/capacityTxt"
+                            style="@style/TextViewFont"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:gravity="center_vertical"
+                            android:text="@string/show_total_capacity_label"
+                            android:textColor="#ffffff"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/Capacity"
+                        style="@style/TextViewFont"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text='@{(batteryProfile.totalCapacity.toString()  ?? "NA").concat(" ").concat(@string/show_mAH)}'
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#212121" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.8"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/health"
+                            style="@style/TextViewFont"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:gravity="center_vertical"
+                            android:text="@string/show_battery_health"
+                            android:textColor="#ffffff"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/TxtHealth"
+                        style="@style/TextViewFont"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text='@{BatteryProfileUtils.getHealthStatusString(batteryProfile.batteryHealthType, context) ?? "NA"}'
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#212121" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.8"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/level"
+                            style="@style/TextViewFont"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:gravity="center_vertical"
+                            android:text="@string/show_battery_level"
+                            android:textColor="#ffffff"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/batteryPctTv"
+                        style="@style/TextViewFont"
+                        text='@{(batteryProfile.remainingPercent.toString() ?? "NA").concat(" ").concat(@string/show_percent) }'
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#212121" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.8"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/plugged"
+                            style="@style/TextViewFont"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:gravity="center_vertical"
+                            android:text="@string/show_plugged"
+                            android:textColor="#ffffff"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/pluggedTv"
+                        style="@style/TextViewFont"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text='@{BatteryProfileUtils.getPlugTypeString(batteryProfile.batteryPlugType,context) ??  "NA" }'
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#212121" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.8"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/chargingstatus"
+                            style="@style/TextViewFont"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:gravity="center_vertical"
+                            android:text="@string/show_charging_status"
+                            android:textColor="#ffffff"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/chargingStatusTv"
+                        style="@style/TextViewFont"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text='@{BatteryProfileUtils.getBatteryStatusString(batteryProfile.batteryStatusType, context)?? "NA"}'
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#212121" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.8"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/voltage"
+                            style="@style/TextViewFont"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:gravity="center_vertical"
+                            android:text="@string/show_voltage"
+                            android:textColor="#ffffff"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/voltageTv"
+                        style="@style/TextViewFont"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text='@{(batteryProfile.recentBatteryVoltage.toString() ?? "NA") + " V"}'
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#212121" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.8"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/temp"
+                            style="@style/TextViewFont"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:gravity="center_vertical"
+                            android:text="@string/show_temperature"
+                            android:textColor="#ffffff"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tempTv"
+                        style="@style/TextViewFont"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text='@{ ( batteryProfile.recentBatteryTemperature.toString()?? "NA" ).concat(" ").concat(@string/show_degree) }'
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#212121" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.8"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/tech"
+                            style="@style/TextViewFont"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:gravity="center_vertical"
+                            android:text="@string/show_technology"
+                            android:textColor="#ffffff"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/technologyTv"
+                        style="@style/TextViewFont"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text='@{batteryProfile.batteryTechnology ?? "NA"}'
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#212121" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
 </layout>

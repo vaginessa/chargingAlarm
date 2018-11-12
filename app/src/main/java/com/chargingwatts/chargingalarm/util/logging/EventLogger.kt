@@ -33,7 +33,7 @@ object EventLogger {
             params.putInt(BATTERY_PERCENT, it)
         }
         getContext()?.let { context ->
-            BatteryProfileUtils.getBatteryStatusString(context, batteryProfile.batteryStatusType)?.let { batteryStatusString ->
+            BatteryProfileUtils.getBatteryStatusString( batteryProfile.batteryStatusType, context)?.let { batteryStatusString ->
                 params.putString(BATTERY_STATUS, batteryStatusString)
             }
         }

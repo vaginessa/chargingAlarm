@@ -165,7 +165,7 @@ object BatteryProfileUtils {
                     isCharging = map[CN_IS_CHARGING]as Boolean?)
 
     @JvmStatic
-    fun getBatteryStatusString(context: Context, intStatus: Int?): String? {
+    fun getBatteryStatusString( intStatus: Int?,context: Context): String? {
 
         return when (intStatus) {
             BatteryManager.BATTERY_STATUS_CHARGING -> context.getString(R.string.BATTERY_STATUS_CHARGING)

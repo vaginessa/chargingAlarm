@@ -30,6 +30,8 @@ class HomeActivity : BaseActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        drawerLayout = findViewById(R.id.drawer_layout)
+
 
         navController = Navigation.findNavController(this, R.id.nav_host);
 //
@@ -37,8 +39,9 @@ class HomeActivity : BaseActivity() {
             setupActionBar(it)
             setupNavigationMenu(it)
         }
-        navController?.navigate(R.id.battery_detail_fragment)
+//        navController?.navigate(R.id.battery_detail_fragment)
     }
+
 
     private fun setupNavigationMenu(navController: NavController) {
 //        // In split screen mode, you can drag this view out from the left
@@ -53,12 +56,10 @@ class HomeActivity : BaseActivity() {
 //        // This allows NavigationUI to decide what label to show in the action bar
 //        // And, since we are passing in drawerLayout, it will also determine whether to
 //        // show the up arrow or drawer menu icon
-        drawerLayout = findViewById(R.id.drawer_layout)
 
 
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
     }
-
 
 
     override fun onAttachedToWindow() {
@@ -72,10 +73,11 @@ class HomeActivity : BaseActivity() {
 
 
     override fun onSupportNavigateUp(): Boolean {
-//        // Allows NavigationUI to support proper up navigation or the drawer layout
-//        // drawer menu, depending on the situation
-        return NavigationUI.navigateUp(drawerLayout,
-                navController!!)    }
-
+        navController?.let {
+            return NavigationUI.navigateUp(drawerLayout, it)
+                    || super.onSupportNavigateUp()
+        }
+        return super.onSupportNavigateUp()
+    }
 
 }

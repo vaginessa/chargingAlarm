@@ -7,14 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/drawer_header_layout"
-        app:menu="@menu/home_menu" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -43,7 +36,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:navGraph="@navigation/nav_home_activity_graph" />
+            app:navGraph="@navigation/nav_home_activity_graph"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/drawer_header_layout"
+        app:menu="@menu/home_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>
