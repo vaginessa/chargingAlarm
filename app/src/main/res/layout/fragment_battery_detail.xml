@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -83,9 +81,9 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_height="@dimen/dimen_point_5_dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#212121" />
 
                 <LinearLayout
@@ -99,7 +97,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -127,7 +125,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:text='@{(batteryProfile.totalCapacity.toString()  ?? "NA").concat(" ").concat(@string/show_mAH)}'
                         android:textColor="#ffffff"
                         android:textSize="@dimen/text_size_16" />
@@ -136,8 +134,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#212121" />
 
                 <LinearLayout
@@ -152,7 +150,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -180,7 +178,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:text='@{BatteryProfileUtils.getHealthStatusString(batteryProfile.batteryHealthType, context) ?? "NA"}'
                         android:textColor="#ffffff"
                         android:textSize="@dimen/text_size_16" />
@@ -189,8 +187,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#212121" />
 
                 <LinearLayout
@@ -205,7 +203,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -234,7 +232,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:textColor="#ffffff"
                         android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
@@ -242,8 +240,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#212121" />
 
                 <LinearLayout
@@ -258,7 +256,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -286,7 +284,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:text='@{BatteryProfileUtils.getPlugTypeString(batteryProfile.batteryPlugType,context) ??  "NA" }'
                         android:textColor="#ffffff"
                         android:textSize="@dimen/text_size_16" />
@@ -295,8 +293,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#212121" />
 
                 <LinearLayout
@@ -311,7 +309,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -339,7 +337,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/dimen_20dp"
+                        android:paddingStart="@dimen/dimen_20dp"
                         android:text='@{BatteryProfileUtils.getBatteryStatusString(batteryProfile.batteryStatusType, context)?? "NA"}'
                         android:textColor="#ffffff"
                         android:textSize="@dimen/text_size_16" />
@@ -348,8 +346,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_point_5_dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#212121" />
 
                 <LinearLayout
@@ -364,7 +362,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dimen_20dp"
+                        android:paddingStart="@dimen/dimen_20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -392,7 +390,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/dimen_20dp"
+                        android:paddingStart="@dimen/dimen_20dp"
                         android:text='@{(batteryProfile.recentBatteryVoltage.toString() ?? "NA") + " V"}'
                         android:textColor="#ffffff"
                         android:textSize="@dimen/text_size_16" />
@@ -401,8 +399,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_point_5_dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#212121" />
 
                 <LinearLayout
@@ -417,7 +415,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dimen_20dp"
+                        android:paddingStart="@dimen/dimen_20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -445,7 +443,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/dimen_20dp"
+                        android:paddingStart="@dimen/dimen_20dp"
                         android:text='@{ ( batteryProfile.recentBatteryTemperature.toString()?? "NA" ).concat(" ").concat(@string/show_degree) }'
                         android:textColor="#ffffff"
                         android:textSize="@dimen/text_size_16" />
@@ -454,8 +452,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_point_5_dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#212121" />
 
                 <LinearLayout
@@ -470,7 +468,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dimen_20dp"
+                        android:paddingStart="@dimen/dimen_20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -498,7 +496,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/dimen_20dp"
+                        android:paddingStart="@dimen/dimen_20dp"
                         android:text='@{batteryProfile.batteryTechnology ?? "NA"}'
                         android:textColor="#ffffff"
                         android:textSize="@dimen/text_size_16" />
@@ -507,8 +505,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_point_5_dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#212121" />
             </LinearLayout>
         </LinearLayout>

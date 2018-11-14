@@ -29,14 +29,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/royal_blue_1"
-        tools:context="com.chargingwatts.chargingalarm.ui.batteryprofile.BatteryProfileFragment">
+        tools:context="com.chargingwatts.chargingalarm.ui.batteryprofile.BatteryProfileFragment"
+        >
 
         <com.chargingwatts.chargingalarm.ui.circleprogress.CircleProgressView
             android:id="@+id/cpv_battery_level"
             android:layout_width="@dimen/dimen_200dp"
             android:layout_height="@dimen/dimen_200dp"
             android:layout_marginStart="@dimen/dimen_16dp"
-            android:layout_marginLeft="@dimen/dimen_16dp"
             app:cpv_autoTextSize="true"
             app:cpv_barColor="@color/color_bat_progress_bar"
             app:cpv_barWidth="18dp"
@@ -104,7 +104,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16dp"
-            android:layout_marginLeft="@dimen/dimen_16dp"
             android:text="@string/show_capacity_unit"
             android:textColor="@color/color_white"
             android:textSize="@dimen/text_size_20"
@@ -117,7 +116,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_8dp"
-            android:layout_marginLeft="@dimen/dimen_8dp"
             android:layout_marginTop="@dimen/dimen_16dp"
             android:text="@string/show_remaining_capacity_label"
             android:textColor="@color/color_white"
@@ -144,7 +142,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16dp"
-            android:layout_marginLeft="@dimen/dimen_16dp"
             android:text="@string/show_capacity_unit"
             android:textColor="@color/color_white"
             android:textSize="@dimen/text_size_20"
@@ -175,7 +172,8 @@
             android:src="@drawable/ic_battery"
             app:layout_constraintBottom_toTopOf="@id/tv_battery_voltagelabel"
             app:layout_constraintEnd_toEndOf="@id/tv_battery_voltage"
-            app:layout_constraintStart_toStartOf="@id/tv_battery_voltage" />
+            app:layout_constraintStart_toStartOf="@id/tv_battery_voltage"
+            android:contentDescription="@string/cd_battery_charging_icon"/>
 
         <TextView
             android:id="@+id/tv_battery_voltagelabel"
@@ -211,6 +209,7 @@
             app:layout_constraintBottom_toTopOf="@id/tv_temperature_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/cd_battery_temperature_icon"
             />
 
         <TextView
@@ -245,7 +244,8 @@
             android:src="@drawable/ic_battery_health"
             app:layout_constraintBottom_toTopOf="@id/tv_battery_health_label"
             app:layout_constraintEnd_toEndOf="@id/tv_battery_health"
-            app:layout_constraintStart_toStartOf="@id/tv_battery_health" />
+            app:layout_constraintStart_toStartOf="@id/tv_battery_health"
+            android:contentDescription="@string/cd_battery_health_icon"/>
 
         <TextView
             android:id="@+id/tv_battery_health_label"
@@ -298,7 +298,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
                 android:layout_weight="1.0"
                 android:background="#ff212121"
                 android:gravity="center"
@@ -312,7 +311,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:src="@{userAlarmPreference ? @drawable/ic_stop_white : @drawable/ic_play_circle_outline_green }" />
+                    android:src="@{userAlarmPreference ? @drawable/ic_stop_white : @drawable/ic_play_circle_outline_green }"
+                    android:contentDescription="@string/cd_alarm_start_stop_icon"/>
 
                 <TextView
                     android:id="@+id/tv_start_stop_service"
@@ -359,7 +359,7 @@
                 android:id="@+id/ll_settings"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginLeft="0.5px"
+                android:layout_marginStart="@dimen/dimen_point_5_dp"
                 android:layout_weight="1.0"
                 android:background="#ff212121"
                 android:gravity="center"
@@ -374,7 +374,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_settings_white" />
+                    android:src="@drawable/ic_settings_white"
+                    android:contentDescription="@string/cd_application_settings_icon"/>
 
                 <TextView
                     android:id="@+id/tv_settings"

@@ -72,6 +72,11 @@
     <string name="show_fba_instruction_a">Once the application is installed, full battery alarm is activated.</string>
     <string name="show_fba_instruction_b">While charging, once the battery is fully charged at 100%, the app will sound an alarm which can be stopped by either clicking the dismiss alarm button or by unplugging the charger.</string>
     <string name="show_how_to_use">How To Use</string>
+    <string name="cd_battery_charging_icon">Battery Charging Icon</string>
+    <string name="cd_battery_temperature_icon">Battery Temperature Icon</string>
+    <string name="cd_battery_health_icon">Battery Health Icon</string>
+    <string name="cd_alarm_start_stop_icon">Alarm Start/Stop Icon</string>
+    <string name="cd_application_settings_icon">Application Settings Icon</string>
 
 
 </resources>

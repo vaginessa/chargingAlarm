@@ -9,8 +9,8 @@
         android:layout_height="match_parent">
         <LinearLayout android:orientation="vertical"
             android:padding="@dimen/dimen_18dp"
-            android:paddingLeft="@dimen/dimen_24dp"
-            android:paddingRight="@dimen/dimen_24dp"
+            android:paddingStart="@dimen/dimen_24dp"
+            android:paddingEnd="@dimen/dimen_24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout android:gravity="center_vertical"
