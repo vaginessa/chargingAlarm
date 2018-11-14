@@ -65,7 +65,7 @@
                             android:gravity="center"
                             android:text="@string/show_battery_detail"
                             android:textColor="#ffffff"
-                            android:textSize="18dp" />
+                            android:textSize="@dimen/text_size_18" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -117,7 +117,7 @@
                             android:gravity="center_vertical"
                             android:text="@string/show_total_capacity_label"
                             android:textColor="#ffffff"
-                            android:textSize="16dp" />
+                            android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
                     <TextView
@@ -130,7 +130,7 @@
                         android:paddingLeft="20dp"
                         android:text='@{(batteryProfile.totalCapacity.toString()  ?? "NA").concat(" ").concat(@string/show_mAH)}'
                         android:textColor="#ffffff"
-                        android:textSize="16dp" />
+                        android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
 
                 <View
@@ -170,7 +170,7 @@
                             android:gravity="center_vertical"
                             android:text="@string/show_battery_health"
                             android:textColor="#ffffff"
-                            android:textSize="16dp" />
+                            android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
                     <TextView
@@ -183,7 +183,7 @@
                         android:paddingLeft="20dp"
                         android:text='@{BatteryProfileUtils.getHealthStatusString(batteryProfile.batteryHealthType, context) ?? "NA"}'
                         android:textColor="#ffffff"
-                        android:textSize="16dp" />
+                        android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
 
                 <View
@@ -223,7 +223,7 @@
                             android:gravity="center_vertical"
                             android:text="@string/show_battery_level"
                             android:textColor="#ffffff"
-                            android:textSize="16dp" />
+                            android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
                     <TextView
@@ -236,7 +236,7 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="20dp"
                         android:textColor="#ffffff"
-                        android:textSize="16dp" />
+                        android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
 
                 <View
@@ -276,7 +276,7 @@
                             android:gravity="center_vertical"
                             android:text="@string/show_plugged"
                             android:textColor="#ffffff"
-                            android:textSize="16dp" />
+                            android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
                     <TextView
@@ -289,7 +289,7 @@
                         android:paddingLeft="20dp"
                         android:text='@{BatteryProfileUtils.getPlugTypeString(batteryProfile.batteryPlugType,context) ??  "NA" }'
                         android:textColor="#ffffff"
-                        android:textSize="16dp" />
+                        android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
 
                 <View
@@ -329,7 +329,7 @@
                             android:gravity="center_vertical"
                             android:text="@string/show_charging_status"
                             android:textColor="#ffffff"
-                            android:textSize="16dp" />
+                            android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
                     <TextView
@@ -339,15 +339,15 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="@dimen/dimen_20dp"
                         android:text='@{BatteryProfileUtils.getBatteryStatusString(batteryProfile.batteryStatusType, context)?? "NA"}'
                         android:textColor="#ffffff"
-                        android:textSize="16dp" />
+                        android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5px"
+                    android:layout_height="@dimen/dimen_point_5_dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="#212121" />
@@ -364,7 +364,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="@dimen/dimen_20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -382,7 +382,7 @@
                             android:gravity="center_vertical"
                             android:text="@string/show_voltage"
                             android:textColor="#ffffff"
-                            android:textSize="16dp" />
+                            android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
                     <TextView
@@ -392,15 +392,15 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="@dimen/dimen_20dp"
                         android:text='@{(batteryProfile.recentBatteryVoltage.toString() ?? "NA") + " V"}'
                         android:textColor="#ffffff"
-                        android:textSize="16dp" />
+                        android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5px"
+                    android:layout_height="@dimen/dimen_point_5_dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="#212121" />
@@ -417,7 +417,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="@dimen/dimen_20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -435,7 +435,7 @@
                             android:gravity="center_vertical"
                             android:text="@string/show_temperature"
                             android:textColor="#ffffff"
-                            android:textSize="16dp" />
+                            android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
                     <TextView
@@ -445,15 +445,15 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="@dimen/dimen_20dp"
                         android:text='@{ ( batteryProfile.recentBatteryTemperature.toString()?? "NA" ).concat(" ").concat(@string/show_degree) }'
                         android:textColor="#ffffff"
-                        android:textSize="16dp" />
+                        android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5px"
+                    android:layout_height="@dimen/dimen_point_5_dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="#212121" />
@@ -470,7 +470,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="@dimen/dimen_20dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -488,7 +488,7 @@
                             android:gravity="center_vertical"
                             android:text="@string/show_technology"
                             android:textColor="#ffffff"
-                            android:textSize="16dp" />
+                            android:textSize="@dimen/text_size_16" />
                     </LinearLayout>
 
                     <TextView
@@ -498,15 +498,15 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.6"
                         android:gravity="center_vertical"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="@dimen/dimen_20dp"
                         android:text='@{batteryProfile.batteryTechnology ?? "NA"}'
                         android:textColor="#ffffff"
-                        android:textSize="16dp" />
+                        android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5px"
+                    android:layout_height="@dimen/dimen_point_5_dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="#212121" />
