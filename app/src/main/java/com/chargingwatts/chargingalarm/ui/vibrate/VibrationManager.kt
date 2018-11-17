@@ -1,17 +1,21 @@
 package com.chargingwatts.chargingalarm.ui.vibrate
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object VibrationManager {
+@Singleton
+class VibrationManager @Inject constructor(context: Context): ContextWrapper(context) {
     private var vibrator: Vibrator? = null
     private var vibratorDisabled: Boolean = false
 
-    fun init(context: Context) {
+    init {
         vibrator = context.applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         vibratorDisabled = !(vibrator?.hasVibrator()?: false)
         if (vibratorDisabled ) {
@@ -59,7 +63,7 @@ object VibrationManager {
         return VibratePattern()
     }
 
-    class VibratePattern {
+    inner class VibratePattern {
         private val internalPattern: MutableList<Long>
         var isLocked: Boolean = false
             private set

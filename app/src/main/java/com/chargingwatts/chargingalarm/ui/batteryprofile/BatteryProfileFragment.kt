@@ -19,10 +19,7 @@ import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.databinding.FragmentBatteryProfileBinding
 import com.chargingwatts.chargingalarm.ui.vibrate.VibrationManager
 import com.chargingwatts.chargingalarm.util.autoCleared
-import com.chargingwatts.chargingalarm.util.battery.BATTERY_WORKER_REQUEST_TAG
-import com.chargingwatts.chargingalarm.util.battery.BatteryChangeReciever
-import com.chargingwatts.chargingalarm.util.battery.BatteryMonitoringService
-import com.chargingwatts.chargingalarm.util.battery.PeriodicBatteryUpdater
+import com.chargingwatts.chargingalarm.util.battery.*
 import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerDialog
 import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerListener
 import com.chargingwatts.chargingalarm.util.ui.UIHelper
@@ -39,6 +36,8 @@ class BatteryProfileFragment : BaseFragment() {
     lateinit var batteryChangeReciever: BatteryChangeReciever
     @Inject
     lateinit var uiHelper: UIHelper
+    @Inject
+    lateinit var batteryAlarmManager: BatteryAlarmManager
 
 
     private lateinit var batteryProfileViewModel: BatteryProfileViewModel
@@ -80,9 +79,8 @@ class BatteryProfileFragment : BaseFragment() {
         context?.let { lContext ->
             BatteryMonitoringService.startInForeground(lContext)
             uiHelper.showToast(R.string.toast_alarm_start,Toast.LENGTH_SHORT)
-            mediaPlayer?.start()
-            VibrationManager.init(lContext)
-            VibrationManager.makePattern().beat(2000).rest(1000).playPattern(60)
+            batteryAlarmManager.initateAlarm()
+
         }
     }
 
@@ -90,11 +88,8 @@ class BatteryProfileFragment : BaseFragment() {
         context?.let { lContext ->
             BatteryMonitoringService.stopService(lContext)
             uiHelper.showToast(R.string.toast_alarm_stop,Toast.LENGTH_SHORT)
+            batteryAlarmManager.stopAlarm()
 
-            mediaPlayer?.stop()
-            mediaPlayer?.prepare()
-            VibrationManager.stop()
-            batteryProfileViewModel.setUserAlarmPreference(false)
         }
     }
 

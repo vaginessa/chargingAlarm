@@ -348,6 +348,7 @@ public final class RingtonePickerDialog extends DialogFragment implements Ringto
         if (mLoaderTask != null && !mLoaderTask.isCancelled()) mLoaderTask.cancel(true);
 
         //Release media player
+        mRingTonePlayer.stopRingtone();
         mRingTonePlayer.close();
     }
 

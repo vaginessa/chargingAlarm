@@ -30,7 +30,7 @@ import androidx.annotation.Nullable;
  *
  * @author {@link 'https://github.com/kevalpatel2106'}
  */
-final class RingTonePlayer implements Closeable {
+public final class RingTonePlayer implements Closeable {
 
     @NonNull
     private final Context mContext;
@@ -44,11 +44,13 @@ final class RingTonePlayer implements Closeable {
     /**
      * Public constructor.
      */
-    RingTonePlayer(@NonNull final Context context) {
+    public RingTonePlayer(@NonNull final Context context) {
         mContext = context;
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setLooping(true);
     }
+
+
 
     /**
      * Play the ringtone for the given uri.
@@ -56,7 +58,7 @@ final class RingTonePlayer implements Closeable {
      * @param uri uri of the ringtone to play.
      * @throws IOException if it cannot play the ringtone.
      */
-    void playRingtone(@Nullable final Uri uri) throws IOException,
+    public void playRingtone(@Nullable final Uri uri) throws IOException,
             IllegalArgumentException,
             SecurityException,
             IllegalStateException {
@@ -76,6 +78,9 @@ final class RingTonePlayer implements Closeable {
         mMediaPlayer.start();
     }
 
+    public void stopRingtone(){
+        if (mMediaPlayer.isPlaying()) mMediaPlayer.stop();
+    }
     /**
      * Release the {@link MediaPlayer} instance. Remember to call this method in on destroy.
      */

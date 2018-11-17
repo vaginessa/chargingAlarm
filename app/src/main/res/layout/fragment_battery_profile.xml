@@ -37,6 +37,8 @@
             android:layout_width="@dimen/dimen_200dp"
             android:layout_height="@dimen/dimen_200dp"
             android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             app:cpv_autoTextSize="true"
             app:cpv_barColor="@color/color_bat_progress_bar"
             app:cpv_barWidth="18dp"
