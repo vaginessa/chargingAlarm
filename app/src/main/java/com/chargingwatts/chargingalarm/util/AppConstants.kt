@@ -41,4 +41,13 @@ object AppConstants {
     @JvmField
     val IS_CHARGING_PREFERENCE = "is_charging_preference"
 
+    @JvmField
+    val BATTERY_HIGH_LEVEL = "battery_high_level"
+
+    @JvmField
+    val BATTERY_LOW_LEVEL = "battery_low_level"
+
+    @JvmField
+    val BATTERY_HIGH_TEMPERATURE = "battery_high_Temperature"
+
 }

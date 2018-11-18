@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import com.chargingwatts.chargingalarm.util.autoCleared
 import com.chargingwatts.chargingalarm.util.battery.*
 import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerDialog
 import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerListener
+import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import com.chargingwatts.chargingalarm.util.ui.UIHelper
 import javax.inject.Inject
 import kotlin.Exception
@@ -38,7 +40,8 @@ class BatteryProfileFragment : BaseFragment() {
     lateinit var uiHelper: UIHelper
     @Inject
     lateinit var batteryAlarmManager: BatteryAlarmManager
-
+    @Inject
+    lateinit var settingsManager: SettingsManager
 
     private lateinit var batteryProfileViewModel: BatteryProfileViewModel
 

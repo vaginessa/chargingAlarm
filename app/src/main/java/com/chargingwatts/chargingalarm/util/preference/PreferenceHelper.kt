@@ -101,10 +101,28 @@ class PreferenceHelper @Inject constructor(
     //==END======================================Long============================================/
 
 
+    //============================================Long=============================================/
+
+    fun getFloat(key: String): Float = preferences.getFloat(key, 0f)
+
+    fun getFloat(key: String, defaultValue: Float): Float = preferences.getFloat(key, defaultValue)
+
+    @SuppressLint("CommitPrefEdits")
+    fun putFloat(key: String, value: Float) {
+        with(preferences.edit()) {
+            putFloat(key, value)
+            apply()
+        }
+    }
+
+    //==END======================================Long============================================/
+
+
     //======================================Set<String>=============================================/
 
     fun getStringSet(key: String, defaultValue: Set<String>): Set<String> =
             preferences.getStringSet(key, defaultValue)
+
 
 
     @SuppressLint("CommitPrefEdits")

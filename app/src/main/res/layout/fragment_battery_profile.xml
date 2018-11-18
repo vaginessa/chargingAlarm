@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <data>
 
@@ -30,6 +31,7 @@
         android:layout_height="match_parent"
         android:background="@color/royal_blue_1"
         tools:context="com.chargingwatts.chargingalarm.ui.batteryprofile.BatteryProfileFragment"
+
         >
 
         <com.chargingwatts.chargingalarm.ui.circleprogress.CircleProgressView
@@ -37,8 +39,9 @@
             android:layout_width="@dimen/dimen_200dp"
             android:layout_height="@dimen/dimen_200dp"
             android:layout_marginStart="@dimen/dimen_16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:layout_marginBottom="@dimen/dimen_16dp"
             app:cpv_autoTextSize="true"
             app:cpv_barColor="@color/color_bat_progress_bar"
             app:cpv_barWidth="18dp"
@@ -59,6 +62,7 @@
             app:cpv_unitScale="0.75"
             app:cpv_value="@{batteryProfile.remainingPercent }"
             app:layout_constraintBottom_toTopOf="@id/iv_thermometer"
+            app:layout_constraintEnd_toStartOf="@id/tv_remaining_capacity_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.6" />
@@ -123,9 +127,8 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/text_size_14"
             app:layout_constraintBottom_toBottomOf="@id/cpv_battery_level"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tv_battery_health_label"
             app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintStart_toEndOf="@id/cpv_battery_level"
             app:layout_constraintTop_toTopOf="@id/cpv_battery_level" />
 
         <TextView
