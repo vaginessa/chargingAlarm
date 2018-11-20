@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +17,9 @@ import androidx.work.PeriodicWorkRequest
 import com.chargingwatts.chargingalarm.BaseFragment
 import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.databinding.FragmentBatteryProfileBinding
-import com.chargingwatts.chargingalarm.ui.vibrate.VibrationManager
 import com.chargingwatts.chargingalarm.util.autoCleared
 import com.chargingwatts.chargingalarm.util.battery.*
+import com.chargingwatts.chargingalarm.util.constants.IntegerDefinitions
 import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerDialog
 import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerListener
 import com.chargingwatts.chargingalarm.util.settings.SettingsManager
@@ -82,7 +81,7 @@ class BatteryProfileFragment : BaseFragment() {
         context?.let { lContext ->
             BatteryMonitoringService.startInForeground(lContext)
             uiHelper.showToast(R.string.toast_alarm_start,Toast.LENGTH_SHORT)
-            batteryAlarmManager.initateAlarm()
+            batteryAlarmManager.initateAlarm(IntegerDefinitions.ALARM_TYPE.BATTERY_HIGH_LEVEL_ALARM)
 
         }
     }
