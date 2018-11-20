@@ -10,6 +10,7 @@ import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.di.component.DaggerAppComponent
 import com.chargingwatts.chargingalarm.di.module.BatteryUpdateWorkerModule
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
+import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import javax.inject.Inject
 
@@ -22,6 +23,11 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
 
     @Inject
     lateinit var mNotificationHelper: NotificationHelper
+
+    @Inject
+    lateinit var batteryAlarmManager: BatteryAlarmManager
+    @Inject
+    lateinit var settingsManager: SettingsManager
 
     override fun doWork(): Result {
 
@@ -64,6 +70,8 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
                 mAppExecutors.diskIO().execute {
                     mBatteryProfileDaoWrapper.insert(it)
                 }
+                batteryAlarmManager.checkAlarmTypeAndStartAlarm(it,settingsManager.getSettingsProfile())
+
             }
         }
         return lBatteryProfile

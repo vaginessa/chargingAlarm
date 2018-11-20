@@ -10,6 +10,7 @@ import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.logging.EventLogger
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper
+import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import dagger.android.DaggerBroadcastReceiver
 import javax.inject.Inject
@@ -26,6 +27,10 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
     lateinit var preferenceHelper: PreferenceHelper
     @Inject
     lateinit var mNotificationHelper: NotificationHelper
+    @Inject
+    lateinit var batteryAlarmManager: BatteryAlarmManager
+    @Inject
+    lateinit var settingsManager: SettingsManager
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
@@ -69,6 +74,8 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
                     notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
                 }
                 appExecutors.diskIO().execute { batteryProfileDaoWrapper.insert(it) }
+                batteryAlarmManager.checkAlarmTypeAndStartAlarm(it,settingsManager.getSettingsProfile())
+
             }
         }
     }

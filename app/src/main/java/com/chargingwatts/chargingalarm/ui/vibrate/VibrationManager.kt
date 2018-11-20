@@ -17,6 +17,7 @@ class VibrationManager @Inject constructor(context: Context): ContextWrapper(con
 
     init {
         vibrator = context.applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
         vibratorDisabled = !(vibrator?.hasVibrator()?: false)
         if (vibratorDisabled ) {
             Log.w("VibrationManager", "System does not have a Vibrator, or the permission is disabled. " + "VibrationManager has been turned rest. Subsequent calls to static methods will have no effect.")

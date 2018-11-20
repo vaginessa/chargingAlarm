@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 const val DEFAULT_BATTERY_HIGH_LEVEL = 100
-const val DEFAULT_BATTERY_LOW_LEVEL = 20
+const val DEFAULT_BATTERY_LOW_LEVEL = 5
 const val DEFAULT_BATTERY_HIGH_TEMPERATURE = 42f
 
 @Singleton

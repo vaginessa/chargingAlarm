@@ -7,11 +7,16 @@ import android.content.IntentFilter
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
+import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BatteryChangeReciever  @Inject constructor(val batteryProfileDaoWrapper: BatteryProfileDaoWrapper, val appExecutors: AppExecutors, val notificationHelper: NotificationHelper) : BroadcastReceiver() {
+class BatteryChangeReciever  @Inject constructor(val batteryProfileDaoWrapper: BatteryProfileDaoWrapper,
+                                                 val appExecutors: AppExecutors,
+                                                 val notificationHelper: NotificationHelper,
+                                                 val settingsManager: SettingsManager,
+                                                 val batteryAlarmManager: BatteryAlarmManager) : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.let { batteryIntent ->
             val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
@@ -22,6 +27,7 @@ class BatteryChangeReciever  @Inject constructor(val batteryProfileDaoWrapper: B
                 appExecutors.diskIO().execute {
                     batteryProfileDaoWrapper.insert(it)
                 }
+                batteryAlarmManager.checkAlarmTypeAndStartAlarm(it,settingsManager.getSettingsProfile())
             }
         }
     }

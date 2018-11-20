@@ -8,12 +8,12 @@ abstract class SharedPreferenceLiveData<T>(val sharedPrefs: SharedPreferences,
                                            val defValue: T) : LiveData<T>() {
 
     init {
-        value = this.getValueFromPreferences(key, defValue)
+        postValue(this.getValueFromPreferences(key, defValue))
     }
 
     private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
         if (key == this.key) {
-            value = getValueFromPreferences(key, defValue)
+            postValue(getValueFromPreferences(key, defValue))
         }
     }
 
@@ -28,6 +28,10 @@ abstract class SharedPreferenceLiveData<T>(val sharedPrefs: SharedPreferences,
     override fun onInactive() {
         sharedPrefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
         super.onInactive()
+    }
+
+    final override fun postValue(value: T) {
+        super.postValue(value)
     }
 }
 
