@@ -3,10 +3,12 @@ package com.chargingwatts.chargingalarm.util.battery
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
+import com.chargingwatts.chargingalarm.di.AppInjector
 import com.chargingwatts.chargingalarm.di.component.DaggerAppComponent
 import com.chargingwatts.chargingalarm.di.module.BatteryUpdateWorkerModule
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
@@ -30,8 +32,7 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
     lateinit var settingsManager: SettingsManager
 
     override fun doWork(): Result {
-
-        DaggerAppComponent.builder().applicationContext(applicationContext = applicationContext).build().newBatteryUpdateWorkerComponent(BatteryUpdateWorkerModule()).inject(this)
+        AppInjector.init(this)
 
 //        val sendIntent = Intent(applicationContext, HomeActivity::class.java)
 //        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -71,6 +72,8 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
                     mBatteryProfileDaoWrapper.insert(it)
                 }
                 batteryAlarmManager.checkAlarmTypeAndStartAlarm(it,settingsManager.getSettingsProfile())
+                Log.d("HASHOO - BUW",batteryAlarmManager.hashCode().toString())
+
 
             }
         }

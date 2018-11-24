@@ -7,7 +7,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.chargingwatts.chargingalarm.ChargingAlarmApp
+import com.chargingwatts.chargingalarm.di.component.AppComponent
 import com.chargingwatts.chargingalarm.di.component.DaggerAppComponent
+import com.chargingwatts.chargingalarm.di.module.BatteryUpdateWorkerModule
+import com.chargingwatts.chargingalarm.util.battery.BatteryUpdateWorker
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
@@ -16,9 +19,12 @@ import dagger.android.support.HasSupportFragmentInjector
  * Helper class to automatically inject fragments if they implement [Injectable].
  */
 object AppInjector {
+    var appComponent: AppComponent? = null
     fun init(chargingAlarmApp: ChargingAlarmApp) {
-        DaggerAppComponent.builder().applicationContext(chargingAlarmApp)
-                .build().inject(chargingAlarmApp)
+        appComponent =
+                DaggerAppComponent.builder().applicationContext(chargingAlarmApp)
+                        .build()
+        appComponent?.inject(chargingAlarmApp)
         chargingAlarmApp
                 .registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
                     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -49,6 +55,11 @@ object AppInjector {
 
                     }
                 })
+    }
+
+
+    fun init(batteryUpdateWorker: BatteryUpdateWorker){
+        appComponent?.newBatteryUpdateWorkerComponent(BatteryUpdateWorkerModule())?.inject(batteryUpdateWorker)
     }
 
     private fun handleActivity(activity: Activity) {

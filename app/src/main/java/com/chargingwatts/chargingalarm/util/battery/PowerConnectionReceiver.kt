@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
+import android.util.Log
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.logging.EventLogger
@@ -75,6 +76,7 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
                 }
                 appExecutors.diskIO().execute { batteryProfileDaoWrapper.insert(it) }
                 batteryAlarmManager.checkAlarmTypeAndStartAlarm(it,settingsManager.getSettingsProfile())
+                Log.d("HASHOO - PCR",batteryAlarmManager.hashCode().toString())
 
             }
         }

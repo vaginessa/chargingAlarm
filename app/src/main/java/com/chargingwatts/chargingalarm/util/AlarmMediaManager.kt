@@ -33,8 +33,10 @@ class AlarmMediaManager @Inject constructor(context: Context) : ContextWrapper(c
 //                    start()
 //                }
                 if (isPlaying) {
-                    stop()
+                    return
+//                    stop()
                 }
+
                 reset()
                 setDataSource(this@AlarmMediaManager, uri)
                 prepare()
