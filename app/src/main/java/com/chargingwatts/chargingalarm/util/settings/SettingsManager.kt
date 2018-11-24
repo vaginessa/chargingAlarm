@@ -3,15 +3,15 @@ package com.chargingwatts.chargingalarm.util.settings
 import AppConstants.BATTERY_HIGH_LEVEL
 import AppConstants.BATTERY_HIGH_TEMPERATURE
 import AppConstants.BATTERY_LOW_LEVEL
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import com.chargingwatts.chargingalarm.util.preference.*
+import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper
+import com.chargingwatts.chargingalarm.util.preference.SharedPreferenceLiveData
+import com.chargingwatts.chargingalarm.util.preference.floatLiveData
+import com.chargingwatts.chargingalarm.util.preference.intLiveData
 import javax.inject.Inject
 import javax.inject.Singleton
 
 const val DEFAULT_BATTERY_HIGH_LEVEL = 100
-const val DEFAULT_BATTERY_LOW_LEVEL = 5
+const val DEFAULT_BATTERY_LOW_LEVEL = 20
 const val DEFAULT_BATTERY_HIGH_TEMPERATURE = 42f
 
 @Singleton

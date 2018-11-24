@@ -19,10 +19,11 @@
         <activity android:name=".HowToUseActivity"
             android:theme="@style/AppActivityDialogTheme"
             android:excludeFromRecents="true"
+            android:launchMode="singleTask"
             ></activity>
         <activity
             android:name=".HomeActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>

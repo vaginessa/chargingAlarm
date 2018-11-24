@@ -2,9 +2,7 @@
 
 
 import android.widget.Toast
-import androidx.annotation.IntDef
 import com.google.android.material.snackbar.Snackbar
-import java.lang.annotation.RetentionPolicy
 
 object AppConstants {
     //--------------------------SNACKBAR CONSTANTS------------------------------------------------//

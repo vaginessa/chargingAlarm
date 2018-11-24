@@ -1,10 +1,10 @@
 package com.chargingwatts.chargingalarm
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 
 class HowToUseActivity : AppCompatActivity() {
 

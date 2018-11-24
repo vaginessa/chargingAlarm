@@ -1,6 +1,5 @@
 package com.chargingwatts.chargingalarm.util.battery
 
-import com.chargingwatts.chargingalarm.util.constants.IntegerDefinitions
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -8,6 +7,7 @@ import android.net.Uri
 import com.chargingwatts.chargingalarm.HomeActivity
 import com.chargingwatts.chargingalarm.ui.vibrate.VibrationManager
 import com.chargingwatts.chargingalarm.util.AlarmMediaManager
+import com.chargingwatts.chargingalarm.util.constants.IntegerDefinitions
 import com.chargingwatts.chargingalarm.util.constants.IntegerDefinitions.ALARM_TYPE.*
 import com.chargingwatts.chargingalarm.util.settings.SettingsProfile
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
@@ -61,7 +61,6 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
 
     fun displayAlarmScreen() {
         val intent = Intent(this, HomeActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 

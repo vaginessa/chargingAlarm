@@ -25,7 +25,6 @@ import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerListene
 import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import com.chargingwatts.chargingalarm.util.ui.UIHelper
 import javax.inject.Inject
-import kotlin.Exception
 
 
 class BatteryProfileFragment : BaseFragment() {
