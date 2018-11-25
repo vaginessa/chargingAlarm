@@ -29,7 +29,7 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
     }
 
 
-    fun initateAlarm(@IntegerDefinitions.ALARM_TYPE alarmType: Int) {
+    private fun initateAlarm(@IntegerDefinitions.ALARM_TYPE alarmType: Int) {
         when ( alarmType) {
             BATTERY_HIGH_LEVEL_ALARM -> {
                 displayAlarmScreen()
@@ -76,7 +76,7 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
     }
 
     fun startVibration() {
-        vibrationManager.makePattern().beat(2000).rest(1000).playPattern(30)
+        vibrationManager.makePattern().rest(1000).beat(2000).playPattern(10)
     }
 
     fun stopVibration() {
@@ -84,6 +84,9 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
     }
 
     fun checkAlarmTypeAndStartAlarm(batteryProfile: BatteryProfile, settingsProfile: SettingsProfile) {
+        if(!settingsProfile.userAlarmPreference){
+            return
+        }
         val alarmType = checkForAlarmType(batteryProfile, settingsProfile)
         initateAlarm(alarmType)
     }

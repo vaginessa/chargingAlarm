@@ -10,7 +10,6 @@ class BatteryProfileViewModel
 @Inject constructor( private val batteryProfileRepository: BatteryProfileRepository) : ViewModel() {
      val userAlarmPreferenceLiveData = batteryProfileRepository.getUserAlarmPreference()
 
-    val isChargingPreference = batteryProfileRepository.getIsChargingPreference()
 
     val batteryProfileLiveData: LiveData<BatteryProfile> =
             batteryProfileRepository.getBatteryProfile()

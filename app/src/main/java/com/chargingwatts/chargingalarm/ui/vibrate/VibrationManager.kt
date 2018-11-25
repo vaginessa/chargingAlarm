@@ -14,6 +14,7 @@ import javax.inject.Singleton
 class VibrationManager @Inject constructor(context: Context): ContextWrapper(context) {
     private var vibrator: Vibrator? = null
     private var vibratorDisabled: Boolean = false
+    private var isPlaying = false
 
     init {
         vibrator = context.applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -25,34 +26,58 @@ class VibrationManager @Inject constructor(context: Context): ContextWrapper(con
     }
 
     private fun apiIndependentVibrate(milliseconds: Long) {
-        if (vibratorDisabled) {
+        if (vibratorDisabled || isPlaying) {
             return
         }
+        vibrator?.cancel()
 
+        isPlaying = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator?.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
             vibrator?.vibrate(milliseconds)
         }
+
+        updatePlayingFlag(milliseconds)
+
     }
 
+
+
     private fun apiIndependentVibrate(pattern: LongArray) {
-        if (vibratorDisabled) {
+        if (vibratorDisabled || isPlaying) {
             return
         }
+        vibrator?.cancel()
 
+        isPlaying = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator?.vibrate(VibrationEffect.createWaveform(pattern, -1))
         } else {
             vibrator?.vibrate(pattern, -1)
         }
+
+        var vibrateDuration = 0L
+        for( x in pattern){
+            vibrateDuration = vibrateDuration + x
+        }
+        updatePlayingFlag(vibrateDuration)
     }
 
+    private fun updatePlayingFlag(delay:Long){
+        val timer = Timer()
+        val timerTaskObj = object : TimerTask() {
+            override fun run() {
+                isPlaying = false
+            }
+        }
+        timer.schedule(timerTaskObj, delay);
+    }
     fun stop() {
         if (vibratorDisabled) {
             return
         }
-
+        isPlaying = false
         vibrator?.cancel()
     }
 

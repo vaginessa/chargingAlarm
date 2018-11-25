@@ -1,6 +1,7 @@
 package com.chargingwatts.chargingalarm.util.preference;
 
 import android.content.SharedPreferences
+import android.os.Looper
 import androidx.lifecycle.LiveData
 
 abstract class SharedPreferenceLiveData<T>(val sharedPrefs: SharedPreferences,
@@ -8,12 +9,12 @@ abstract class SharedPreferenceLiveData<T>(val sharedPrefs: SharedPreferences,
                                            val defValue: T) : LiveData<T>() {
 
     init {
-        postValue(this.getValueFromPreferences(key, defValue))
+        setPrefValue(this.getValueFromPreferences(key, defValue))
     }
 
     private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
         if (key == this.key) {
-            postValue(getValueFromPreferences(key, defValue))
+            setPrefValue(getValueFromPreferences(key, defValue))
         }
     }
 
@@ -21,7 +22,7 @@ abstract class SharedPreferenceLiveData<T>(val sharedPrefs: SharedPreferences,
 
     override fun onActive() {
         super.onActive()
-        value = getValueFromPreferences(key, defValue)
+        setPrefValue(getValueFromPreferences(key, defValue))
         sharedPrefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
     }
 
@@ -30,8 +31,13 @@ abstract class SharedPreferenceLiveData<T>(val sharedPrefs: SharedPreferences,
         super.onInactive()
     }
 
-    final override fun postValue(value: T) {
-        super.postValue(value)
+
+    fun setPrefValue(value: T) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            setValue(value)
+        } else {
+            postValue(value)
+        }
     }
 }
 

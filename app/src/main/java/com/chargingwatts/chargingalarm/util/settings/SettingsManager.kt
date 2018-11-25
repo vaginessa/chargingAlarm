@@ -3,16 +3,15 @@ package com.chargingwatts.chargingalarm.util.settings
 import AppConstants.BATTERY_HIGH_LEVEL
 import AppConstants.BATTERY_HIGH_TEMPERATURE
 import AppConstants.BATTERY_LOW_LEVEL
-import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper
-import com.chargingwatts.chargingalarm.util.preference.SharedPreferenceLiveData
-import com.chargingwatts.chargingalarm.util.preference.floatLiveData
-import com.chargingwatts.chargingalarm.util.preference.intLiveData
+import AppConstants.USER_ALARM_PREFERENCE
+import com.chargingwatts.chargingalarm.util.preference.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 const val DEFAULT_BATTERY_HIGH_LEVEL = 100
-const val DEFAULT_BATTERY_LOW_LEVEL = 20
+const val DEFAULT_BATTERY_LOW_LEVEL = 35
 const val DEFAULT_BATTERY_HIGH_TEMPERATURE = 42f
+const val DEFAULT_USER_ALARM_PREFERENCE = false
 
 @Singleton
 class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper) {
@@ -42,6 +41,14 @@ class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper
         preferenceHelper.putFloat(BATTERY_HIGH_TEMPERATURE, batteryHighTemperature)
     }
 
+    fun setUserAlarmPreference(userAlarmPreference: Boolean) {
+        preferenceHelper.putBoolean(USER_ALARM_PREFERENCE, userAlarmPreference)
+    }
+
+    fun getUserAlarmPreferenceLiveData(): SharedPreferenceLiveData<Boolean> {
+        return preferenceHelper.getNewSharedPreference().booleanLiveData(USER_ALARM_PREFERENCE, false)
+    }
+
     fun getSettingsProfile(): SettingsProfile {
         val batteryHighLevelPercent = getBatteryHighLevelPercentPreferenceLiveData().value
                 ?: DEFAULT_BATTERY_HIGH_LEVEL
@@ -49,16 +56,20 @@ class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper
                 ?: DEFAULT_BATTERY_LOW_LEVEL
         val batteryHighTemperature = getBatteryHighTemperaturePreferenceLiveData().value
                 ?: DEFAULT_BATTERY_HIGH_TEMPERATURE
-        return SettingsProfile(batteryHighLevelPercent, batteryLowLevelPercent, batteryHighTemperature)
+        val userAlarmPreference = getUserAlarmPreferenceLiveData().value
+                ?: DEFAULT_USER_ALARM_PREFERENCE
+
+        return SettingsProfile(batteryHighLevelPercent, batteryLowLevelPercent, batteryHighTemperature, userAlarmPreference)
 
     }
 
     fun getSettingsProfileLivedata(): SettingsProfileLiveData =
-         SettingsProfileLiveData(
-                getBatteryHighLevelPercentPreferenceLiveData(),
-                getBatteryLowLevelPercentPreferenceLiveData(),
-                getBatteryHighTemperaturePreferenceLiveData()
-        )
+            SettingsProfileLiveData(
+                    getBatteryHighLevelPercentPreferenceLiveData(),
+                    getBatteryLowLevelPercentPreferenceLiveData(),
+                    getBatteryHighTemperaturePreferenceLiveData(),
+                    getUserAlarmPreferenceLiveData()
+            )
 
 
 }

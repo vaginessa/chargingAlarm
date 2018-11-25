@@ -19,7 +19,6 @@ import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.databinding.FragmentBatteryProfileBinding
 import com.chargingwatts.chargingalarm.util.autoCleared
 import com.chargingwatts.chargingalarm.util.battery.*
-import com.chargingwatts.chargingalarm.util.constants.IntegerDefinitions
 import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerDialog
 import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerListener
 import com.chargingwatts.chargingalarm.util.settings.SettingsManager
@@ -80,7 +79,6 @@ class BatteryProfileFragment : BaseFragment() {
         context?.let { lContext ->
             BatteryMonitoringService.startInForeground(lContext)
             uiHelper.showToast(R.string.toast_alarm_start,Toast.LENGTH_SHORT)
-            batteryAlarmManager.initateAlarm(IntegerDefinitions.ALARM_TYPE.BATTERY_HIGH_LEVEL_ALARM)
 
         }
     }
@@ -97,7 +95,6 @@ class BatteryProfileFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         batteryProfileViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(BatteryProfileViewModel::class.java)
         binding = FragmentBatteryProfileBinding.inflate(inflater)

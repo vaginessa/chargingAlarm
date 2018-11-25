@@ -9,8 +9,6 @@ import androidx.work.WorkerParameters
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.di.AppInjector
-import com.chargingwatts.chargingalarm.di.component.DaggerAppComponent
-import com.chargingwatts.chargingalarm.di.module.BatteryUpdateWorkerModule
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
