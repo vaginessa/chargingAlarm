@@ -30,26 +30,57 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
 
 
     private fun initateAlarm(@IntegerDefinitions.ALARM_TYPE alarmType: Int) {
-        when ( alarmType) {
+        when (alarmType) {
             BATTERY_HIGH_LEVEL_ALARM -> {
-                displayAlarmScreen()
-                startAlarmTone()
-                startVibration()
+                startHighBatteryAlarm()
             }
             BATTERY_LOW_LEVEL_ALARM -> {
-                displayAlarmScreen()
-                startAlarmTone()
-                startVibration()
+                startLowBatteryAlarm()
             }
             BATTERY_HIGH_TEMPERATURE_ALARM -> {
-                displayAlarmScreen()
-                startAlarmTone()
-                startVibration()
+                startHighTemperatureAlarm()
             }
-            NONE->{
+            NONE -> {
 
             }
         }
+
+    }
+
+    fun startHighBatteryAlarm() {
+        displayAlarmScreen()
+//                startAlarmTone()
+        startVibration()
+    }
+
+    fun startLowBatteryAlarm() {
+        displayAlarmScreen()
+//                startAlarmTone()
+        startVibration()
+    }
+
+    fun startHighTemperatureAlarm() {
+        displayAlarmScreen()
+//                startAlarmTone()
+        startVibration()
+    }
+
+    fun stopHighBatteryAlarm() {
+        stopAlarm()
+    }
+
+    fun stopLowBatteryAlarm() {
+        stopAlarm()
+
+    }
+
+    fun stopHighTemperatureAlarm() {
+        stopAlarm()
+
+    }
+
+    fun stopAllAlarms() {
+        stopAlarm()
 
     }
 
@@ -59,8 +90,17 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
         stopVibration()
     }
 
+
+    fun stopIfHighBatteryAlarm(batteryProfile: BatteryProfile, settingsProfile: SettingsProfile) {
+        if (checkForAlarmType(batteryProfile, settingsProfile) == BATTERY_HIGH_LEVEL_ALARM) {
+            stopHighBatteryAlarm()
+        }
+    }
+
+
     fun displayAlarmScreen() {
         val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 
@@ -84,7 +124,7 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
     }
 
     fun checkAlarmTypeAndStartAlarm(batteryProfile: BatteryProfile, settingsProfile: SettingsProfile) {
-        if(!settingsProfile.userAlarmPreference){
+        if (!settingsProfile.userAlarmPreference) {
             return
         }
         val alarmType = checkForAlarmType(batteryProfile, settingsProfile)
@@ -92,10 +132,10 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
     }
 
 
-    fun checkForAlarmType(batteryProfile: BatteryProfile, settingsProfile: SettingsProfile):  Int {
+    fun checkForAlarmType(batteryProfile: BatteryProfile, settingsProfile: SettingsProfile): Int {
 
         return when {
-            isHighBatteryAlarm(batteryProfile.remainingPercent, settingsProfile.batteryHighLevelPercent) ->
+            isHighBatteryAlarm(batteryProfile, settingsProfile.batteryHighLevelPercent) ->
                 BATTERY_HIGH_LEVEL_ALARM
             isLowBatteryAlarm(batteryProfile.remainingPercent, settingsProfile.batteryLowLevelPercent) ->
                 BATTERY_LOW_LEVEL_ALARM
@@ -105,9 +145,9 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
         }
     }
 
-    fun isHighBatteryAlarm(remainingPercent: Int?, batteryHighLevelPercent: Int): Boolean {
-        remainingPercent?.let {
-            if (it >= batteryHighLevelPercent) {
+    fun isHighBatteryAlarm(batteryProfile: BatteryProfile, batteryHighLevelPercent: Int): Boolean {
+        batteryProfile.let { bProfile ->
+            if (bProfile.isCharging != null && bProfile.remainingPercent != null && bProfile.remainingPercent >= batteryHighLevelPercent) {
                 return true
             }
         }

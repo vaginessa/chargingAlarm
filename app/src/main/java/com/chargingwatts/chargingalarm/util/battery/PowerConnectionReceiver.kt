@@ -17,6 +17,12 @@ import dagger.android.DaggerBroadcastReceiver
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/*
+As part of the Android 8.0 (API level 26) Background Execution Limits, apps that target the API
+level 26 or higher can no longer register broadcast receivers for implicit broadcasts in their
+manifest. However, several broadcasts are currently exempted from these limitations. PowerConnection
+Reciever is not in these limitations
+ */
 @Singleton
 class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() {
 
@@ -35,50 +41,51 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
-        if(intent == null){
+
+
+        if (intent == null) {
             return
         }
-        EventLogger.logPowerConnectionEvent()
-        if(intent.action == Intent.ACTION_POWER_CONNECTED){
-            context?.let{
-                BatteryMonitoringService.startInForeground(it)
-            }
-            preferenceHelper.putBoolean(AppConstants.IS_CHARGING_PREFERENCE,true)
-        }
-        else if(intent.action == Intent.ACTION_POWER_DISCONNECTED){
-            context?.let{
-                BatteryMonitoringService.stopService(it)
-            }
-            preferenceHelper.putBoolean(AppConstants.IS_CHARGING_PREFERENCE,false)
-        }
-
-        val batteryProfile: BatteryProfile? = BatteryProfileUtils.extractBatteryProfileFromIntent(intent, context)
-
-
-        val isCharging: Boolean = batteryProfile?.batteryStatusType == BatteryManager.BATTERY_STATUS_CHARGING
-                || batteryProfile?.batteryStatusType == BatteryManager.BATTERY_STATUS_FULL
-
         context?.let {
             updateBatteryProfile(context)
         }
+        EventLogger.logPowerConnectionEvent()
+        if (intent.action == Intent.ACTION_POWER_CONNECTED) {
+            context?.let {
+                BatteryMonitoringService.startInForeground(it)
+            }
+            preferenceHelper.putBoolean(AppConstants.IS_CHARGING_PREFERENCE, true)
+        } else if (intent.action == Intent.ACTION_POWER_DISCONNECTED) {
+            context?.let {
+                getBatteryProfile(context)?.let {
+                    batteryAlarmManager.stopIfHighBatteryAlarm(it, settingsManager.getSettingsProfile())
+                }
+            }
+            preferenceHelper.putBoolean(AppConstants.IS_CHARGING_PREFERENCE, false)
+        }
     }
 
-    fun updateBatteryProfile(context: Context) {
+    private fun getBatteryProfile(context: Context): BatteryProfile? {
+        var batteryProfile: BatteryProfile? = null
         val intent: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
             context.registerReceiver(null, ifilter)
         }
-
         intent?.let { batteryIntent ->
-            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
-            batteryProfile?.let {
-                mNotificationHelper.apply {
-                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
-                }
-                appExecutors.diskIO().execute { batteryProfileDaoWrapper.insert(it) }
-                batteryAlarmManager.checkAlarmTypeAndStartAlarm(it,settingsManager.getSettingsProfile())
-                Log.d("HASHOO - PCR",batteryAlarmManager.hashCode().toString())
+            batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
+        }
+        return batteryProfile
+    }
 
+
+    private fun updateBatteryProfile(context: Context) {
+        getBatteryProfile(context)?.let {
+            mNotificationHelper.apply {
+                notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, it), ""))
             }
+            appExecutors.diskIO().execute { batteryProfileDaoWrapper.insert(it) }
+            batteryAlarmManager.checkAlarmTypeAndStartAlarm(it, settingsManager.getSettingsProfile())
+            Log.d("HASHOO - PCR", batteryAlarmManager.hashCode().toString())
+
         }
     }
 }

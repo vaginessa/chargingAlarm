@@ -78,7 +78,7 @@ class BatteryProfileFragment : BaseFragment() {
     fun startAlarm() {
         context?.let { lContext ->
             BatteryMonitoringService.startInForeground(lContext)
-            uiHelper.showToast(R.string.toast_alarm_start,Toast.LENGTH_SHORT)
+            uiHelper.showToast(R.string.toast_alarm_start, Toast.LENGTH_SHORT)
 
         }
     }
@@ -86,8 +86,8 @@ class BatteryProfileFragment : BaseFragment() {
     fun stopAlarm() {
         context?.let { lContext ->
             BatteryMonitoringService.stopService(lContext)
-            uiHelper.showToast(R.string.toast_alarm_stop,Toast.LENGTH_SHORT)
-            batteryAlarmManager.stopAlarm()
+            uiHelper.showToast(R.string.toast_alarm_stop, Toast.LENGTH_SHORT)
+            batteryAlarmManager.stopAllAlarms()
 
         }
     }
@@ -131,8 +131,7 @@ class BatteryProfileFragment : BaseFragment() {
         context?.let {
             try {
                 batteryChangeReciever.registerReciever(it)
-            }
-            catch (exception:Exception){
+            } catch (exception: Exception) {
 
             }
         }
@@ -145,15 +144,14 @@ class BatteryProfileFragment : BaseFragment() {
             try {
                 batteryChangeReciever.unregisterReciever(it)
 
-            }
-            catch (exception: Exception){
+            } catch (exception: Exception) {
 
             }
         }
     }
 
 
-     fun openRingtonPickerDialog(){
+    fun openRingtonPickerDialog() {
         if (ActivityCompat.checkSelfPermission(context!!,
                         Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
@@ -185,7 +183,7 @@ class BatteryProfileFragment : BaseFragment() {
                     .setPlaySampleWhileSelection(true)
 
                     //Set the callback listener.
-                    .setListener(object :RingtonePickerListener{
+                    .setListener(object : RingtonePickerListener {
                         override fun OnRingtoneSelected(ringtoneName: String, ringtoneUri: Uri?) {
                             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                         }
@@ -201,7 +199,7 @@ class BatteryProfileFragment : BaseFragment() {
 //            if (ringtoneCb.isChecked())
 //                ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_RINGTONE)
 //            if (alarmCb.isChecked())
-                ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_ALARM)
+            ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_ALARM)
 
             //Display the dialog.
             ringtonePickerBuilder.show()
