@@ -5,6 +5,7 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.net.Uri
 import com.chargingwatts.chargingalarm.HomeActivity
+import com.chargingwatts.chargingalarm.di.AppInjector
 import com.chargingwatts.chargingalarm.ui.vibrate.VibrationManager
 import com.chargingwatts.chargingalarm.util.AlarmMediaManager
 import com.chargingwatts.chargingalarm.util.constants.IntegerDefinitions
@@ -14,16 +15,19 @@ import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
 @Singleton
 class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper(context) {
     private lateinit var alarmMediaManager: AlarmMediaManager
     private lateinit var vibrationManager: VibrationManager
+    private var isAlarmScreenVisible = false
 
 
     init {
-        applicationContext.let {
-            alarmMediaManager = AlarmMediaManager(it)
-            vibrationManager = VibrationManager(it)
+        applicationContext.apply {
+            alarmMediaManager = AlarmMediaManager(this)
+            vibrationManager = VibrationManager(this)
+
 
         }
     }
@@ -49,19 +53,19 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
 
     fun startHighBatteryAlarm() {
         displayAlarmScreen()
-//                startAlarmTone()
+        startAlarmTone()
         startVibration()
     }
 
     fun startLowBatteryAlarm() {
         displayAlarmScreen()
-//                startAlarmTone()
+        startAlarmTone()
         startVibration()
     }
 
     fun startHighTemperatureAlarm() {
         displayAlarmScreen()
-//                startAlarmTone()
+        startAlarmTone()
         startVibration()
     }
 
@@ -99,9 +103,17 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
 
 
     fun displayAlarmScreen() {
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
+        if (!AppInjector.isAlarmScreenVisible()) {
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+
+//        NotificationHelper(this).apply {
+//            notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getHighBatteryNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, null), ""))
+//        }
+
     }
 
     fun startAlarmTone() {

@@ -125,8 +125,10 @@ class BatteryProfileFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+
+
+    override fun onResume() {
+        super.onResume()
         periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
         context?.let {
             try {
@@ -135,11 +137,12 @@ class BatteryProfileFragment : BaseFragment() {
 
             }
         }
+
     }
 
-    override fun onStop() {
-        super.onStop()
-        periodicBatteryUpdater.stopPeriodicBatteryUpdate()
+    override fun onPause() {
+        super.onPause()
+//        periodicBatteryUpdater.stopPeriodicBatteryUpdate()
         context?.let {
             try {
                 batteryChangeReciever.unregisterReciever(it)
@@ -149,6 +152,7 @@ class BatteryProfileFragment : BaseFragment() {
             }
         }
     }
+
 
 
     fun openRingtonPickerDialog() {
