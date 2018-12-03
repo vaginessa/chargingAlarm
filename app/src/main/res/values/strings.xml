@@ -3,6 +3,7 @@
     <string name="base_api_url">http://private-e8a06-feprofile.apiary-mock.com</string>
     <string name="retry">Retry</string>
     <string name="unknown_error">unknown error</string>
+    <string name="show_default">Default</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
@@ -60,7 +61,6 @@
     <string name="ringtone_picker_default_title">Select ringtone</string>
     <string name="title_default_list_item">Default</string>
     <string name="title_silent_list_item">Silent</string>
-    <string name="show_battery_detail">Battery Detail</string>
     <string name="show_battery_level">Battery Level</string>
     <string name="show_plugged">Plugged</string>
     <string name="show_charging_status">Charging Status</string>
@@ -77,6 +77,23 @@
     <string name="cd_battery_health_icon">Battery Health Icon</string>
     <string name="cd_alarm_start_stop_icon">Alarm Start/Stop Icon</string>
     <string name="cd_application_settings_icon">Application Settings Icon</string>
+
+
+    <!--Settings Screen Labels -->
+    <string name="label_threshold_levels">Threshold Levels</string>
+    <string name="label_battery_high_level">Full Battery Alarm Level</string>
+    <string name="summary_battery_high_level">Alert at Selected battery level</string>
+
+    <string name="label_battery_low_level">Low Battery Level</string>
+    <string name="summary_battery_low_level">Alert at Selected battery level</string>
+
+    <string name="label_battery_high_temperature">Battery Temperature Warning Level</string>
+    <string name="summary_battery_high_temperature">Alert at Selected battery Temperature </string>
+
+
+    <!--Drawer Items -->
+    <string name="show_battery_detail">Battery Detail</string>
+
 
 
 </resources>

@@ -2,6 +2,7 @@ package com.chargingwatts.chargingalarm.di
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -88,14 +89,13 @@ object AppInjector {
             activity.supportFragmentManager
                     .registerFragmentLifecycleCallbacks(
                             object : FragmentManager.FragmentLifecycleCallbacks() {
-                                override fun onFragmentCreated(
-                                        fm: FragmentManager,
-                                        f: Fragment,
-                                        savedInstanceState: Bundle?
-                                ) {
+                                override fun onFragmentPreAttached(fm: FragmentManager, f: Fragment, context: Context) {
+                                    Log.d(AppInjector.javaClass.simpleName, f.javaClass.simpleName + "- onFragmentPreAttached")
+
                                     if (f is Injectable) {
                                         AndroidSupportInjection.inject(f)
                                     }
+
                                 }
                             }, true
                     )

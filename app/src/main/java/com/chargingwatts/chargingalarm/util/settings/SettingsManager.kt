@@ -8,8 +8,9 @@ import com.chargingwatts.chargingalarm.util.preference.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
-const val DEFAULT_BATTERY_HIGH_LEVEL = 50
-const val DEFAULT_BATTERY_LOW_LEVEL = 14
+const val DEFAULT_BATTERY_HIGH_LEVEL = 100
+const val DEFAULT_BATTERY_LOW_LEVEL = 15
+//keep this temperature between 30 and 45
 const val DEFAULT_BATTERY_HIGH_TEMPERATURE = 42f
 const val DEFAULT_USER_ALARM_PREFERENCE = false
 

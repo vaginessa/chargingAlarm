@@ -45,6 +45,7 @@ class BatteryAlarmManager @Inject constructor(context: Context) : ContextWrapper
                 startHighTemperatureAlarm()
             }
             NONE -> {
+                stopAllAlarms()
 
             }
         }

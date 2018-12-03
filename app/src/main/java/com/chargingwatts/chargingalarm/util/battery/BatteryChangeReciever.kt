@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.util.Log
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
+import com.chargingwatts.chargingalarm.util.logging.LoggingHelper
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import javax.inject.Inject
@@ -21,6 +22,8 @@ class BatteryChangeReciever  @Inject constructor(val batteryProfileDaoWrapper: B
 
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        LoggingHelper.d(AppConstants.LOG_CHARGING_ALARM,BatteryChangeReciever::class.java.simpleName + " - onReceive")
+
         intent?.let { batteryIntent ->
             val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
             batteryProfile?.let {

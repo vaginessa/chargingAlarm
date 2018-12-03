@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ACTIVATE_VIBRATION_MODE">activate_vibration_mode</string>
+    <string name="AUTO_STARTUP_ON_BOOT">auto_startup_on_boot</string>
+    <string name="THRESHOLD_LEVELS">threshold_levels</string>
+    <string name="BATTERY_HIGH_LEVEL">battery_high_level</string>
+    <string name="BATTERY_LOW_LEVEL">battery_low_level</string>
+    <string name="BATTERY_HIGH_TEMPERATURE">battery_high_Temperature</string>
+
+
+
+
+
+</resources>

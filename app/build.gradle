@@ -118,7 +118,7 @@ dependencies {
     kapt deps.dagger.compiler
     kapt 'androidx.room:room-compiler:2.1.0-alpha02'
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
-
+    implementation 'androidx.preference:preference:1.0.0'
 //    testImplementation deps.junit
 //    testImplementation deps.mock_web_server
 //    testImplementation(deps.arch_core.testing, {

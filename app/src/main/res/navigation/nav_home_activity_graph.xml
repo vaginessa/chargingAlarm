@@ -22,6 +22,11 @@
         android:name="com.chargingwatts.chargingalarm.ui.batterydetail.BatteryDetailFragment"
         android:label="fragment_battery_detail"
         tools:layout="@layout/fragment_battery_detail" />
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.chargingwatts.chargingalarm.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+         />
     <activity
         android:id="@+id/how_to_use_activity"
         android:name="com.chargingwatts.chargingalarm.HowToUseActivity"

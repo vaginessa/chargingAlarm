@@ -36,7 +36,7 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
 //        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 //        getApplicationContext().startActivity(sendIntent)
 
-
+        Log.d("CALLED - BUW", "CALLED")
         val lBatteryProfile = updateBatteryProfile()
         lBatteryProfile?.isCharging?.apply {
             when (this) {

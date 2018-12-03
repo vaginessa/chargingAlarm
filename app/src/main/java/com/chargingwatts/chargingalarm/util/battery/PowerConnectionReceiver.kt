@@ -9,6 +9,7 @@ import android.util.Log
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.logging.EventLogger
+import com.chargingwatts.chargingalarm.util.logging.LoggingHelper
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper
 import com.chargingwatts.chargingalarm.util.settings.SettingsManager
@@ -41,6 +42,8 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
+        LoggingHelper.d(AppConstants.LOG_CHARGING_ALARM,PowerConnectionReceiver::class.java.simpleName + " - onReceive")
+
 
 
         if (intent == null) {

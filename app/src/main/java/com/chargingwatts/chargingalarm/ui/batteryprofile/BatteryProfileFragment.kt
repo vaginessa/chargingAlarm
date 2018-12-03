@@ -23,6 +23,7 @@ import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerDialog
 import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerListener
 import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import com.chargingwatts.chargingalarm.util.ui.UIHelper
+import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import javax.inject.Inject
 
 
@@ -45,7 +46,7 @@ class BatteryProfileFragment : BaseFragment() {
     var binding by autoCleared<FragmentBatteryProfileBinding>()
 
     var mediaPlayer: MediaPlayer? = null
-
+    var mBatteryProfile: BatteryProfile? = null
     val callback = object : View.OnClickListener {
         override fun onClick(view: View?) {
             when (view?.id) {
@@ -77,7 +78,12 @@ class BatteryProfileFragment : BaseFragment() {
 
     fun startAlarm() {
         context?.let { lContext ->
-            BatteryMonitoringService.startInForeground(lContext)
+            mBatteryProfile?.isCharging?.apply {
+                if (true){
+                    BatteryMonitoringService.startInForeground(lContext)
+                    periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
+                }
+            }
             uiHelper.showToast(R.string.toast_alarm_start, Toast.LENGTH_SHORT)
 
         }
@@ -103,6 +109,7 @@ class BatteryProfileFragment : BaseFragment() {
         val lUserAlarmPreferenceLiveData = batteryProfileViewModel.userAlarmPreferenceLiveData
         lBatteryProfileLiveData.observe(this, Observer { lBatteryProfile ->
             binding.batteryProfile = lBatteryProfile
+            mBatteryProfile = lBatteryProfile
         })
 
         lUserAlarmPreferenceLiveData.observe(this, Observer { lUserAlarmPreference ->
@@ -124,7 +131,6 @@ class BatteryProfileFragment : BaseFragment() {
 
         return binding.root
     }
-
 
 
     override fun onResume() {
@@ -152,7 +158,6 @@ class BatteryProfileFragment : BaseFragment() {
             }
         }
     }
-
 
 
     fun openRingtonPickerDialog() {
