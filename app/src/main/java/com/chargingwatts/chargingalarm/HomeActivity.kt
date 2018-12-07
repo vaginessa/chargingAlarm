@@ -10,12 +10,21 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
+import androidx.work.PeriodicWorkRequest
+import com.chargingwatts.chargingalarm.util.battery.BATTERY_WORKER_REQUEST_TAG
+import com.chargingwatts.chargingalarm.util.battery.BatteryChangeReciever
+import com.chargingwatts.chargingalarm.util.battery.PeriodicBatteryUpdater
 import com.google.android.material.navigation.NavigationView
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity() {
     @Inject
     lateinit var appExecutors: AppExecutors
+
+    @Inject
+    lateinit var periodicBatteryUpdater: PeriodicBatteryUpdater
+    @Inject
+    lateinit var batteryChangeReciever: BatteryChangeReciever
 
 
     var navController: NavController? = null
@@ -39,6 +48,26 @@ class HomeActivity : BaseActivity() {
             setupNavigationMenu(it)
         }
 //        navController?.navigate(R.id.battery_detail_fragment)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
+            try {
+                batteryChangeReciever.registerReciever(this)
+            } catch (exception: Exception) {
+
+            }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        try {
+            batteryChangeReciever.unregisterReciever(this)
+
+        } catch (exception: Exception) {
+
+        }
     }
 
 

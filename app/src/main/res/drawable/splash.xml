@@ -2,17 +2,13 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:opacity="opaque">
     <item android:drawable="@color/colorPrimary" />
-    <item>
-        <shape xmlns:android="http://schemas.android.com/apk/res/android"
-            android:innerRadiusRatio="2.5"
-            android:shape="ring"
-            android:thickness="9dp"
-            android:useLevel="false">
-
-            <solid android:color="#CCC" />
-
-        </shape>
-
-    </item>
-
+    <!--<item>-->
+        <!--<shape xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:innerRadiusRatio="2.5"-->
+            <!--android:shape="ring"-->
+            <!--android:thickness="9dp"-->
+            <!--android:useLevel="false">-->
+            <!--<solid android:color="#CCC" />-->
+        <!--</shape>-->
+    <!--</item>-->
 </layer-list>

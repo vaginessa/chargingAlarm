@@ -3,6 +3,9 @@ package com.chargingwatts.chargingalarm.util.settings
 import AppConstants.BATTERY_HIGH_LEVEL
 import AppConstants.BATTERY_HIGH_TEMPERATURE
 import AppConstants.BATTERY_LOW_LEVEL
+import AppConstants.IS_SOUND_ENABLED
+import AppConstants.IS_VIBRATION_ENABLED
+import AppConstants.RING_ON_SILENT_MODE
 import AppConstants.USER_ALARM_PREFERENCE
 import com.chargingwatts.chargingalarm.util.preference.*
 import javax.inject.Inject
@@ -13,6 +16,11 @@ const val DEFAULT_BATTERY_LOW_LEVEL = 15
 //keep this temperature between 30 and 45
 const val DEFAULT_BATTERY_HIGH_TEMPERATURE = 42f
 const val DEFAULT_USER_ALARM_PREFERENCE = false
+const val DEFAULT_IS_VIBRATION_ENABLED = true
+const val DEFAULT_IS_SOUND_ENABLED = true
+const val DEFAULT_RING_IN_SILENT_MODE = true
+
+
 
 @Singleton
 class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper) {
@@ -66,13 +74,51 @@ class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper
         return preferenceHelper.getBoolean(USER_ALARM_PREFERENCE, DEFAULT_USER_ALARM_PREFERENCE)
     }
 
-    fun getSettingsProfile(): SettingsProfile {
+    fun setVibrationPreference(vibrationPreference:Boolean){
+        preferenceHelper.putBoolean(IS_VIBRATION_ENABLED, vibrationPreference)
+    }
+
+    fun getVibrationPreferenceLiveData(): SharedPreferenceLiveData<Boolean> {
+        return preferenceHelper.getNewSharedPreference().booleanLiveData(IS_VIBRATION_ENABLED, DEFAULT_IS_VIBRATION_ENABLED)
+    }
+
+    fun getVibrationPreference(): Boolean {
+        return preferenceHelper.getBoolean(IS_VIBRATION_ENABLED, DEFAULT_IS_VIBRATION_ENABLED)
+    }
+
+    fun getRingOnSilentModePreferenceLiveData(): SharedPreferenceLiveData<Boolean> {
+        return preferenceHelper.getNewSharedPreference().booleanLiveData(RING_ON_SILENT_MODE, DEFAULT_RING_IN_SILENT_MODE)
+    }
+
+    fun getRingOnSilentModePreference(): Boolean {
+        return preferenceHelper.getBoolean(RING_ON_SILENT_MODE, DEFAULT_RING_IN_SILENT_MODE)
+    }
+
+    fun setRingOnSilentModePreference(ringOnSilentModePreference:Boolean){
+        preferenceHelper.putBoolean(RING_ON_SILENT_MODE, ringOnSilentModePreference)
+    }
+    fun setSoundPreference(vibrationPreference:Boolean){
+        preferenceHelper.putBoolean(IS_SOUND_ENABLED, vibrationPreference)
+    }
+
+    fun getSoundPreferenceLiveData(): SharedPreferenceLiveData<Boolean> {
+        return preferenceHelper.getNewSharedPreference().booleanLiveData(IS_SOUND_ENABLED, DEFAULT_IS_SOUND_ENABLED)
+    }
+
+    fun getSoundPreference(): Boolean {
+        return preferenceHelper.getBoolean(IS_SOUND_ENABLED,DEFAULT_IS_SOUND_ENABLED)
+    }
+    fun  getSettingsProfile(): SettingsProfile {
         val batteryHighLevelPercent = getBatteryHighLevelPercentPreference()
         val batteryLowLevelPercent = getBatteryLowLevelPercentPreference()
         val batteryHighTemperature = getBatteryHighTemperaturePreference()
         val userAlarmPreference = getUserAlarmPreference()
+        val isVibrationEnabled = getVibrationPreference()
+        val isSoundEnabled = getSoundPreference()
+        val ringOnSilentMode = getRingOnSilentModePreference()
 
-        return SettingsProfile(batteryHighLevelPercent, batteryLowLevelPercent, batteryHighTemperature, userAlarmPreference)
+        return SettingsProfile(batteryHighLevelPercent, batteryLowLevelPercent, batteryHighTemperature,
+                userAlarmPreference, isVibrationEnabled, isSoundEnabled, getRingOnSilentModePreference())
 
     }
 
@@ -81,7 +127,10 @@ class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper
                     getBatteryHighLevelPercentPreferenceLiveData(),
                     getBatteryLowLevelPercentPreferenceLiveData(),
                     getBatteryHighTemperaturePreferenceLiveData(),
-                    getUserAlarmPreferenceLiveData()
+                    getUserAlarmPreferenceLiveData(),
+                    getVibrationPreferenceLiveData(),
+                    getSoundPreferenceLiveData(),
+                    getRingOnSilentModePreferenceLiveData()
             )
 
 

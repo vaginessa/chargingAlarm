@@ -4,11 +4,7 @@ import AppConstants
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.preference.ListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.*
 import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.di.Injectable
 import com.chargingwatts.chargingalarm.util.settings.DEFAULT_BATTERY_HIGH_LEVEL
@@ -36,6 +32,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         lContext = preferenceManager.context
         val screen = preferenceManager.createPreferenceScreen(lContext)
+        screen.addPreference(createVibrationModePreference())
+        screen.addPreference(createSoundPreference())
+        screen.addPreference(createRingOnSilentModePreference())
+
         val thresholdPrefCategory = createBatteryThresholdPrefCategory()
         screen.addPreference(thresholdPrefCategory)
 
@@ -223,12 +223,12 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
 
         val entryArray: Array<String> = Array(noOfSteps) { i ->
             if (defaultValueIndex < 0 && i == (noOfSteps - 1)) {
-                endValue.toString() + " %" + " (" + context?.getString(R.string.show_default) + ")"
+                endValue.toString() + context?.getString(R.string.show_degree) + " (" + context?.getString(R.string.show_default) + ")"
             } else if (defaultValueIndex > 0 && defaultValueIndex == i) {
-                Integer.toString(i * stepSize + startValue) + " %" + " (" + context?.getString(R.string.show_default) + ")"
+                Integer.toString(i * stepSize + startValue) + context?.getString(R.string.show_degree) + " (" + context?.getString(R.string.show_default) + ")"
 
             } else {
-                Integer.toString(i * stepSize + startValue) + " %"
+                Integer.toString(i * stepSize + startValue) + context?.getString(R.string.show_degree)
             }
         }
 
@@ -263,4 +263,41 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
             context?.getString(R.string.summary_battery_high_temperature) + " : " +
                     curentSelectedTemp + context?.getString(R.string.show_degree)
 
+
+
+    private fun createVibrationModePreference(): CheckBoxPreference{
+        val vibrationPref = CheckBoxPreference(context)
+        vibrationPref.key = AppConstants.IS_VIBRATION_ENABLED
+        vibrationPref.title = "Activate Vibration Mode"
+        vibrationPref.setDefaultValue(settingsManager.getVibrationPreference())
+        vibrationPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+        settingsManager.setVibrationPreference(newValue as Boolean)
+            true
+        }
+        return  vibrationPref
+    }
+
+    private fun createSoundPreference(): CheckBoxPreference{
+        val soundPref = CheckBoxPreference(context)
+        soundPref.key = AppConstants.IS_SOUND_ENABLED
+        soundPref.title = "Activate Sound Mode"
+        soundPref.setDefaultValue(settingsManager.getVibrationPreference())
+        soundPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+            settingsManager.setSoundPreference(newValue as Boolean)
+            true
+        }
+        return  soundPref
+    }
+
+    private fun createRingOnSilentModePreference(): CheckBoxPreference{
+        val silentModePref = CheckBoxPreference(context)
+        silentModePref.key = AppConstants.RING_ON_SILENT_MODE
+        silentModePref.title = "Ring Alarm in silent Mode"
+        silentModePref.setDefaultValue(settingsManager.getRingOnSilentModePreference())
+        silentModePref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+            settingsManager.setRingOnSilentModePreference(newValue as Boolean)
+            true
+        }
+        return  silentModePref
+    }
 }

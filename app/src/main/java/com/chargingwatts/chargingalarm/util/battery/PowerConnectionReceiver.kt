@@ -37,8 +37,6 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
     lateinit var mNotificationHelper: NotificationHelper
     @Inject
     lateinit var batteryAlarmManager: BatteryAlarmManager
-    @Inject
-    lateinit var settingsManager: SettingsManager
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
@@ -61,7 +59,7 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
         } else if (intent.action == Intent.ACTION_POWER_DISCONNECTED) {
             context?.let {
                 getBatteryProfile(context)?.let {
-                    batteryAlarmManager.stopIfHighBatteryAlarm(it, settingsManager.getSettingsProfile())
+                    batteryAlarmManager.stopIfHighBatteryAlarm(it)
                 }
             }
             preferenceHelper.putBoolean(AppConstants.IS_CHARGING_PREFERENCE, false)
@@ -86,7 +84,7 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
                 notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, it), ""))
             }
             appExecutors.diskIO().execute { batteryProfileDaoWrapper.insert(it) }
-            batteryAlarmManager.checkAlarmTypeAndStartAlarm(it, settingsManager.getSettingsProfile())
+            batteryAlarmManager.checkAlarmTypeAndStartAlarm(it)
             Log.d("HASHOO - PCR", batteryAlarmManager.hashCode().toString())
 
         }

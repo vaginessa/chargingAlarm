@@ -7,13 +7,19 @@ import com.chargingwatts.chargingalarm.util.preference.SharedPreferenceLiveData
 class SettingsProfileLiveData(private val batteryHighLevelPercentPreferenceLiveData: SharedPreferenceLiveData<Int>,
                               private val batteryLowLevelPercentPreferenceLiveData: SharedPreferenceLiveData<Int>,
                               private val batteryHighTemperaturePreferenceLiveData: SharedPreferenceLiveData<Float>,
-                              private val userAlarmPreferenceLiveData: SharedPreferenceLiveData<Boolean>) : LiveData<SettingsProfile>() {
+                              private val userAlarmPreferenceLiveData: SharedPreferenceLiveData<Boolean>,
+                              private val vibrationPreferenceLiveData: SharedPreferenceLiveData<Boolean>,
+                              private val soundPreferenceLiveData: SharedPreferenceLiveData<Boolean>,
+                              private val ringOnSilentModePreferenceLiveData: SharedPreferenceLiveData<Boolean>) : LiveData<SettingsProfile>() {
 
     init {
         value = SettingsProfile(batteryHighLevelPercentPreferenceLiveData.value!!,
                 batteryLowLevelPercentPreferenceLiveData.value!!,
                 batteryHighTemperaturePreferenceLiveData.value!!,
-                userAlarmPreferenceLiveData.value!!
+                userAlarmPreferenceLiveData.value!!,
+                vibrationPreferenceLiveData.value!!,
+                soundPreferenceLiveData.value!!,
+                ringOnSilentModePreferenceLiveData.value!!
         )
     }
 
@@ -55,6 +61,25 @@ class SettingsProfileLiveData(private val batteryHighLevelPercentPreferenceLiveD
         newSettingsProfileCopy?.userAlarmPreference = it
         value = newSettingsProfileCopy
     }
+    private val vibrationPreferenceObserver = Observer<Boolean> {
+        val oldSettingsProfile = value
+        val newSettingsProfileCopy = oldSettingsProfile
+        newSettingsProfileCopy?.isVibrationPreference = it
+        value = newSettingsProfileCopy
+    }
+    private val soundPreferenceObserver = Observer<Boolean> {
+        val oldSettingsProfile = value
+        val newSettingsProfileCopy = oldSettingsProfile
+        newSettingsProfileCopy?.isSoundPreference = it
+        value = newSettingsProfileCopy
+    }
+
+    private val ringOnSilentModePreferenceObserver = Observer<Boolean> {
+        val oldSettingsProfile = value
+        val newSettingsProfileCopy = oldSettingsProfile
+        newSettingsProfileCopy?.ringOnSilentMode = it
+        value = newSettingsProfileCopy
+    }
 
 
     private fun observeSettingsProfileChanges() {
@@ -62,6 +87,9 @@ class SettingsProfileLiveData(private val batteryHighLevelPercentPreferenceLiveD
         batteryLowLevelPercentPreferenceLiveData.observeForever(batteryLowLevelPercentObserver)
         batteryHighTemperaturePreferenceLiveData.observeForever(batteryHighTemperatureObserver)
         userAlarmPreferenceLiveData.observeForever(userAlarmPreferenceObserver)
+        vibrationPreferenceLiveData.observeForever(vibrationPreferenceObserver)
+        soundPreferenceLiveData.observeForever(soundPreferenceObserver)
+        ringOnSilentModePreferenceLiveData.observeForever(ringOnSilentModePreferenceObserver)
     }
 
     private fun removeSettingsProfileObservers() {
@@ -69,7 +97,9 @@ class SettingsProfileLiveData(private val batteryHighLevelPercentPreferenceLiveD
         batteryLowLevelPercentPreferenceLiveData.removeObserver(batteryLowLevelPercentObserver)
         batteryHighTemperaturePreferenceLiveData.removeObserver(batteryHighTemperatureObserver)
         userAlarmPreferenceLiveData.removeObserver(userAlarmPreferenceObserver)
-
+        vibrationPreferenceLiveData.removeObserver(vibrationPreferenceObserver)
+        soundPreferenceLiveData.removeObserver(soundPreferenceObserver)
+        ringOnSilentModePreferenceLiveData.removeObserver(ringOnSilentModePreferenceObserver)
     }
 
 }

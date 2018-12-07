@@ -8,11 +8,18 @@ import android.util.Log
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
+import android.media.AudioManager
+
+
 
 @Singleton
 class AlarmMediaManager @Inject constructor(context: Context) : ContextWrapper(context) {
-
+    lateinit var audioManager:AudioManager
+    init {
+        audioManager  = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    }
     private var mMediaPlayer: MediaPlayer? = null
+
 
 
     fun playAlarmSound(uri: Uri) {
@@ -21,6 +28,13 @@ class AlarmMediaManager @Inject constructor(context: Context) : ContextWrapper(c
             return
         }
         if (mMediaPlayer == null) {
+            val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume, 0)
+            when (audioManager.getRingerMode()) {
+                AudioManager.RINGER_MODE_SILENT -> Log.i("MyApp", "Silent mode")
+                AudioManager.RINGER_MODE_VIBRATE -> Log.i("MyApp", "Vibrate mode")
+                AudioManager.RINGER_MODE_NORMAL -> Log.i("MyApp", "Normal mode")
+            }
             mMediaPlayer = MediaPlayer()
         }
 
@@ -70,5 +84,7 @@ class AlarmMediaManager @Inject constructor(context: Context) : ContextWrapper(c
         }
     }
 
+
+    fun getRingerMode():Int = audioManager.ringerMode
 
 }

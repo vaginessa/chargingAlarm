@@ -50,6 +50,13 @@ object AppConstants {
     @JvmField
     val BATTERY_HIGH_TEMPERATURE = "battery_high_Temperature"
 
+    @JvmField
+    val IS_VIBRATION_ENABLED = "is_vibration_enabled"
 
+    @JvmField
+    val IS_SOUND_ENABLED = "is_sound_enabled"
+
+    @JvmField
+    val RING_ON_SILENT_MODE = "ring_on_silent_mode"
 
 }

@@ -17,7 +17,6 @@ import javax.inject.Singleton
 class BatteryChangeReciever  @Inject constructor(val batteryProfileDaoWrapper: BatteryProfileDaoWrapper,
                                                  val appExecutors: AppExecutors,
                                                  val notificationHelper: NotificationHelper,
-                                                 val settingsManager: SettingsManager,
                                                  val batteryAlarmManager: BatteryAlarmManager) : BroadcastReceiver() {
 
 
@@ -33,7 +32,7 @@ class BatteryChangeReciever  @Inject constructor(val batteryProfileDaoWrapper: B
                 appExecutors.diskIO().execute {
                     batteryProfileDaoWrapper.insert(it)
                 }
-                batteryAlarmManager.checkAlarmTypeAndStartAlarm(it,settingsManager.getSettingsProfile())
+                batteryAlarmManager.checkAlarmTypeAndStartAlarm(it)
                 Log.d("HASHOO - BCR",batteryAlarmManager.hashCode().toString())
             }
         }

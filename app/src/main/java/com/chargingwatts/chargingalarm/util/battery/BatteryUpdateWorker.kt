@@ -26,8 +26,7 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
 
     @Inject
     lateinit var batteryAlarmManager: BatteryAlarmManager
-    @Inject
-    lateinit var settingsManager: SettingsManager
+
 
     override fun doWork(): Result {
         AppInjector.init(this)
@@ -69,7 +68,7 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
                 mAppExecutors.diskIO().execute {
                     mBatteryProfileDaoWrapper.insert(it)
                 }
-                batteryAlarmManager.checkAlarmTypeAndStartAlarm(it,settingsManager.getSettingsProfile())
+                batteryAlarmManager.checkAlarmTypeAndStartAlarm(it)
                 Log.d("HASHOO - BUW",batteryAlarmManager.hashCode().toString())
 
 
