@@ -34,15 +34,14 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         val screen = preferenceManager.createPreferenceScreen(lContext)
         screen.addPreference(createVibrationModePreference())
         screen.addPreference(createSoundPreference())
-        screen.addPreference(createRingOnSilentModePreference())
 
+        //Battery Threshold level category
         val thresholdPrefCategory = createBatteryThresholdPrefCategory()
         screen.addPreference(thresholdPrefCategory)
 
         val batteryHighLevelPreference = createBatteryHighLevelPref(startValue = 0,
                 endValue = 100, stepSize = 5, defaultValue = DEFAULT_BATTERY_HIGH_LEVEL)
         thresholdPrefCategory.addPreference(batteryHighLevelPreference)
-
 
         val batteryLowLevelPreference = createBatteryLowLevelPref(startValue = 0,
                 endValue = 100, stepSize = 5, defaultValue = DEFAULT_BATTERY_LOW_LEVEL)
@@ -51,6 +50,18 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         val batteryHighTempPreference = createBatteryHighTempPref(startValue = 30,
                 endValue = 45, stepSize = 1, defaultValue = DEFAULT_BATTERY_HIGH_TEMPERATURE)
         thresholdPrefCategory.addPreference(batteryHighTempPreference)
+
+        // Silent Mode Category
+        val silentModePrefCategory = createSilentModePrefCategory()
+        screen.addPreference(silentModePrefCategory)
+
+        silentModePrefCategory.addPreference(createRingOnSilentModePreference())
+        silentModePrefCategory.addPreference(createVibrateOnSilentModePreference())
+
+
+
+
+
 
         preferenceScreen = screen
 
@@ -61,11 +72,22 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
 
     private fun createBatteryThresholdPrefCategory(): PreferenceCategory {
         val thresholdPrefCategory = PreferenceCategory(lContext)
-        thresholdPrefCategory.key = "battery_threshold_levels"
-        thresholdPrefCategory.title = "Battery Threshold Levels"
+        thresholdPrefCategory.key = AppConstants.KEY_BATTERY_THRESHOLD_PREF_CATEGORY
+        thresholdPrefCategory.title = getString(R.string.battery_threshold_pref_category_title)
         return thresholdPrefCategory
 
     }
+
+    //--------------------------CREATE THRESHOLD CATEGORY------------------------------------------//
+
+    private fun createSilentModePrefCategory(): PreferenceCategory {
+        val thresholdPrefCategory = PreferenceCategory(lContext)
+        thresholdPrefCategory.key = AppConstants.KEY_SILENT_MODE_PREF_CATEGORY
+        thresholdPrefCategory.title = getString(R.string.silent_mode_pref_category_title)
+        return thresholdPrefCategory
+
+    }
+
 
     //--------------------------CREATE BATTERY HIGH LEVEL PREFERENCE CATEGORY---------------------//
 
@@ -124,7 +146,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         return highLevelListPreference
     }
 
-    fun checkAndFindIfValueInArray(entryArray: Array<String>, searchValue: Int): Int {
+    private fun checkAndFindIfValueInArray(entryArray: Array<String>, searchValue: Int): Int {
         for (entryIndex in entryArray.indices) {
             if (entryArray[entryIndex].toInt().equals(searchValue)) {
                 return entryIndex
@@ -134,7 +156,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
 
     }
 
-    fun createBatteryHighLevelListPrefSummary(currentSelectedBatteryLevel: String) =
+    private fun createBatteryHighLevelListPrefSummary(currentSelectedBatteryLevel: String) =
             context?.getString(R.string.summary_battery_high_level) + " : " +
                     currentSelectedBatteryLevel + "%%"
 
@@ -197,7 +219,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         return lowLevelListPreference
     }
 
-    fun createBatteryLowLevelListPrefSummary(currentSelectedBatteryLevel: String) =
+    private fun createBatteryLowLevelListPrefSummary(currentSelectedBatteryLevel: String) =
             context?.getString(R.string.summary_battery_low_level) + " : " +
                     currentSelectedBatteryLevel + "%%"
 
@@ -238,7 +260,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         val selectedPrefIndex = checkAndFindIfValueInArray(entryValueArray, settingsManager.getBatteryHighTemperaturePreference().toInt())
 
         if (selectedPrefIndex < 0) {
-            highTempListPreference.setValueIndex(noOfSteps -1)
+            highTempListPreference.setValueIndex(noOfSteps - 1)
 
         } else {
             highTempListPreference.setValueIndex(selectedPrefIndex)
@@ -259,45 +281,56 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         return highTempListPreference
     }
 
-    fun createBatteryHighTempListPrefSummary(curentSelectedTemp: String) =
+    private fun createBatteryHighTempListPrefSummary(curentSelectedTemp: String) =
             context?.getString(R.string.summary_battery_high_temperature) + " : " +
                     curentSelectedTemp + context?.getString(R.string.show_degree)
 
 
-
-    private fun createVibrationModePreference(): CheckBoxPreference{
+    private fun createVibrationModePreference(): CheckBoxPreference {
         val vibrationPref = CheckBoxPreference(context)
         vibrationPref.key = AppConstants.IS_VIBRATION_ENABLED
-        vibrationPref.title = "Activate Vibration Mode"
+        vibrationPref.title = getString(R.string.label_activate_vibration_mode)
         vibrationPref.setDefaultValue(settingsManager.getVibrationPreference())
         vibrationPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
-        settingsManager.setVibrationPreference(newValue as Boolean)
+            settingsManager.setVibrationPreference(newValue as Boolean)
             true
         }
-        return  vibrationPref
+        return vibrationPref
     }
 
-    private fun createSoundPreference(): CheckBoxPreference{
+    private fun createSoundPreference(): CheckBoxPreference {
         val soundPref = CheckBoxPreference(context)
         soundPref.key = AppConstants.IS_SOUND_ENABLED
-        soundPref.title = "Activate Sound Mode"
+        soundPref.title = getString(R.string.label_activate_sound_mode)
         soundPref.setDefaultValue(settingsManager.getVibrationPreference())
         soundPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
             settingsManager.setSoundPreference(newValue as Boolean)
             true
         }
-        return  soundPref
+        return soundPref
     }
 
-    private fun createRingOnSilentModePreference(): CheckBoxPreference{
-        val silentModePref = CheckBoxPreference(context)
-        silentModePref.key = AppConstants.RING_ON_SILENT_MODE
-        silentModePref.title = "Ring Alarm in silent Mode"
-        silentModePref.setDefaultValue(settingsManager.getRingOnSilentModePreference())
-        silentModePref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+    private fun createRingOnSilentModePreference(): CheckBoxPreference {
+        val silentModeRingPref = CheckBoxPreference(context)
+        silentModeRingPref.key = AppConstants.RING_ON_SILENT_MODE
+        silentModeRingPref.title = getString(R.string.label_ring_on_silent_mode)
+        silentModeRingPref.setDefaultValue(settingsManager.getRingOnSilentModePreference())
+        silentModeRingPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
             settingsManager.setRingOnSilentModePreference(newValue as Boolean)
             true
         }
-        return  silentModePref
+        return silentModeRingPref
+    }
+
+    private fun createVibrateOnSilentModePreference(): CheckBoxPreference {
+        val silentModeVibratePref = CheckBoxPreference(context)
+        silentModeVibratePref.key = AppConstants.VIBRATE_ON_SILENT_MODE
+        silentModeVibratePref.title = getString(R.string.label_vibrate_on_silent_mode)
+        silentModeVibratePref.setDefaultValue(settingsManager.getVibrateOnSilentModePreference())
+        silentModeVibratePref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+            settingsManager.setVibrateOnSilentModePreference(newValue as Boolean)
+            true
+        }
+        return silentModeVibratePref
     }
 }

@@ -93,7 +93,12 @@
 
     <!--Drawer Items -->
     <string name="show_battery_detail">Battery Detail</string>
-
+    <string name="battery_threshold_pref_category_title">Battery Threshold Levels</string>
+    <string name="silent_mode_pref_category_title">Silent Mode Settings</string>
+    <string name="label_activate_vibration_mode">Activate Vibration Mode</string>
+    <string name="label_activate_sound_mode">Activate Sound Mode</string>
+    <string name="label_ring_on_silent_mode">Ring Alarm in silent Mode</string>
+    <string name="label_vibrate_on_silent_mode">Vibrate in silent Mode</string>
 
 
 </resources>

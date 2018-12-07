@@ -27,9 +27,7 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
 
         when (alarmType) {
             BATTERY_HIGH_LEVEL_ALARM -> {
-
-
-                    startHighBatteryAlarm()
+                startHighBatteryAlarm()
             }
             BATTERY_LOW_LEVEL_ALARM -> {
                 startLowBatteryAlarm()
@@ -50,44 +48,34 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
         displayAlarmScreen()
 
 
-        if (settingsManager.getVibrationPreference()) {
+        if (shouldVibrate()) {
             startVibration()
         }
-        if (settingsManager.getSoundPreference()) {
-            if (alarmMediaManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT &&
-                    !settingsManager.getRingOnSilentModePreference()) {
-                return
-            }
+        if (shouldRunAlarmTone()) {
             startAlarmTone()
         }
     }
 
     private fun startLowBatteryAlarm() {
         displayAlarmScreen()
-        if (settingsManager.getVibrationPreference()) {
+        if (shouldVibrate()) {
             startVibration()
         }
-        if (settingsManager.getSoundPreference()) {
-            if (alarmMediaManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT &&
-                    !settingsManager.getRingOnSilentModePreference()) {
-                return
-            }
+        if (shouldRunAlarmTone()) {
             startAlarmTone()
         }
+
     }
 
     private fun startHighTemperatureAlarm() {
         displayAlarmScreen()
-        if (settingsManager.getVibrationPreference()) {
+        if (shouldVibrate()) {
             startVibration()
         }
-        if (settingsManager.getSoundPreference()) {
-            if (alarmMediaManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT &&
-                    !settingsManager.getRingOnSilentModePreference()) {
-                return
-            }
+        if (shouldRunAlarmTone()) {
             startAlarmTone()
         }
+
     }
 
     private fun stopHighBatteryAlarm() {
@@ -208,5 +196,18 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
         return false
     }
 
+    private fun shouldRunAlarmTone(): Boolean {
+
+        return settingsManager.getSoundPreference() && (alarmMediaManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT
+                || (alarmMediaManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT &&
+                settingsManager.getRingOnSilentModePreference()))
+    }
+
+    private fun shouldVibrate(): Boolean {
+
+        return settingsManager.getVibrationPreference() && (alarmMediaManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT
+                || (alarmMediaManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT &&
+                settingsManager.getVibrateOnSilentModePreference()))
+    }
 
 }

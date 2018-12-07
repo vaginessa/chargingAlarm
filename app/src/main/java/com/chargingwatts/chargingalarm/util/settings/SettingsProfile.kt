@@ -8,6 +8,8 @@ data class SettingsProfile(
         var userAlarmPreference: Boolean,
         var isVibrationPreference:Boolean,
         var isSoundPreference:Boolean,
-        var ringOnSilentMode:Boolean
+        var ringOnSilentMode:Boolean,
+        var vibrateOnSilentMode:Boolean
 
-)
+
+        )

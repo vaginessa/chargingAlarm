@@ -59,4 +59,18 @@ object AppConstants {
     @JvmField
     val RING_ON_SILENT_MODE = "ring_on_silent_mode"
 
+    @JvmField
+    val VIBRATE_ON_SILENT_MODE = "vibrate_on_silent_mode"
+
+
+    //---------------------------SETTINGS FRAGMENT CONSTANTS--------------------------------------//
+
+
+    @JvmField
+    val KEY_BATTERY_THRESHOLD_PREF_CATEGORY = "key_threshold_pref_category"
+
+
+    @JvmField
+    val KEY_SILENT_MODE_PREF_CATEGORY = "key_silent_mode_pref_category"
+
 }

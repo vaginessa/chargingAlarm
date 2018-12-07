@@ -10,7 +10,8 @@ class SettingsProfileLiveData(private val batteryHighLevelPercentPreferenceLiveD
                               private val userAlarmPreferenceLiveData: SharedPreferenceLiveData<Boolean>,
                               private val vibrationPreferenceLiveData: SharedPreferenceLiveData<Boolean>,
                               private val soundPreferenceLiveData: SharedPreferenceLiveData<Boolean>,
-                              private val ringOnSilentModePreferenceLiveData: SharedPreferenceLiveData<Boolean>) : LiveData<SettingsProfile>() {
+                              private val ringOnSilentModePreferenceLiveData: SharedPreferenceLiveData<Boolean>,
+                              private val vibrateOnSilentModePreferenceLiveData: SharedPreferenceLiveData<Boolean>) : LiveData<SettingsProfile>() {
 
     init {
         value = SettingsProfile(batteryHighLevelPercentPreferenceLiveData.value!!,
@@ -19,7 +20,8 @@ class SettingsProfileLiveData(private val batteryHighLevelPercentPreferenceLiveD
                 userAlarmPreferenceLiveData.value!!,
                 vibrationPreferenceLiveData.value!!,
                 soundPreferenceLiveData.value!!,
-                ringOnSilentModePreferenceLiveData.value!!
+                ringOnSilentModePreferenceLiveData.value!!,
+                vibrateOnSilentModePreferenceLiveData.value!!
         )
     }
 
@@ -81,6 +83,12 @@ class SettingsProfileLiveData(private val batteryHighLevelPercentPreferenceLiveD
         value = newSettingsProfileCopy
     }
 
+    private val vibrateOnSilentModePreferenceObserver = Observer<Boolean> {
+        val oldSettingsProfile = value
+        val newSettingsProfileCopy = oldSettingsProfile
+        newSettingsProfileCopy?.vibrateOnSilentMode = it
+        value = newSettingsProfileCopy
+    }
 
     private fun observeSettingsProfileChanges() {
         batteryHighLevelPercentPreferenceLiveData.observeForever(batteryHighLevelPercentObserver)
@@ -90,6 +98,8 @@ class SettingsProfileLiveData(private val batteryHighLevelPercentPreferenceLiveD
         vibrationPreferenceLiveData.observeForever(vibrationPreferenceObserver)
         soundPreferenceLiveData.observeForever(soundPreferenceObserver)
         ringOnSilentModePreferenceLiveData.observeForever(ringOnSilentModePreferenceObserver)
+        vibrateOnSilentModePreferenceLiveData.observeForever(vibrateOnSilentModePreferenceObserver)
+
     }
 
     private fun removeSettingsProfileObservers() {
@@ -99,7 +109,7 @@ class SettingsProfileLiveData(private val batteryHighLevelPercentPreferenceLiveD
         userAlarmPreferenceLiveData.removeObserver(userAlarmPreferenceObserver)
         vibrationPreferenceLiveData.removeObserver(vibrationPreferenceObserver)
         soundPreferenceLiveData.removeObserver(soundPreferenceObserver)
-        ringOnSilentModePreferenceLiveData.removeObserver(ringOnSilentModePreferenceObserver)
+        vibrateOnSilentModePreferenceLiveData.removeObserver(vibrateOnSilentModePreferenceObserver)
     }
 
 }

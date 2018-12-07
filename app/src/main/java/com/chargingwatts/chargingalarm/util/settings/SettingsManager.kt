@@ -7,6 +7,7 @@ import AppConstants.IS_SOUND_ENABLED
 import AppConstants.IS_VIBRATION_ENABLED
 import AppConstants.RING_ON_SILENT_MODE
 import AppConstants.USER_ALARM_PREFERENCE
+import AppConstants.VIBRATE_ON_SILENT_MODE
 import com.chargingwatts.chargingalarm.util.preference.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,6 +20,8 @@ const val DEFAULT_USER_ALARM_PREFERENCE = false
 const val DEFAULT_IS_VIBRATION_ENABLED = true
 const val DEFAULT_IS_SOUND_ENABLED = true
 const val DEFAULT_RING_IN_SILENT_MODE = true
+const val DEFAULT_VIBRATE_IN_SILENT_MODE = true
+
 
 
 
@@ -97,6 +100,18 @@ class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper
     fun setRingOnSilentModePreference(ringOnSilentModePreference:Boolean){
         preferenceHelper.putBoolean(RING_ON_SILENT_MODE, ringOnSilentModePreference)
     }
+
+    fun getVibrateOnSilentModePreferenceLiveData(): SharedPreferenceLiveData<Boolean> {
+        return preferenceHelper.getNewSharedPreference().booleanLiveData(VIBRATE_ON_SILENT_MODE, DEFAULT_VIBRATE_IN_SILENT_MODE)
+    }
+
+    fun getVibrateOnSilentModePreference(): Boolean {
+        return preferenceHelper.getBoolean(VIBRATE_ON_SILENT_MODE, DEFAULT_VIBRATE_IN_SILENT_MODE)
+    }
+
+    fun setVibrateOnSilentModePreference(vibrateOnSilentModePreference:Boolean){
+        preferenceHelper.putBoolean(VIBRATE_ON_SILENT_MODE, vibrateOnSilentModePreference)
+    }
     fun setSoundPreference(vibrationPreference:Boolean){
         preferenceHelper.putBoolean(IS_SOUND_ENABLED, vibrationPreference)
     }
@@ -108,6 +123,8 @@ class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper
     fun getSoundPreference(): Boolean {
         return preferenceHelper.getBoolean(IS_SOUND_ENABLED,DEFAULT_IS_SOUND_ENABLED)
     }
+
+
     fun  getSettingsProfile(): SettingsProfile {
         val batteryHighLevelPercent = getBatteryHighLevelPercentPreference()
         val batteryLowLevelPercent = getBatteryLowLevelPercentPreference()
@@ -116,9 +133,11 @@ class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper
         val isVibrationEnabled = getVibrationPreference()
         val isSoundEnabled = getSoundPreference()
         val ringOnSilentMode = getRingOnSilentModePreference()
+        val vibrateOnSilentMode = getVibrateOnSilentModePreference()
 
         return SettingsProfile(batteryHighLevelPercent, batteryLowLevelPercent, batteryHighTemperature,
-                userAlarmPreference, isVibrationEnabled, isSoundEnabled, getRingOnSilentModePreference())
+                userAlarmPreference, isVibrationEnabled, isSoundEnabled, ringOnSilentMode,
+                vibrateOnSilentMode)
 
     }
 
@@ -130,7 +149,8 @@ class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper
                     getUserAlarmPreferenceLiveData(),
                     getVibrationPreferenceLiveData(),
                     getSoundPreferenceLiveData(),
-                    getRingOnSilentModePreferenceLiveData()
+                    getRingOnSilentModePreferenceLiveData(),
+                    getVibrateOnSilentModePreferenceLiveData()
             )
 
 
