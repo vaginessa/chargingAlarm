@@ -82,6 +82,9 @@ object AppConstants {
     @JvmField
     val KEY_VOLUME_SETTING_PREF_CATEGORY = "key_volume_setting_pref_category"
 
+    @JvmField
+    val KEY_ALARM_TONE_PREF_CATEGORY = "key_alarm_tone_pref_category"
+
     //---------------------------SETTINGS FRAGMENT CONSTANTS--------------------------------------//
 
     @JvmField

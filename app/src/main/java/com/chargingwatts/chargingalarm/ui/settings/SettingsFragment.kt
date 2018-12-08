@@ -70,13 +70,19 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         silentModePrefCategory.addPreference(createVibrateOnSilentModePreference())
 
 
+        // Alarm Tone Settings Category
+        val alarmTonePrefCategory = createAlarmTonePrefCategory()
+        screen.addPreference(alarmTonePrefCategory)
+
+        alarmTonePrefCategory.addPreference(createAlarmTonePreference())
+
+
         // Alarm Volume Settings Category
         val alarmVolumePrefCategory = createAlarmVolumeSettingPrefCategory()
         screen.addPreference(alarmVolumePrefCategory)
 
         alarmVolumePrefCategory.addPreference(createAlarmVolumeSettingsPref())
 
-        alarmVolumePrefCategory.addPreference(createAlarmTonePreference())
 
         preferenceScreen = screen
 
@@ -96,24 +102,34 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
     //--------------------------CREATE THRESHOLD CATEGORY------------------------------------------//
 
     private fun createSilentModePrefCategory(): PreferenceCategory {
-        val thresholdPrefCategory = PreferenceCategory(lContext)
-        thresholdPrefCategory.key = AppConstants.KEY_SILENT_MODE_PREF_CATEGORY
-        thresholdPrefCategory.title = getString(R.string.pref_category_silent_mode_label)
-        return thresholdPrefCategory
+        val silentModePrefCategory = PreferenceCategory(lContext)
+        silentModePrefCategory.key = AppConstants.KEY_SILENT_MODE_PREF_CATEGORY
+        silentModePrefCategory.title = getString(R.string.pref_category_silent_mode_label)
+        return silentModePrefCategory
 
     }
 
     //--------------------------CREATE VOLUME SETTING CATEGORY------------------------------------//
 
     private fun createAlarmVolumeSettingPrefCategory(): PreferenceCategory {
-        val thresholdPrefCategory = PreferenceCategory(lContext)
-        thresholdPrefCategory.key = AppConstants.KEY_VOLUME_SETTING_PREF_CATEGORY
-        thresholdPrefCategory.title = getString(R.string.pref_category_alarm_volume_setting_label)
-        return thresholdPrefCategory
+        val alarmVolumePrefCategory = PreferenceCategory(lContext)
+        alarmVolumePrefCategory.key = AppConstants.KEY_VOLUME_SETTING_PREF_CATEGORY
+        alarmVolumePrefCategory.title = getString(R.string.pref_category_alarm_volume_setting_label)
+        return alarmVolumePrefCategory
 
     }
 
-    //--------------------------CREATE BATTERY HIGH LEVEL PREFERENCE CATEGORY---------------------//
+    //--------------------------CREATE ALARM TONE CATEGORY----------------------------------------//
+
+    private fun createAlarmTonePrefCategory(): PreferenceCategory {
+        val alarmTonePrefCategory = PreferenceCategory(lContext)
+        alarmTonePrefCategory.key = AppConstants.KEY_ALARM_TONE_PREF_CATEGORY
+        alarmTonePrefCategory.title = getString(R.string.pref_category_alarm_tone_setting_label)
+        return alarmTonePrefCategory
+
+    }
+
+    //--------------------------CREATE BATTERY HIGH LEVEL PREFERENCE -----------------------------//
 
     private fun createBatteryHighLevelPref(startValue: Int, endValue: Int, stepSize: Int, defaultValue: Int): ListPreference {
         val highLevelListPreference = ListPreference(context)
@@ -172,7 +188,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
 
     private fun checkAndFindIfValueInArray(entryArray: Array<String>, searchValue: Int): Int {
         for (entryIndex in entryArray.indices) {
-            if (entryArray[entryIndex].toInt().equals(searchValue)) {
+            if (entryArray[entryIndex].toInt() == searchValue) {
                 return entryIndex
             }
         }
@@ -184,7 +200,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
             context?.getString(R.string.summary_battery_high_level) + " : " +
                     currentSelectedBatteryLevel + "%%"
 
-    //--------------------------CREATE BATTERY LOW LEVEL PREFERENCE CATEGORY---------------------//
+    //--------------------------CREATE BATTERY LOW LEVEL PREFERENCE ------------------------------//
 
     private fun createBatteryLowLevelPref(startValue: Int, endValue: Int, stepSize: Int, defaultValue: Int): ListPreference {
         val lowLevelListPreference = ListPreference(context)
@@ -248,7 +264,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
                     currentSelectedBatteryLevel + "%%"
 
 
-    //--------------------------CREATE BATTERY LOW LEVEL PREFERENCE CATEGORY---------------------//
+    //--------------------------CREATE BATTERY HIGH TEMP PREFERENCE ------------------------------//
 
     private fun createBatteryHighTempPref(startValue: Int, endValue: Int, stepSize: Int, defaultValue: Float): ListPreference {
         val highTempListPreference = ListPreference(context)
@@ -295,7 +311,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
 
         highTempListPreference.summary =
                 createBatteryHighTempListPrefSummary(highTempListPreference.value)
-        highTempListPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+        highTempListPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener {
+            preference, newValue ->
             settingsManager.setBatteryHighTemperaturePreference((newValue as String).toFloat()
             )
             preference.summary = createBatteryHighTempListPrefSummary(newValue.toString())
@@ -310,71 +327,67 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
                     curentSelectedTemp + context?.getString(R.string.show_degree)
 
 
+    //--------------------------CREATE VIBRATION MODE PREFERENCE ---------------------------------//
+
     private fun createVibrationModePreference(): CheckBoxPreference {
         val vibrationPref = CheckBoxPreference(context)
         vibrationPref.key = AppConstants.IS_VIBRATION_ENABLED_PREF
         vibrationPref.title = getString(R.string.label_activate_vibration_mode)
         vibrationPref.setDefaultValue(settingsManager.getVibrationPreference())
-        vibrationPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+        vibrationPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener {
+            preference, newValue ->
             settingsManager.setVibrationPreference(newValue as Boolean)
             true
         }
         return vibrationPref
     }
 
+    //--------------------------CREATE SOUND PREFERENCE ------------------------------------------//
+
     private fun createSoundPreference(): CheckBoxPreference {
         val soundPref = CheckBoxPreference(context)
         soundPref.key = AppConstants.IS_SOUND_ENABLED_PREF
         soundPref.title = getString(R.string.label_activate_sound_mode)
         soundPref.setDefaultValue(settingsManager.getVibrationPreference())
-        soundPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+        soundPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener {
+            preference, newValue ->
             settingsManager.setSoundPreference(newValue as Boolean)
             true
         }
         return soundPref
     }
 
+    //--------------------------CREATE SILENT MODE RING PREFERENCE --------------------------------//
+
     private fun createRingOnSilentModePreference(): CheckBoxPreference {
         val silentModeRingPref = CheckBoxPreference(context)
         silentModeRingPref.key = AppConstants.RING_ON_SILENT_MODE_PREF
         silentModeRingPref.title = getString(R.string.label_ring_on_silent_mode)
         silentModeRingPref.setDefaultValue(settingsManager.getRingOnSilentModePreference())
-        silentModeRingPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+        silentModeRingPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener {
+            preference, newValue ->
             settingsManager.setRingOnSilentModePreference(newValue as Boolean)
             true
         }
         return silentModeRingPref
     }
 
+    //--------------------------CREATE SILENT MODE VIBRATE PREFERENCE -----------------------------//
+
     private fun createVibrateOnSilentModePreference(): CheckBoxPreference {
         val silentModeVibratePref = CheckBoxPreference(context)
         silentModeVibratePref.key = AppConstants.VIBRATE_ON_SILENT_MODE_PREF
         silentModeVibratePref.title = getString(R.string.label_vibrate_on_silent_mode)
         silentModeVibratePref.setDefaultValue(settingsManager.getVibrateOnSilentModePreference())
-        silentModeVibratePref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+        silentModeVibratePref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener {
+            preference, newValue ->
             settingsManager.setVibrateOnSilentModePreference(newValue as Boolean)
             true
         }
         return silentModeVibratePref
     }
 
-//    private fun createAlarmVolumePreference(): SeekBarPreference {
-//        val alarmVolumePref = SeekBarPreference(context)
-//        alarmVolumePref.key = AppConstants.ALARM_VOLUME_PREF
-//        alarmVolumePref.title = getString(R.string.label_alarm_volume)
-//        alarmVolumePref.setDefaultValue(settingsManager.getAlarmVolumePreference())
-//        alarmVolumePref.max = alarmMediaManager.getMaxVoulume()
-//        alarmVolumePref.min = 0
-//        alarmVolumePref.isAdjustable = true
-//        alarmVolumePref.seekBarIncrement = alarmMediaManager.getMaxVoulume()/10
-//
-//        alarmVolumePref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
-//            settingsManager.setAlarmVolumePreference((newValue as String).toInt())
-//            true
-//        }
-//        return alarmVolumePref
-//    }
-
+    //--------------------------CREATE ALARM VOLUME PREFERENCE -----------------------------------//
 
     private fun createAlarmVolumeSettingsPref(): ListPreference {
         val noOfSteps = 11
@@ -412,33 +425,44 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         alarmVolumeLevelListPref.entries = entryArray
         alarmVolumeLevelListPref.entryValues = entryValueArray
 
-        val tempPrefIndex = checkAndFindIfValueInArray(entryValueArray, settingsManager.getAlarmVolumePreference())
-        val selectedPrefIndex: Int
-        if (tempPrefIndex < 0) {
-            selectedPrefIndex = noOfSteps - 1
+        val selectedVolumeLevelIndex = getSelectedVolumeLevelIndex(entryValueArray,settingsManager.getAlarmVolumePreference())
 
-        } else {
-            selectedPrefIndex = tempPrefIndex
-
-        }
-        alarmVolumeLevelListPref.setValueIndex(selectedPrefIndex)
+        alarmVolumeLevelListPref.setValueIndex(selectedVolumeLevelIndex)
 
 
         alarmVolumeLevelListPref.summary =
-                createAlarmLevelListPrefSummary(selectedPrefIndex.toString())
+                createAlarmVolumeSettingsPrefSummary(selectedVolumeLevelIndex.toString())
         alarmVolumeLevelListPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
             settingsManager.setAlarmVolumePreference((newValue as String).toInt()
             )
-            preference.summary = createAlarmLevelListPrefSummary(selectedPrefIndex.toString())
+            preference.summary = createAlarmVolumeSettingsPrefSummary(getSelectedVolumeLevelIndex(entryValueArray,newValue.toInt()).toString())
             true
         }
 
         return alarmVolumeLevelListPref
     }
 
-    private fun createAlarmLevelListPrefSummary(currentSelectedVolumeLevel: String) =
+    private fun getSelectedVolumeLevelIndex(entryValueArray: Array<String>, alarmPref: Int): Int {
+        val tempPrefIndex = checkAndFindIfValueInArray(entryValueArray, alarmPref)
+        val selectedPrefIndex: Int
+        selectedPrefIndex = if (tempPrefIndex < 0) {
+            entryValueArray.size - 1
+
+        } else {
+            tempPrefIndex
+
+        }
+        return selectedPrefIndex
+
+    }
+
+    private fun createAlarmVolumeSettingsPrefSummary(currentSelectedVolumeLevel: String) =
             context?.getString(R.string.summary_alarm_volume) + " : " +
                     currentSelectedVolumeLevel
+
+
+    //----------------------------CREATE ALARM TONE PREFERENCE -----------------------------------//
+
 
     private fun createAlarmTonePreference(): Preference? {
         val ringtonPreference = Preference(context)
@@ -471,7 +495,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
 
     }
 
-    protected fun getSelectedAlarmTone(): Uri {
+    private fun getSelectedAlarmTone(): Uri {
         val uriString = settingsManager.getAlarmTonePreference()
         return Uri.parse(uriString)
     }

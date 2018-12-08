@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/battery_level_fragment"
         android:name="com.chargingwatts.chargingalarm.ui.batteryprofile.BatteryProfileFragment"
-        android:label="fragment_battery_level"
+        android:label="@string/show_battery_alarm"
         tools:layout="@layout/fragment_battery_profile" >
         <action
             android:id="@+id/action_battery_level_fragment_to_battery_detail_fragment"
@@ -20,12 +20,12 @@
     <fragment
         android:id="@+id/battery_detail_fragment"
         android:name="com.chargingwatts.chargingalarm.ui.batterydetail.BatteryDetailFragment"
-        android:label="fragment_battery_detail"
+        android:label="@string/show_battery_detail"
         tools:layout="@layout/fragment_battery_detail" />
     <fragment
         android:id="@+id/settings_fragment"
         android:name="com.chargingwatts.chargingalarm.ui.settings.SettingsFragment"
-        android:label="fragment_settings"
+        android:label="@string/show_settings"
          />
     <activity
         android:id="@+id/how_to_use_activity"
