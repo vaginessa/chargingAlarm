@@ -130,7 +130,7 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
         ///TODO uri of alarm tone selected by user to be used here
 
         val uri = Uri.parse("android.resource://$packageName/raw/ultra_alarm")
-        alarmMediaManager.playAlarmSound(uri)
+        alarmMediaManager.playAlarmSound(uri, settingsManager.getAlarmVolumePreference())
 
     }
 

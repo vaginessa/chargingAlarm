@@ -80,7 +80,13 @@
 
 
     <!--Settings Screen Labels -->
-    <string name="label_threshold_levels">Threshold Levels</string>
+    <string name="pref_category_battery_threshold_label">Battery Threshold Levels</string>
+    <string name="pref_category_silent_mode_label">Silent Mode Settings</string>
+    <string name="pref_category_alarm_volume_setting_label">Alarm Volume Settings</string>
+
+
+
+
     <string name="label_battery_high_level">Full Battery Alarm Level</string>
     <string name="summary_battery_high_level">Alert at Selected battery level</string>
 
@@ -90,15 +96,18 @@
     <string name="label_battery_high_temperature">Battery Temperature Warning Level</string>
     <string name="summary_battery_high_temperature">Alert at Selected battery Temperature </string>
 
+    <string name="label_alarm_volume">Alarm Volume Settings</string>
+    <string name="summary_alarm_volume">Currently Selected Alarm Volume </string>
 
-    <!--Drawer Items -->
-    <string name="show_battery_detail">Battery Detail</string>
-    <string name="battery_threshold_pref_category_title">Battery Threshold Levels</string>
-    <string name="silent_mode_pref_category_title">Silent Mode Settings</string>
     <string name="label_activate_vibration_mode">Activate Vibration Mode</string>
     <string name="label_activate_sound_mode">Activate Sound Mode</string>
     <string name="label_ring_on_silent_mode">Ring Alarm in silent Mode</string>
     <string name="label_vibrate_on_silent_mode">Vibrate in silent Mode</string>
+
+    <!--Drawer Items -->
+    <string name="show_battery_detail">Battery Detail</string>
+
+
 
 
 </resources>

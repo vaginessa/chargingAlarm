@@ -36,31 +36,34 @@ object AppConstants {
     //---------------------------SHARED PREFERENCE CONSTANTS--------------------------------------//
 
     @JvmField
-    val USER_ALARM_PREFERENCE = "user_alarm_preference"
+    val USER_ALARM_PREFERENCE = "user_alarm_preference_pref"
 
     @JvmField
-    val IS_CHARGING_PREFERENCE = "is_charging_preference"
+    val IS_CHARGING_PREFERENCE = "is_charging_preference_pref"
 
     @JvmField
-    val BATTERY_HIGH_LEVEL = "battery_high_level"
+    val BATTERY_HIGH_LEVEL_PREF = "battery_high_level_pref"
 
     @JvmField
-    val BATTERY_LOW_LEVEL = "battery_low_level"
+    val BATTERY_LOW_LEVEL_PREF = "battery_low_level_pref"
 
     @JvmField
-    val BATTERY_HIGH_TEMPERATURE = "battery_high_Temperature"
+    val BATTERY_HIGH_TEMPERATURE_PREF = "battery_high_Temperature_pref"
 
     @JvmField
-    val IS_VIBRATION_ENABLED = "is_vibration_enabled"
+    val IS_VIBRATION_ENABLED_PREF = "is_vibration_enabled_pref"
 
     @JvmField
-    val IS_SOUND_ENABLED = "is_sound_enabled"
+    val IS_SOUND_ENABLED_PREF = "is_sound_enabled_pref"
 
     @JvmField
-    val RING_ON_SILENT_MODE = "ring_on_silent_mode"
+    val RING_ON_SILENT_MODE_PREF = "ring_on_silent_mode_pref"
 
     @JvmField
-    val VIBRATE_ON_SILENT_MODE = "vibrate_on_silent_mode"
+    val VIBRATE_ON_SILENT_MODE_PREF = "vibrate_on_silent_mode_pref"
+
+    @JvmField
+    val ALARM_VOLUME_PREF = "alarm_volume_pref"
 
 
     //---------------------------SETTINGS FRAGMENT CONSTANTS--------------------------------------//
@@ -73,4 +76,6 @@ object AppConstants {
     @JvmField
     val KEY_SILENT_MODE_PREF_CATEGORY = "key_silent_mode_pref_category"
 
+    @JvmField
+    val KEY_VOLUME_SETTING_PREF_CATEGORY = "key_volume_setting_pref_category"
 }

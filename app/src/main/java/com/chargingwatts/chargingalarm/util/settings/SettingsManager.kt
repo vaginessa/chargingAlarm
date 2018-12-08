@@ -1,13 +1,15 @@
 package com.chargingwatts.chargingalarm.util.settings
 
-import AppConstants.BATTERY_HIGH_LEVEL
-import AppConstants.BATTERY_HIGH_TEMPERATURE
-import AppConstants.BATTERY_LOW_LEVEL
-import AppConstants.IS_SOUND_ENABLED
-import AppConstants.IS_VIBRATION_ENABLED
-import AppConstants.RING_ON_SILENT_MODE
+import AppConstants.ALARM_VOLUME_PREF
+import AppConstants.BATTERY_HIGH_LEVEL_PREF
+import AppConstants.BATTERY_HIGH_TEMPERATURE_PREF
+import AppConstants.BATTERY_LOW_LEVEL_PREF
+import AppConstants.IS_SOUND_ENABLED_PREF
+import AppConstants.IS_VIBRATION_ENABLED_PREF
+import AppConstants.RING_ON_SILENT_MODE_PREF
 import AppConstants.USER_ALARM_PREFERENCE
-import AppConstants.VIBRATE_ON_SILENT_MODE
+import AppConstants.VIBRATE_ON_SILENT_MODE_PREF
+import com.chargingwatts.chargingalarm.util.AlarmMediaManager
 import com.chargingwatts.chargingalarm.util.preference.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,44 +27,46 @@ const val DEFAULT_VIBRATE_IN_SILENT_MODE = true
 
 
 
-@Singleton
-class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper) {
 
+@Singleton
+class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper, val alarmMediaManager: AlarmMediaManager) {
+
+     val DEFAULT_ALARM_VOLUME = alarmMediaManager.getMaxVoulume()
 
     fun getBatteryHighLevelPercentPreferenceLiveData(): SharedPreferenceLiveData<Int> {
-        return preferenceHelper.getNewSharedPreference().intLiveData(BATTERY_HIGH_LEVEL, DEFAULT_BATTERY_HIGH_LEVEL)
+        return preferenceHelper.getNewSharedPreference().intLiveData(BATTERY_HIGH_LEVEL_PREF, DEFAULT_BATTERY_HIGH_LEVEL)
     }
 
     fun getBatteryHighLevelPercentPreference(): Int {
-        return preferenceHelper.getInt(BATTERY_HIGH_LEVEL, DEFAULT_BATTERY_HIGH_LEVEL)
+        return preferenceHelper.getInt(BATTERY_HIGH_LEVEL_PREF, DEFAULT_BATTERY_HIGH_LEVEL)
     }
 
     fun setBatteryHighLevelPercentPreference(batteryHighLevelPercent: Int) {
-        preferenceHelper.putInt(BATTERY_HIGH_LEVEL, batteryHighLevelPercent)
+        preferenceHelper.putInt(BATTERY_HIGH_LEVEL_PREF, batteryHighLevelPercent)
     }
 
     fun getBatteryLowLevelPercentPreferenceLiveData(): SharedPreferenceLiveData<Int> {
-        return preferenceHelper.getNewSharedPreference().intLiveData(BATTERY_LOW_LEVEL, DEFAULT_BATTERY_LOW_LEVEL)
+        return preferenceHelper.getNewSharedPreference().intLiveData(BATTERY_LOW_LEVEL_PREF, DEFAULT_BATTERY_LOW_LEVEL)
     }
 
     fun getBatteryLowLevelPercentPreference(): Int {
-        return preferenceHelper.getInt(BATTERY_LOW_LEVEL, DEFAULT_BATTERY_LOW_LEVEL)
+        return preferenceHelper.getInt(BATTERY_LOW_LEVEL_PREF, DEFAULT_BATTERY_LOW_LEVEL)
     }
 
     fun setBatteryLowLevelPercentPreference(batteryLowLevelPercent: Int) {
-        preferenceHelper.putInt(BATTERY_LOW_LEVEL, batteryLowLevelPercent)
+        preferenceHelper.putInt(BATTERY_LOW_LEVEL_PREF, batteryLowLevelPercent)
     }
 
     fun getBatteryHighTemperaturePreferenceLiveData(): SharedPreferenceLiveData<Float> {
-        return preferenceHelper.getNewSharedPreference().floatLiveData(BATTERY_HIGH_TEMPERATURE, DEFAULT_BATTERY_HIGH_TEMPERATURE)
+        return preferenceHelper.getNewSharedPreference().floatLiveData(BATTERY_HIGH_TEMPERATURE_PREF, DEFAULT_BATTERY_HIGH_TEMPERATURE)
     }
 
     fun getBatteryHighTemperaturePreference(): Float {
-        return preferenceHelper.getFloat(BATTERY_HIGH_TEMPERATURE, DEFAULT_BATTERY_HIGH_TEMPERATURE)
+        return preferenceHelper.getFloat(BATTERY_HIGH_TEMPERATURE_PREF, DEFAULT_BATTERY_HIGH_TEMPERATURE)
     }
 
     fun setBatteryHighTemperaturePreference(batteryHighTemperature: Float) {
-        preferenceHelper.putFloat(BATTERY_HIGH_TEMPERATURE, batteryHighTemperature)
+        preferenceHelper.putFloat(BATTERY_HIGH_TEMPERATURE_PREF, batteryHighTemperature)
     }
 
     fun setUserAlarmPreference(userAlarmPreference: Boolean) {
@@ -78,50 +82,61 @@ class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper
     }
 
     fun setVibrationPreference(vibrationPreference:Boolean){
-        preferenceHelper.putBoolean(IS_VIBRATION_ENABLED, vibrationPreference)
+        preferenceHelper.putBoolean(IS_VIBRATION_ENABLED_PREF, vibrationPreference)
     }
 
     fun getVibrationPreferenceLiveData(): SharedPreferenceLiveData<Boolean> {
-        return preferenceHelper.getNewSharedPreference().booleanLiveData(IS_VIBRATION_ENABLED, DEFAULT_IS_VIBRATION_ENABLED)
+        return preferenceHelper.getNewSharedPreference().booleanLiveData(IS_VIBRATION_ENABLED_PREF, DEFAULT_IS_VIBRATION_ENABLED)
     }
 
     fun getVibrationPreference(): Boolean {
-        return preferenceHelper.getBoolean(IS_VIBRATION_ENABLED, DEFAULT_IS_VIBRATION_ENABLED)
+        return preferenceHelper.getBoolean(IS_VIBRATION_ENABLED_PREF, DEFAULT_IS_VIBRATION_ENABLED)
     }
 
     fun getRingOnSilentModePreferenceLiveData(): SharedPreferenceLiveData<Boolean> {
-        return preferenceHelper.getNewSharedPreference().booleanLiveData(RING_ON_SILENT_MODE, DEFAULT_RING_IN_SILENT_MODE)
+        return preferenceHelper.getNewSharedPreference().booleanLiveData(RING_ON_SILENT_MODE_PREF, DEFAULT_RING_IN_SILENT_MODE)
     }
 
     fun getRingOnSilentModePreference(): Boolean {
-        return preferenceHelper.getBoolean(RING_ON_SILENT_MODE, DEFAULT_RING_IN_SILENT_MODE)
+        return preferenceHelper.getBoolean(RING_ON_SILENT_MODE_PREF, DEFAULT_RING_IN_SILENT_MODE)
     }
 
     fun setRingOnSilentModePreference(ringOnSilentModePreference:Boolean){
-        preferenceHelper.putBoolean(RING_ON_SILENT_MODE, ringOnSilentModePreference)
+        preferenceHelper.putBoolean(RING_ON_SILENT_MODE_PREF, ringOnSilentModePreference)
     }
 
     fun getVibrateOnSilentModePreferenceLiveData(): SharedPreferenceLiveData<Boolean> {
-        return preferenceHelper.getNewSharedPreference().booleanLiveData(VIBRATE_ON_SILENT_MODE, DEFAULT_VIBRATE_IN_SILENT_MODE)
+        return preferenceHelper.getNewSharedPreference().booleanLiveData(VIBRATE_ON_SILENT_MODE_PREF, DEFAULT_VIBRATE_IN_SILENT_MODE)
     }
 
     fun getVibrateOnSilentModePreference(): Boolean {
-        return preferenceHelper.getBoolean(VIBRATE_ON_SILENT_MODE, DEFAULT_VIBRATE_IN_SILENT_MODE)
+        return preferenceHelper.getBoolean(VIBRATE_ON_SILENT_MODE_PREF, DEFAULT_VIBRATE_IN_SILENT_MODE)
     }
 
     fun setVibrateOnSilentModePreference(vibrateOnSilentModePreference:Boolean){
-        preferenceHelper.putBoolean(VIBRATE_ON_SILENT_MODE, vibrateOnSilentModePreference)
+        preferenceHelper.putBoolean(VIBRATE_ON_SILENT_MODE_PREF, vibrateOnSilentModePreference)
     }
     fun setSoundPreference(vibrationPreference:Boolean){
-        preferenceHelper.putBoolean(IS_SOUND_ENABLED, vibrationPreference)
+        preferenceHelper.putBoolean(IS_SOUND_ENABLED_PREF, vibrationPreference)
     }
 
     fun getSoundPreferenceLiveData(): SharedPreferenceLiveData<Boolean> {
-        return preferenceHelper.getNewSharedPreference().booleanLiveData(IS_SOUND_ENABLED, DEFAULT_IS_SOUND_ENABLED)
+        return preferenceHelper.getNewSharedPreference().booleanLiveData(IS_SOUND_ENABLED_PREF, DEFAULT_IS_SOUND_ENABLED)
     }
 
     fun getSoundPreference(): Boolean {
-        return preferenceHelper.getBoolean(IS_SOUND_ENABLED,DEFAULT_IS_SOUND_ENABLED)
+        return preferenceHelper.getBoolean(IS_SOUND_ENABLED_PREF,DEFAULT_IS_SOUND_ENABLED)
+    }
+    fun getAlarmVolumePreferenceLiveData(): SharedPreferenceLiveData<Int> {
+        return preferenceHelper.getNewSharedPreference().intLiveData(ALARM_VOLUME_PREF, DEFAULT_ALARM_VOLUME)
+    }
+
+    fun getAlarmVolumePreference(): Int {
+        return preferenceHelper.getInt(ALARM_VOLUME_PREF, DEFAULT_ALARM_VOLUME)
+    }
+
+    fun setAlarmVolumePreference(alarmVolumeLevel: Int) {
+        preferenceHelper.putInt(ALARM_VOLUME_PREF, alarmVolumeLevel)
     }
 
 

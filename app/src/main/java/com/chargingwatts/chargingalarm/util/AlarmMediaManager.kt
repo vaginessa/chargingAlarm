@@ -22,14 +22,13 @@ class AlarmMediaManager @Inject constructor(context: Context) : ContextWrapper(c
 
 
 
-    fun playAlarmSound(uri: Uri) {
+    fun playAlarmSound(uri: Uri, playVolume: Int) {
         if (uri === Uri.EMPTY) {
             Log.w(AlarmMediaManager::class.java.name, "playRingtone: Uri is null or empty.")
             return
         }
         if (mMediaPlayer == null) {
-            val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume, 0)
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, playVolume, 0)
             when (audioManager.getRingerMode()) {
                 AudioManager.RINGER_MODE_SILENT -> Log.i("MyApp", "Silent mode")
                 AudioManager.RINGER_MODE_VIBRATE -> Log.i("MyApp", "Vibrate mode")
@@ -86,5 +85,9 @@ class AlarmMediaManager @Inject constructor(context: Context) : ContextWrapper(c
 
 
     fun getRingerMode():Int = audioManager.ringerMode
+
+    fun getMaxVoulume():Int = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+
+
 
 }
