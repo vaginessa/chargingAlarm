@@ -65,6 +65,9 @@ object AppConstants {
     @JvmField
     val ALARM_VOLUME_PREF = "alarm_volume_pref"
 
+    @JvmField
+    val ALARM_TONE_PREF = "alarm_tone_pref"
+
 
     //---------------------------SETTINGS FRAGMENT CONSTANTS--------------------------------------//
 
@@ -78,4 +81,10 @@ object AppConstants {
 
     @JvmField
     val KEY_VOLUME_SETTING_PREF_CATEGORY = "key_volume_setting_pref_category"
+
+    //---------------------------SETTINGS FRAGMENT CONSTANTS--------------------------------------//
+
+    @JvmField
+    val REQUEST_CODE_ALARM_TONE_SELECTOR = 2121
+
 }

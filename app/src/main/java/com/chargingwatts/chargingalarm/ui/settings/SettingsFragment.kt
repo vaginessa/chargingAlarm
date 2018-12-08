@@ -2,8 +2,12 @@ package com.chargingwatts.chargingalarm.ui.settings
 
 import AppConstants
 import android.content.Context
+import android.content.Intent
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.preference.*
 import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.di.Injectable
@@ -22,7 +26,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
     lateinit var settingsManager: SettingsManager
 
     @Inject
-    lateinit var alarmMediaManager:AlarmMediaManager
+    lateinit var alarmMediaManager: AlarmMediaManager
 
     private var lContext: Context? = null
     override fun onAttach(context: Context?) {
@@ -72,6 +76,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
 
         alarmVolumePrefCategory.addPreference(createAlarmVolumeSettingsPref())
 
+        alarmVolumePrefCategory.addPreference(createAlarmTonePreference())
 
         preferenceScreen = screen
 
@@ -372,7 +377,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
 
 
     private fun createAlarmVolumeSettingsPref(): ListPreference {
-        val noOfSteps =11
+        val noOfSteps = 11
         val maxVolume = alarmMediaManager.getMaxVoulume()
         val defaultValue = maxVolume
         val alarmVolumeLevelListPref = ListPreference(context)
@@ -383,11 +388,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             alarmVolumeLevelListPref.icon = context?.getDrawable(R.drawable.ic_setting_full_battery)
         }
-        val stepSize = maxVolume/noOfSteps
+        val stepSize = maxVolume / noOfSteps
 
 
         val entryValueArray: Array<String> = Array(noOfSteps) { i ->
-            Integer.toString(i * stepSize )
+            Integer.toString(i * stepSize)
         }
 
 
@@ -395,12 +400,12 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
 
         val entryArray: Array<String> = Array(noOfSteps) { i ->
             if (defaultValueIndex < 0 && i == (noOfSteps - 1)) {
-                Integer.toString(i) +  " (" + context?.getString(R.string.show_default) + ")"
+                Integer.toString(i) + " (" + context?.getString(R.string.show_default) + ")"
             } else if (defaultValueIndex > 0 && defaultValueIndex == i) {
-                Integer.toString(i ) +  " (" + context?.getString(R.string.show_default) + ")"
+                Integer.toString(i) + " (" + context?.getString(R.string.show_default) + ")"
 
             } else {
-                Integer.toString(i )
+                Integer.toString(i)
             }
         }
 
@@ -410,7 +415,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         val tempPrefIndex = checkAndFindIfValueInArray(entryValueArray, settingsManager.getAlarmVolumePreference())
         val selectedPrefIndex: Int
         if (tempPrefIndex < 0) {
-            selectedPrefIndex =noOfSteps - 1
+            selectedPrefIndex = noOfSteps - 1
 
         } else {
             selectedPrefIndex = tempPrefIndex
@@ -434,4 +439,58 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
     private fun createAlarmLevelListPrefSummary(currentSelectedVolumeLevel: String) =
             context?.getString(R.string.summary_alarm_volume) + " : " +
                     currentSelectedVolumeLevel
+
+    private fun createAlarmTonePreference(): Preference? {
+        val ringtonPreference = Preference(context)
+        ringtonPreference.key = AppConstants.ALARM_TONE_PREF
+        ringtonPreference.title = context?.getString(R.string.label_alarm_tone)
+        ringtonPreference.summary = context?.getString(R.string.summary_alarm_tone)
+        ringtonPreference.setOnPreferenceClickListener { preference ->
+            val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
+            onPrepareRingtonePickerIntent(intent, getSelectedAlarmTone(), RingtoneManager.TYPE_ALL)
+            startActivityForResult(intent, AppConstants.REQUEST_CODE_ALARM_TONE_SELECTOR)
+            true
+        }
+        return ringtonPreference
+    }
+
+    private fun onPrepareRingtonePickerIntent(ringtonePickerIntent: Intent, existingAlarmTone: Uri,
+                                              ringtoneType: Int, showDefault: Boolean = true,
+                                              showSilent: Boolean = false) {
+
+        ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
+                existingAlarmTone)
+        ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, showDefault)
+        if (showDefault) {
+            ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
+                    getDefaulAppAlarmTone())
+        }
+        ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, showSilent)
+        ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, ringtoneType)
+        ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Choose Alarm Tone")
+
+    }
+
+    protected fun getSelectedAlarmTone(): Uri {
+        val uriString = settingsManager.getAlarmTonePreference()
+        return Uri.parse(uriString)
+    }
+
+    private fun getDefaulAppAlarmTone(): Uri {
+        val uriString = settingsManager.DEFAULT_ALARM_TONE_RINGTONE
+        return Uri.parse(uriString)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == AppConstants.REQUEST_CODE_ALARM_TONE_SELECTOR) {
+            val selectedAlarmToneUri = data?.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
+
+            if (selectedAlarmToneUri != null) {
+                settingsManager.setAlarmTonePreference(selectedAlarmToneUri.toString())
+                Log.d("ringtoneuri", selectedAlarmToneUri.toString())
+            }
+        }
+    }
 }

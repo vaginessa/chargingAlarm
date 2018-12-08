@@ -1,5 +1,6 @@
 package com.chargingwatts.chargingalarm.util.settings
 
+import AppConstants.ALARM_TONE_PREF
 import AppConstants.ALARM_VOLUME_PREF
 import AppConstants.BATTERY_HIGH_LEVEL_PREF
 import AppConstants.BATTERY_HIGH_TEMPERATURE_PREF
@@ -9,6 +10,9 @@ import AppConstants.IS_VIBRATION_ENABLED_PREF
 import AppConstants.RING_ON_SILENT_MODE_PREF
 import AppConstants.USER_ALARM_PREFERENCE
 import AppConstants.VIBRATE_ON_SILENT_MODE_PREF
+import android.content.Context
+import android.content.ContextWrapper
+import android.net.Uri
 import com.chargingwatts.chargingalarm.util.AlarmMediaManager
 import com.chargingwatts.chargingalarm.util.preference.*
 import javax.inject.Inject
@@ -28,10 +32,14 @@ const val DEFAULT_VIBRATE_IN_SILENT_MODE = true
 
 
 
+
 @Singleton
-class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper, val alarmMediaManager: AlarmMediaManager) {
+class SettingsManager @Inject constructor(context : Context, val preferenceHelper: PreferenceHelper, val alarmMediaManager: AlarmMediaManager):
+                            ContextWrapper(context){
 
      val DEFAULT_ALARM_VOLUME = alarmMediaManager.getMaxVoulume()
+     val DEFAULT_ALARM_TONE_RINGTONE =  "android.resource://$packageName/raw/ultra_alarm"
+
 
     fun getBatteryHighLevelPercentPreferenceLiveData(): SharedPreferenceLiveData<Int> {
         return preferenceHelper.getNewSharedPreference().intLiveData(BATTERY_HIGH_LEVEL_PREF, DEFAULT_BATTERY_HIGH_LEVEL)
@@ -138,6 +146,25 @@ class SettingsManager @Inject constructor(val preferenceHelper: PreferenceHelper
     fun setAlarmVolumePreference(alarmVolumeLevel: Int) {
         preferenceHelper.putInt(ALARM_VOLUME_PREF, alarmVolumeLevel)
     }
+
+
+
+
+    fun getAlarmTonePreferenceLiveData(): SharedPreferenceLiveData<String> {
+        return preferenceHelper.getNewSharedPreference().stringLiveData(ALARM_TONE_PREF, DEFAULT_ALARM_TONE_RINGTONE)
+    }
+
+    fun getAlarmTonePreference(): String {
+        return preferenceHelper.getString(ALARM_TONE_PREF, DEFAULT_ALARM_TONE_RINGTONE)
+    }
+
+    fun setAlarmTonePreference(alarmToneUri: String) {
+        preferenceHelper.putString(ALARM_TONE_PREF, alarmToneUri)
+    }
+
+
+
+
 
 
     fun  getSettingsProfile(): SettingsProfile {

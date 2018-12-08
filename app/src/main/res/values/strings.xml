@@ -99,10 +99,15 @@
     <string name="label_alarm_volume">Alarm Volume Settings</string>
     <string name="summary_alarm_volume">Currently Selected Alarm Volume </string>
 
+    <string name="label_alarm_tone">Alarm Ringtone</string>
+    <string name="summary_alarm_tone">Select Alarm Ringtone </string>
+
+
     <string name="label_activate_vibration_mode">Activate Vibration Mode</string>
     <string name="label_activate_sound_mode">Activate Sound Mode</string>
     <string name="label_ring_on_silent_mode">Ring Alarm in silent Mode</string>
     <string name="label_vibrate_on_silent_mode">Vibrate in silent Mode</string>
+
 
     <!--Drawer Items -->
     <string name="show_battery_detail">Battery Detail</string>
