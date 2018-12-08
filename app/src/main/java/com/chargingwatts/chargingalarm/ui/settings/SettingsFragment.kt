@@ -399,7 +399,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         alarmVolumeLevelListPref.dialogTitle = context?.getString(R.string.label_alarm_volume)
 //        alarmLevelListPref.setDefaultValue(maxVolume)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            alarmVolumeLevelListPref.icon = context?.getDrawable(R.drawable.ic_setting_full_battery)
+            alarmVolumeLevelListPref.icon = context?.getDrawable(R.drawable.ic_volume_settings)
         }
         val stepSize = maxVolume / noOfSteps
 
@@ -469,6 +469,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
         ringtonPreference.key = AppConstants.ALARM_TONE_PREF
         ringtonPreference.title = context?.getString(R.string.label_alarm_tone)
         ringtonPreference.summary = context?.getString(R.string.summary_alarm_tone)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ringtonPreference.icon = context?.getDrawable(R.drawable.ic_alarm_tone_settings)
+        }
         ringtonPreference.setOnPreferenceClickListener { preference ->
             val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
             onPrepareRingtonePickerIntent(intent, getSelectedAlarmTone(), RingtoneManager.TYPE_ALL)

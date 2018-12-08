@@ -11,14 +11,28 @@
                   <entry key="vectorAssetStep">
                     <value>
                       <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="clipartAsset">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="url" value="jar:file:/private/var/folders/hn/8887qvvd3yx8bn6lx_w889ph0000gp/T/AppTranslocation/C0B5D040-A9A0-4D9C-B917-45F0B5AFE586/d/Android%20Studio%203.4%20Preview.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_music_note_black_24dp.xml" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="256" />
-                            <entry key="outputName" value="ic_charger" />
+                            <entry key="height" value="48" />
+                            <entry key="outputName" value="ic_alarm_tone_settings" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="$USER_HOME$/Desktop/charger.svg" />
-                            <entry key="width" value="256" />
+                            <entry key="width" value="48" />
                           </map>
                         </option>
                       </PersistentState>
