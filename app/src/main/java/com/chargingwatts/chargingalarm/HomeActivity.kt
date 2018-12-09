@@ -20,7 +20,6 @@ import android.widget.Toast
 import android.content.Intent
 
 
-
 class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -61,24 +60,24 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return when (item.itemId) {
             R.id.drawer_item_share -> {
                 drawerLayout?.closeDrawers()
+                launchApplicationShareIntent()
                 true
-
             }
             R.id.drawer_item_contact_us -> {
                 drawerLayout?.closeDrawers()
                 launchEmailIntent()
                 true
-
-
             }
 
             else -> {
-                false
+                drawerLayout?.closeDrawers()
+                item.onNavDestinationSelected(navController!!)
+                true
             }
         }
     }
 
-    private fun launchEmailIntent(){
+    private fun launchEmailIntent() {
         val emailIntent = Intent(Intent.ACTION_SEND)
         emailIntent.type = "message/rfc822"
         emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("er.abhishek.luthrat@gmail.com"))
@@ -89,18 +88,32 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         } catch (ex: android.content.ActivityNotFoundException) {
             Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show()
         }
+    }
 
+    private fun launchApplicationShareIntent() {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "ChargingWatts Full Battery Alarm")
+        var extraText = "Let me recommend you this application\n\n"
+        extraText = extraText + "https://play.google.com/store/apps/details?id=the.package.id \n"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, extraText)
+        try {
+            startActivity(Intent.createChooser(shareIntent, "choose one"))
+        } catch (e: Exception) {
+            Toast.makeText(this, "There are no sharing clients installed.", Toast.LENGTH_SHORT).show()
+
+        }
 
     }
 
     override fun onResume() {
         super.onResume()
         periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
-            try {
-                batteryChangeReciever.registerReciever(this)
-            } catch (exception: Exception) {
+        try {
+            batteryChangeReciever.registerReciever(this)
+        } catch (exception: Exception) {
 
-            }
+        }
     }
 
     override fun onPause() {
@@ -117,10 +130,9 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private fun setupNavigationMenu(navController: NavController) {
 //        // In split screen mode, you can drag this view out from the left
 //        // This does NOT modify the actionbar
-        val sideNavView = findViewById<NavigationView>(R.id.nav_view)
-        NavigationUI.setupWithNavController(sideNavView, navController)
-        sideNavView.setNavigationItemSelectedListener(this)
-
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+//        NavigationUI.setupWithNavController(navigationView!!, navController)
+        navigationView.setNavigationItemSelectedListener(this)
 
     }
 
