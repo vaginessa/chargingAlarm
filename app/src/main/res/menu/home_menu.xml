@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/battery_detail_fragment"
-            android:icon="@drawable/ic_battery_health"
+            android:icon="@drawable/ic_info_black_24dp"
             android:title="@string/show_battery_detail" />
         <item
             android:id="@+id/settings_fragment"
-            android:icon="@drawable/ic_battery_health"
+            android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/show_settings" />
 
     </group>
+
+    <item
+        android:id="@+id/drawer_category_communicate"
+        android:title="@string/show_communicate">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/drawer_item_share"
+                    android:icon="@drawable/ic_share_black_24dp"
+                    android:title="@string/show_share" />
+                <item
+                    android:id="@+id/drawer_item_contact_us"
+                    android:icon="@drawable/ic_contact_mail_black_24dp"
+                    android:title="@string/show_contact_us" />
+
+            </group>
+        </menu>
+    </item>
 </menu>

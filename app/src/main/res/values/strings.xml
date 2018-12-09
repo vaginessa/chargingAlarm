@@ -126,6 +126,8 @@
     <string name="show_battery_detail">Battery Detail</string>
     <string name="show_battery_alarm">Battery Alarm</string>
     <string name="show_drawer_header_title">ChargingWatts Battery Alarm</string>
-
+    <string name="show_share">Share</string>
+    <string name="show_contact_us">Contact Us</string>
+    <string name="show_communicate">Communicate</string>
 
 </resources>

@@ -16,8 +16,14 @@ import com.chargingwatts.chargingalarm.util.battery.BatteryChangeReciever
 import com.chargingwatts.chargingalarm.util.battery.PeriodicBatteryUpdater
 import com.google.android.material.navigation.NavigationView
 import javax.inject.Inject
+import android.widget.Toast
+import android.content.Intent
 
-class HomeActivity : BaseActivity() {
+
+
+class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+
     @Inject
     lateinit var appExecutors: AppExecutors
 
@@ -28,6 +34,7 @@ class HomeActivity : BaseActivity() {
 
 
     var navController: NavController? = null
+    private var navigationView: NavigationView? = null
     private var drawerLayout: DrawerLayout? = null
 
 
@@ -39,15 +46,51 @@ class HomeActivity : BaseActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         drawerLayout = findViewById(R.id.drawer_layout)
-
-
+        navigationView = findViewById(R.id.nav_view)
+        navigationView?.setNavigationItemSelectedListener(this)
         navController = Navigation.findNavController(this, R.id.nav_host);
 //
         navController?.let {
             setupActionBar(it)
             setupNavigationMenu(it)
+
         }
-//        navController?.navigate(R.id.battery_detail_fragment)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.drawer_item_share -> {
+                drawerLayout?.closeDrawers()
+                true
+
+            }
+            R.id.drawer_item_contact_us -> {
+                drawerLayout?.closeDrawers()
+                launchEmailIntent()
+                true
+
+
+            }
+
+            else -> {
+                false
+            }
+        }
+    }
+
+    private fun launchEmailIntent(){
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.type = "message/rfc822"
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("er.abhishek.luthrat@gmail.com"))
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "subject of email")
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "body of email")
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."))
+        } catch (ex: android.content.ActivityNotFoundException) {
+            Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show()
+        }
+
+
     }
 
     override fun onResume() {
@@ -76,6 +119,8 @@ class HomeActivity : BaseActivity() {
 //        // This does NOT modify the actionbar
         val sideNavView = findViewById<NavigationView>(R.id.nav_view)
         NavigationUI.setupWithNavController(sideNavView, navController)
+        sideNavView.setNavigationItemSelectedListener(this)
+
 
     }
 
