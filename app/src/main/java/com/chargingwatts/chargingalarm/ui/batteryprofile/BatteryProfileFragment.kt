@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.work.PeriodicWorkRequest
 import com.chargingwatts.chargingalarm.BaseFragment
 import com.chargingwatts.chargingalarm.R
@@ -64,7 +65,7 @@ class BatteryProfileFragment : BaseFragment() {
                 }
 
                 R.id.ll_settings -> {
-                    openRingtonPickerDialog()
+                    Navigation.findNavController(view).navigate(R.id.settings_fragment)
                 }
 
                 else -> {
@@ -79,7 +80,7 @@ class BatteryProfileFragment : BaseFragment() {
     fun startAlarm() {
         context?.let { lContext ->
             mBatteryProfile?.isCharging?.apply {
-                if (true){
+                if (true) {
                     BatteryMonitoringService.startInForeground(lContext)
                     periodicBatteryUpdater.startPeriodicBatteryUpdate(PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, BATTERY_WORKER_REQUEST_TAG)
                 }
@@ -159,64 +160,6 @@ class BatteryProfileFragment : BaseFragment() {
         }
     }
 
-
-    fun openRingtonPickerDialog() {
-        if (ActivityCompat.checkSelfPermission(context!!,
-                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
-            val ringtonePickerBuilder = RingtonePickerDialog.Builder(getContext()!!, activity!!.getSupportFragmentManager())
-
-                    //Set title of the dialog.
-                    //If set null, no title will be displayed.
-                    .setTitle("Select ringtone")
-
-                    //set the currently selected uri, to mark that ringtone as checked by default.
-                    //If no ringtone is currently selected, pass null.
-//                    .setCurrentRingtoneUri(mCurrentSelectedUri)
-
-                    //Allow user to select default ringtone set in phone settings.
-                    .displayDefaultRingtone(true)
-
-                    //Allow user to select silent (i.e. No ringtone.).
-                    .displaySilentRingtone(true)
-
-                    //set the text to display of the positive (ok) button.
-                    //If not set OK will be the default text.
-                    .setPositiveButtonText("SET RINGTONE")
-
-                    //set text to display as negative button.
-                    //If set null, negative button will not be displayed.
-                    .setCancelButtonText("CANCEL")
-
-                    //Set flag true if you want to play the sample of the clicked tone.
-                    .setPlaySampleWhileSelection(true)
-
-                    //Set the callback listener.
-                    .setListener(object : RingtonePickerListener {
-                        override fun OnRingtoneSelected(ringtoneName: String, ringtoneUri: Uri?) {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                        }
-
-                    })
-
-
-            //Add the desirable ringtone types.
-//            if (musicCb.isChecked())
-//                ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_MUSIC)
-//            if (notificationCb.isChecked())
-//                ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_NOTIFICATION)
-//            if (ringtoneCb.isChecked())
-//                ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_RINGTONE)
-//            if (alarmCb.isChecked())
-            ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_ALARM)
-
-            //Display the dialog.
-            ringtonePickerBuilder.show()
-        } else {
-            ActivityCompat.requestPermissions(activity!!,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    123)
-        }
-    }
-
 }
+
+

@@ -36,10 +36,22 @@
     <string name="BATTERY_LEVEL_HIGH_CHANNEL_DESCRIPTION">This Notification notifies the user when the device battery level is equal or greater than the high battery level set by the User in the App.</string>
     <string name="BATTERY_LEVEL_CHANNEL_DESCRIPTION">This Notification notifies user when the battery level of the device changes</string>
     <string name="BATTERY_LEVEL_LOW_CHANNEL_DESCRIPTION">This notification notifies use when the battery level of the device is below the low battery level set by the user in the app</string>
+    <string name="BATTERY_TEMPERATURE_LOW_CHANNEL_DESCRIPTION">This notification notifies use when the battery temperature of the device is equal or greater than the battery high temperature set by the user in the app</string>
 
 
     <string name="description_battery_monitoring_service">This service updates the battery Level shown in the notification</string>
     <string name="default_notification_body">Fetching Battery Information</string>
+
+    <string name="battery_full_notification_title">Battery Full Alarm</string>
+    <string name="battery_full_notification_body">Battery Full Alarm was set at Battery Level</string>
+
+    <string name="battery_low_notification_title">Battery Low Alarm</string>
+    <string name="battery_low_notification_body">Battery Low Alarm was set at Battery Level</string>
+
+    <string name="battery_high_temperature_notification_title">Battery Overheat Alarm</string>
+    <string name="battery_high_temperature_notification_body">Battery Overheat Alarm was set at Battery Temp</string>
+
+
     <string name="show_total_capacity_label">Battery Capacity:</string>
     <string name="show_remaining_capacity_label">Remaining Capacity:</string>
 
@@ -113,8 +125,7 @@
     <!--Drawer Items -->
     <string name="show_battery_detail">Battery Detail</string>
     <string name="show_battery_alarm">Battery Alarm</string>
-
-
+    <string name="show_drawer_header_title">ChargingWatts Battery Alarm</string>
 
 
 </resources>

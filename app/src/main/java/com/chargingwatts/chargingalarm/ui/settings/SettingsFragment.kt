@@ -57,7 +57,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Injectable {
                 endValue = 100, stepSize = 5, defaultValue = DEFAULT_BATTERY_LOW_LEVEL)
         thresholdPrefCategory.addPreference(batteryLowLevelPreference)
 
-        val batteryHighTempPreference = createBatteryHighTempPref(startValue = 30,
+        val batteryHighTempPreference = createBatteryHighTempPref(startValue = 25,
                 endValue = 45, stepSize = 1, defaultValue = DEFAULT_BATTERY_HIGH_TEMPERATURE)
         thresholdPrefCategory.addPreference(batteryHighTempPreference)
 

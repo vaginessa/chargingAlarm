@@ -18,6 +18,7 @@ import com.chargingwatts.chargingalarm.HomeActivity
 import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.util.battery.BatteryProfileUtils
 import com.chargingwatts.chargingalarm.util.logging.EventLogger
+import com.chargingwatts.chargingalarm.util.settings.SettingsProfile
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -43,6 +44,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
             batteryHighChannel.description = getString(R.string.BATTERY_LEVEL_HIGH_CHANNEL_DESCRIPTION)
             batteryHighChannel.lightColor = Color.GREEN
             batteryHighChannel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
+            batteryHighChannel.setSound(null, null)
             notificationManager.createNotificationChannel(batteryHighChannel)
 
 
@@ -59,7 +61,17 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
             batteryLevelLowChannel.description = getString(R.string.BATTERY_LEVEL_LOW_CHANNEL_DESCRIPTION)
             batteryLevelLowChannel.lightColor = Color.RED
             batteryLevelLowChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            batteryLevelLowChannel.setSound(null, null)
             notificationManager.createNotificationChannel(batteryLevelLowChannel)
+
+
+            val batteryTempHighChannel = NotificationChannel(BATTERY_TEMPERATURE_HIGH_CHANNEL,
+                    getString(R.string.noti_channel_battery_level), NotificationManager.IMPORTANCE_HIGH)
+            batteryTempHighChannel.description = getString(R.string.BATTERY_TEMPERATURE_LOW_CHANNEL_DESCRIPTION)
+            batteryTempHighChannel.lightColor = Color.RED
+            batteryTempHighChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            batteryTempHighChannel.setSound(null, null)
+            notificationManager.createNotificationChannel(batteryTempHighChannel)
         }
     }
 
@@ -107,6 +119,8 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
                 .setContentIntent(getTapIntent())
                 .setAutoCancel(true)
 
+
+
     }
 
 
@@ -127,6 +141,18 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 
     fun getLowBatteryNotificationBuilder(title: String, body: String): NotificationCompat.Builder {
         return NotificationCompat.Builder(this, BATTERY_LEVEL_LOW_CHANNEL)
+                .setSmallIcon(smallIcon)
+                .setContentTitle(title)
+                .setContentText(body)
+//                .setStyle(NotificationCompat.BigTextStyle()
+//                        .bigText("Much longer text that cannot fit one line..."))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(getTapIntent())
+                .setAutoCancel(true)
+    }
+
+    fun getBatteryHighTempNotificationBuilder(title: String, body: String): NotificationCompat.Builder {
+        return NotificationCompat.Builder(this, BATTERY_TEMPERATURE_HIGH_CHANNEL)
                 .setSmallIcon(smallIcon)
                 .setContentTitle(title)
                 .setContentText(body)
@@ -192,6 +218,8 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
         val BATTERY_LEVEL_LOW_CHANNEL = "battery_level_low_channel"
         @JvmStatic
         val BATTERY_LEVEL_HIGH_CHANNEL = "battery_level_high_channel"
+        @JvmStatic
+        val BATTERY_TEMPERATURE_HIGH_CHANNEL = "battery_temperature_high_channel"
 
         @JvmStatic
         val BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID = 111
@@ -199,7 +227,8 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
         val BATTERY_LEVEL_LOW_CHANNEL_NOTIFICATION_ID = 222
         @JvmStatic
         val BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID = 333
-
+        @JvmStatic
+        val BATTERY_TEMPERATURE_HIGH_CHANNEL_NOTIFICATION_ID = 444
 
         @JvmStatic
         fun createBatteryNotificationTitleString(context: Context, batteryProfile: BatteryProfile?): String {
@@ -231,6 +260,72 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
             }
 
             return bodyString
+        }
+
+        @JvmStatic
+        fun createHighBatteryAlarmNotificationTitleString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
+            batteryProfile?.let {
+                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
+            }
+            val bodyString: String = context.getString(R.string.battery_full_notification_title) + " : " +
+                    batteryProfile?.remainingPercent + context.getString(R.string.show_percent)
+            return bodyString
+
+        }
+
+        @JvmStatic
+        fun createHighBatteryAlarmNotificationBodyString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
+            batteryProfile?.let {
+                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
+            }
+            val bodyString: String = context.getString(R.string.battery_full_notification_body) + " : " +
+                    settingsProfile.batteryHighLevelPercent + context.getString(R.string.show_percent)
+            return bodyString
+
+        }
+
+        @JvmStatic
+        fun createLowBatteryAlarmNotificationTitleString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
+            batteryProfile?.let {
+                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
+            }
+            val bodyString: String = context.getString(R.string.battery_low_notification_title) + " : " +
+                    batteryProfile?.remainingPercent + context.getString(R.string.show_percent)
+            return bodyString
+
+        }
+
+        @JvmStatic
+        fun createLowBatteryAlarmNotificationBodyString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
+            batteryProfile?.let {
+                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
+            }
+            val bodyString: String = context.getString(R.string.battery_low_notification_body) + " : " +
+                    settingsProfile.batteryLowLevelPercent + context.getString(R.string.show_percent)
+            return bodyString
+
+        }
+
+        @JvmStatic
+        fun createHighTempAlarmNotificationTitleString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
+            batteryProfile?.let {
+                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
+            }
+            val bodyString: String = context.getString(R.string.battery_high_temperature_notification_title) + " : " +
+                    batteryProfile?.recentBatteryTemperature + context.getString(R.string.show_degree)
+            return bodyString
+
+        }
+
+        @JvmStatic
+        fun createHighTempAlarmNotificationBodyString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
+            batteryProfile?.let {
+                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
+            }
+            val bodyString: String = context.getString(R.string.battery_high_temperature_notification_body) + " : " +
+                    settingsProfile.batteryHighTemperature + context.getString(R.string.show_degree)
+            return bodyString
+
         }
     }
 }
