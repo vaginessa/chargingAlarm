@@ -11,6 +11,7 @@ import com.chargingwatts.chargingalarm.ui.vibrate.VibrationManager
 import com.chargingwatts.chargingalarm.util.AlarmMediaManager
 import com.chargingwatts.chargingalarm.util.constants.IntegerDefinitions
 import com.chargingwatts.chargingalarm.util.constants.IntegerDefinitions.ALARM_TYPE.*
+import com.chargingwatts.chargingalarm.util.logging.EventLogger
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper.Companion.BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper.Companion.BATTERY_LEVEL_LOW_CHANNEL_NOTIFICATION_ID
@@ -55,27 +56,28 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
     }
 
     private fun startHighBatteryAlarm(batteryProfile: BatteryProfile) {
-
-//        displayAlarmScreen()
-
         val settingsProfile = settingsManager.getSettingsProfile()
+
+        displayAlarmScreen()
         notificationHelper.apply {
             notify(BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID,
                     getHighBatteryNotificationBuilder(createHighBatteryAlarmNotificationTitleString(this, batteryProfile, settingsProfile),
                     createHighBatteryAlarmNotificationBodyString(this,batteryProfile, settingsProfile)))
         }
-
-
         if (shouldVibrate()) {
             startVibration()
         }
         if (shouldRunAlarmTone()) {
             startAlarmTone()
         }
+
+        batteryProfile.let {
+            EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
+        }
     }
 
     private fun startLowBatteryAlarm(batteryProfile: BatteryProfile) {
-//        displayAlarmScreen()
+        displayAlarmScreen()
 
         val settingsProfile = settingsManager.getSettingsProfile()
         notificationHelper.apply {
@@ -90,10 +92,13 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
             startAlarmTone()
         }
 
+        batteryProfile.let {
+            EventLogger.logLowBatteryNotificationUpdatedEvent(it, settingsProfile)
+        }
     }
 
     private fun startHighTemperatureAlarm(batteryProfile: BatteryProfile) {
-//        displayAlarmScreen()
+        displayAlarmScreen()
 
         val settingsProfile = settingsManager.getSettingsProfile()
         notificationHelper.apply {
@@ -108,6 +113,9 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
             startAlarmTone()
         }
 
+        batteryProfile.let {
+            EventLogger.logBatteryHighTempNotificationUpdatedEvent(it, settingsProfile)
+        }
     }
 
     private fun stopHighBatteryAlarm() {

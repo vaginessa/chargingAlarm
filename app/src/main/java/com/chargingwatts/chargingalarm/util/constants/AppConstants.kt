@@ -34,6 +34,8 @@ object AppConstants {
     val LOG_CHARGING_ALARM = "LOG_CHARGING_ALARM"
 
     //---------------------------SHARED PREFERENCE CONSTANTS--------------------------------------//
+    @JvmField
+    val IS_FIRST_LAUNCH = "is_First_launch_pref"
 
     @JvmField
     val USER_ALARM_PREFERENCE = "user_alarm_preference_pref"

@@ -47,6 +47,24 @@ object EventLogger {
         logEvent(BATTERY_NOTIFICATION_HIGH_ALARM, params)
     }
 
+    fun logLowBatteryNotificationUpdatedEvent(batteryProfile: BatteryProfile, settingsProfile: SettingsProfile) {
+        val params = Bundle()
+        batteryProfile.remainingPercent?.let {
+            params.putInt(BATTERY_PERCENT, it)
+        }
+        params.putInt(SETTING_BATTERY_LOW_LEVEL,settingsProfile.batteryLowLevelPercent)
+        logEvent(BATTERY_NOTIFICATION_LOW_ALARM, params)
+    }
+
+    fun logBatteryHighTempNotificationUpdatedEvent(batteryProfile: BatteryProfile, settingsProfile: SettingsProfile) {
+        val params = Bundle()
+        batteryProfile.recentBatteryTemperature?.let {
+            params.putFloat(BATTERY_TEMP, it)
+        }
+        params.putFloat(SETTING_BATTERY_HIGH_TEMP,settingsProfile.batteryHighTemperature)
+        logEvent(BATTERY_NOTIFICATION_HIGH_TEMP, params)
+    }
+
     fun logPowerConnectionEvent() {
         logEvent(POWER_CONNECTED, null)
 

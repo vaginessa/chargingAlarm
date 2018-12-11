@@ -12,7 +12,6 @@ import AppConstants.USER_ALARM_PREFERENCE
 import AppConstants.VIBRATE_ON_SILENT_MODE_PREF
 import android.content.Context
 import android.content.ContextWrapper
-import android.net.Uri
 import com.chargingwatts.chargingalarm.util.AlarmMediaManager
 import com.chargingwatts.chargingalarm.util.preference.*
 import javax.inject.Inject

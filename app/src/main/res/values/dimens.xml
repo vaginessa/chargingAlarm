@@ -26,4 +26,6 @@
     <dimen name="dimen_5dp">5dp</dimen>
 
     <dimen name="dimen_point_5_dp">0.5dp</dimen>
+    <dimen name="text_size_32sp">32sp</dimen>
+    <dimen name="text_size_22sp">22sp</dimen>
 </resources>

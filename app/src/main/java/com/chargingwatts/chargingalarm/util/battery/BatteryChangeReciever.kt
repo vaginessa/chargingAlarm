@@ -1,5 +1,6 @@
 package com.chargingwatts.chargingalarm.util.battery
 
+import AppConstants
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -9,7 +10,6 @@ import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.util.logging.LoggingHelper
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
-import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,9 +26,9 @@ class BatteryChangeReciever  @Inject constructor(val batteryProfileDaoWrapper: B
         intent?.let { batteryIntent ->
             val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, context)
             batteryProfile?.let {
-                notificationHelper.apply {
-                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
-                }
+//                notificationHelper.apply {
+//                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, batteryProfile), ""))
+//                }
                 appExecutors.diskIO().execute {
                     batteryProfileDaoWrapper.insert(it)
                 }

@@ -10,7 +10,6 @@ import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
 import com.chargingwatts.chargingalarm.di.AppInjector
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
-import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import javax.inject.Inject
 
@@ -61,9 +60,9 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
             lBatteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, applicationContext)
 
             lBatteryProfile?.let {
-                mNotificationHelper.apply {
-                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, it), ""))
-                }
+//                mNotificationHelper.apply {
+//                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, it), ""))
+//                }
 
                 mAppExecutors.diskIO().execute {
                     mBatteryProfileDaoWrapper.insert(it)

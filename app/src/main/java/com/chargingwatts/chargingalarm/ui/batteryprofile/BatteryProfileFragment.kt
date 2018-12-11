@@ -1,15 +1,11 @@
 package com.chargingwatts.chargingalarm.ui.batteryprofile
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -20,8 +16,6 @@ import com.chargingwatts.chargingalarm.R
 import com.chargingwatts.chargingalarm.databinding.FragmentBatteryProfileBinding
 import com.chargingwatts.chargingalarm.util.autoCleared
 import com.chargingwatts.chargingalarm.util.battery.*
-import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerDialog
-import com.chargingwatts.chargingalarm.util.ringtonepicker.RingtonePickerListener
 import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import com.chargingwatts.chargingalarm.util.ui.UIHelper
 import com.chargingwatts.chargingalarm.vo.BatteryProfile

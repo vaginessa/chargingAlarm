@@ -95,7 +95,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
      * @return The small icon resource id
      */
     private val smallIcon: Int
-        get() = android.R.drawable.ic_lock_idle_low_battery
+        get() = R.drawable.ic_battery_clock
 
     /**
      * Get a notification of type 1
@@ -264,9 +264,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 
         @JvmStatic
         fun createHighBatteryAlarmNotificationTitleString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
-            batteryProfile?.let {
-                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
-            }
+
             val bodyString: String = context.getString(R.string.battery_full_notification_title) + " : " +
                     batteryProfile?.remainingPercent + context.getString(R.string.show_percent)
             return bodyString
@@ -275,9 +273,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 
         @JvmStatic
         fun createHighBatteryAlarmNotificationBodyString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
-            batteryProfile?.let {
-                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
-            }
+
             val bodyString: String = context.getString(R.string.battery_full_notification_body) + " : " +
                     settingsProfile.batteryHighLevelPercent + context.getString(R.string.show_percent)
             return bodyString
@@ -286,9 +282,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 
         @JvmStatic
         fun createLowBatteryAlarmNotificationTitleString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
-            batteryProfile?.let {
-                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
-            }
+
             val bodyString: String = context.getString(R.string.battery_low_notification_title) + " : " +
                     batteryProfile?.remainingPercent + context.getString(R.string.show_percent)
             return bodyString
@@ -297,9 +291,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 
         @JvmStatic
         fun createLowBatteryAlarmNotificationBodyString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
-            batteryProfile?.let {
-                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
-            }
+
             val bodyString: String = context.getString(R.string.battery_low_notification_body) + " : " +
                     settingsProfile.batteryLowLevelPercent + context.getString(R.string.show_percent)
             return bodyString
@@ -308,9 +300,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 
         @JvmStatic
         fun createHighTempAlarmNotificationTitleString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
-            batteryProfile?.let {
-                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
-            }
+
             val bodyString: String = context.getString(R.string.battery_high_temperature_notification_title) + " : " +
                     batteryProfile?.recentBatteryTemperature + context.getString(R.string.show_degree)
             return bodyString
@@ -319,9 +309,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 
         @JvmStatic
         fun createHighTempAlarmNotificationBodyString(context: Context, batteryProfile: BatteryProfile?, settingsProfile: SettingsProfile): String{
-            batteryProfile?.let {
-                EventLogger.logHighBatteryNotificationUpdatedEvent(it, settingsProfile)
-            }
+
             val bodyString: String = context.getString(R.string.battery_high_temperature_notification_body) + " : " +
                     settingsProfile.batteryHighTemperature + context.getString(R.string.show_degree)
             return bodyString

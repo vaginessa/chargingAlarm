@@ -1,5 +1,6 @@
 package com.chargingwatts.chargingalarm.util.battery
 
+import AppConstants
 import android.app.Service
 import android.content.Context
 import android.content.Intent

@@ -2,14 +2,13 @@ package com.chargingwatts.chargingalarm.util
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.util.Log
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
-import android.media.AudioManager
-
 
 
 @Singleton

@@ -98,8 +98,6 @@
     <string name="pref_category_alarm_tone_setting_label">Alarm Tone Settings</string>
 
 
-
-
     <string name="label_battery_high_level">Full Battery Alarm Level</string>
     <string name="summary_battery_high_level">Alert at Selected battery level</string>
 
@@ -125,9 +123,11 @@
     <!--Drawer Items -->
     <string name="show_battery_detail">Battery Detail</string>
     <string name="show_battery_alarm">Battery Alarm</string>
-    <string name="show_drawer_header_title">ChargingWatts Battery Alarm</string>
+    <string name="show_drawer_header_title">Battery Alarm</string>
     <string name="show_share">Share</string>
     <string name="show_contact_us">Contact Us</string>
     <string name="show_communicate">Communicate</string>
+    <string name="show_company_name">ChargingWatts</string>
+
 
 </resources>

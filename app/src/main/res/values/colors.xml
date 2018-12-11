@@ -13,9 +13,15 @@
 
     <color name="royal_blue_1">#2980b9</color>
     <color name="royal_red_1">#E54548</color>
+    <color name="royal_green">#26A35B</color>
 
 
-    <color name="color_white">#FFFFFF</color>
 
     <color name="royal_yellow_1">#FDBE03</color>
+    <color name="color_black">#000000</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="tabview_default">#969595</color>
+    <color name="tabview_selected">#FFFFFF</color>
+
+
 </resources>

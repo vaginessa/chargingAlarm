@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.chargingwatts.chargingalarm.ChargingAlarmApp
 import com.chargingwatts.chargingalarm.HomeActivity
-import com.chargingwatts.chargingalarm.HowToUseActivity
 import com.chargingwatts.chargingalarm.di.component.AppComponent
 import com.chargingwatts.chargingalarm.di.component.DaggerAppComponent
 import com.chargingwatts.chargingalarm.di.module.BatteryUpdateWorkerModule

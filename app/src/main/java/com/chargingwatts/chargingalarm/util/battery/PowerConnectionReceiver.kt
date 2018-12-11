@@ -4,7 +4,6 @@ import AppConstants
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.BatteryManager
 import android.util.Log
 import com.chargingwatts.chargingalarm.AppExecutors
 import com.chargingwatts.chargingalarm.db.BatteryProfileDaoWrapper
@@ -12,7 +11,6 @@ import com.chargingwatts.chargingalarm.util.logging.EventLogger
 import com.chargingwatts.chargingalarm.util.logging.LoggingHelper
 import com.chargingwatts.chargingalarm.util.notification.NotificationHelper
 import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper
-import com.chargingwatts.chargingalarm.util.settings.SettingsManager
 import com.chargingwatts.chargingalarm.vo.BatteryProfile
 import dagger.android.DaggerBroadcastReceiver
 import javax.inject.Inject
@@ -80,9 +78,9 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
 
     private fun updateBatteryProfile(context: Context) {
         getBatteryProfile(context)?.let {
-            mNotificationHelper.apply {
-                notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, it), ""))
-            }
+//            mNotificationHelper.apply {
+//                notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, it), ""))
+//            }
             appExecutors.diskIO().execute { batteryProfileDaoWrapper.insert(it) }
             batteryAlarmManager.checkAlarmTypeAndStartAlarm(it)
             Log.d("HASHOO - PCR", batteryAlarmManager.hashCode().toString())

@@ -1,9 +1,11 @@
 package com.chargingwatts.chargingalarm
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -14,10 +16,9 @@ import androidx.work.PeriodicWorkRequest
 import com.chargingwatts.chargingalarm.util.battery.BATTERY_WORKER_REQUEST_TAG
 import com.chargingwatts.chargingalarm.util.battery.BatteryChangeReciever
 import com.chargingwatts.chargingalarm.util.battery.PeriodicBatteryUpdater
+import com.chargingwatts.chargingalarm.util.preference.PreferenceHelper
 import com.google.android.material.navigation.NavigationView
 import javax.inject.Inject
-import android.widget.Toast
-import android.content.Intent
 
 
 class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -30,6 +31,8 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     lateinit var periodicBatteryUpdater: PeriodicBatteryUpdater
     @Inject
     lateinit var batteryChangeReciever: BatteryChangeReciever
+    @Inject
+    lateinit var preferenceHelper: PreferenceHelper
 
 
     var navController: NavController? = null
@@ -40,6 +43,8 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_home)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
