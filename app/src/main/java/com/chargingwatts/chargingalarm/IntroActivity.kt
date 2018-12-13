@@ -24,12 +24,12 @@ class IntroActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
-        if(!preferenceHelper.getBoolean(AppConstants.IS_FIRST_LAUNCH,true)){
-            val homeIntent = Intent(this, HomeActivity::class.java)
-            homeIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(homeIntent)
-            return
-        }
+//        if(!preferenceHelper.getBoolean(AppConstants.IS_FIRST_LAUNCH,true)){
+//            val homeIntent = Intent(this, HomeActivity::class.java)
+//            homeIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(homeIntent)
+//            return
+//        }
         mViewPager = findViewById<View>(R.id.viewpager) as ViewPager
 
         // Set an Adapter on the ViewPager

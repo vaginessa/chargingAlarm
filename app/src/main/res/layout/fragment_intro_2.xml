@@ -40,11 +40,11 @@
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
         android:fontFamily="@font/roboto_regular"
-        android:gravity="center"
-        android:text="It helps you extend your battery lifespan by avoiding \n overcharging of battery. \n\n Research in battery life has shown an increase in the battery lifespan by up to 200
+        android:gravity="left"
+        android:text="It helps you extend your battery lifespan by avoiding  overcharging of battery. \n\n Research in battery life has shown an increase in the battery lifespan by up to 200
 % if not overcharged"
         android:textColor="@color/color_white"
-        android:textSize="@dimen/text_size_18"
+        android:textSize="@dimen/text_size_16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

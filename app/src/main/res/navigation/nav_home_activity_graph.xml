@@ -15,7 +15,9 @@
             app:destination="@id/battery_detail_fragment" />
         <action
             android:id="@+id/action_battery_level_fragment_to_howToUseActivity"
-            app:destination="@id/how_to_use_activity" />
+            app:destination="@id/how_to_use_activity"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_battery_level_fragment_to_settings_fragment"
             app:destination="@id/settings_fragment" />

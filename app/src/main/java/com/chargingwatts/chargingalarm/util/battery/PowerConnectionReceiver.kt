@@ -56,9 +56,8 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
             preferenceHelper.putBoolean(AppConstants.IS_CHARGING_PREFERENCE, true)
         } else if (intent.action == Intent.ACTION_POWER_DISCONNECTED) {
             context?.let {
-                getBatteryProfile(context)?.let {
-                    batteryAlarmManager.stopIfHighBatteryAlarm(it)
-                }
+                BatteryMonitoringService.stopService(it)
+
             }
             preferenceHelper.putBoolean(AppConstants.IS_CHARGING_PREFERENCE, false)
         }
@@ -83,6 +82,7 @@ class PowerConnectionReceiver @Inject constructor() : DaggerBroadcastReceiver() 
 //            }
             appExecutors.diskIO().execute { batteryProfileDaoWrapper.insert(it) }
             batteryAlarmManager.checkAlarmTypeAndStartAlarm(it)
+            batteryAlarmManager.checkStopAlarmTypeAndStopAlarm(it)
             Log.d("HASHOO - PCR", batteryAlarmManager.hashCode().toString())
 
         }

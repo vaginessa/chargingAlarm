@@ -43,7 +43,14 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-
+        if(preferenceHelper.getBoolean(AppConstants.IS_FIRST_LAUNCH,true)){
+            val introIntent = Intent(this, IntroActivity::class.java)
+            introIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(introIntent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish()
+            return
+        }
 
         setContentView(R.layout.activity_home)
 

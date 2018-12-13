@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class AlarmMediaManager @Inject constructor(context: Context) : ContextWrapper(context) {
+class AlarmMediaManager @Inject constructor(context: Context) : ContextWrapper(context.applicationContext) {
     lateinit var audioManager:AudioManager
     init {
         audioManager  = getSystemService(Context.AUDIO_SERVICE) as AudioManager

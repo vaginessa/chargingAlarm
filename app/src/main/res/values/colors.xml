@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimaryUltraLight">#9ABBD1</color>
     <color name="colorPrimaryLight">#2980b9</color>
     <color name="colorPrimary">#157DC0</color>
     <color name="colorPrimaryDark">#014979</color>
@@ -22,6 +23,8 @@
     <color name="color_white">#FFFFFF</color>
     <color name="tabview_default">#969595</color>
     <color name="tabview_selected">#FFFFFF</color>
+
+
 
 
 </resources>

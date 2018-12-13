@@ -28,7 +28,7 @@ import javax.inject.Singleton
  * Helper class to manage notification channels, and create notifications.
  */
 @Singleton
-class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(context) {
+class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(context.applicationContext) {
 
     private var manager: NotificationManagerCompat? = null
 
@@ -61,7 +61,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
             batteryLevelLowChannel.description = getString(R.string.BATTERY_LEVEL_LOW_CHANNEL_DESCRIPTION)
             batteryLevelLowChannel.lightColor = Color.RED
             batteryLevelLowChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-            batteryLevelLowChannel.setSound(null, null)
+       //     batteryLevelLowChannel.setSound(null, null)
             notificationManager.createNotificationChannel(batteryLevelLowChannel)
 
 
@@ -70,7 +70,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
             batteryTempHighChannel.description = getString(R.string.BATTERY_TEMPERATURE_LOW_CHANNEL_DESCRIPTION)
             batteryTempHighChannel.lightColor = Color.RED
             batteryTempHighChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-            batteryTempHighChannel.setSound(null, null)
+           // batteryTempHighChannel.setSound(null, null)
             notificationManager.createNotificationChannel(batteryTempHighChannel)
         }
     }
@@ -95,7 +95,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
      * @return The small icon resource id
      */
     private val smallIcon: Int
-        get() = R.drawable.ic_battery_clock
+        get() = R.drawable.ic_charger
 
     /**
      * Get a notification of type 1
@@ -118,6 +118,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
 //                .setProgress(100, batteryLevel, false)
                 .setContentIntent(getTapIntent())
                 .setAutoCancel(true)
+                .setVibrate(LongArray(1){0L})
 
 
 
@@ -137,6 +138,7 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
 
+
     }
 
     fun getLowBatteryNotificationBuilder(title: String, body: String): NotificationCompat.Builder {
@@ -149,6 +151,10 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(getTapIntent())
                 .setAutoCancel(true)
+                .setVibrate(LongArray(1){0L})
+                .setOnlyAlertOnce(true)
+
+
     }
 
     fun getBatteryHighTempNotificationBuilder(title: String, body: String): NotificationCompat.Builder {
@@ -161,6 +167,10 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(getTapIntent())
                 .setAutoCancel(true)
+                .setVibrate(LongArray(1){0L})
+                .setOnlyAlertOnce(true)
+
+
     }
 
 
@@ -169,6 +179,11 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
         val intent = Intent(this, HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         return PendingIntent.getActivity(this, 0, intent, 0)
+    }
+
+    fun cancelNotification(notificationId:Int){
+        getManager().cancel(notificationId)
+
     }
 
 
@@ -222,13 +237,13 @@ class NotificationHelper @Inject constructor(context: Context) : ContextWrapper(
         val BATTERY_TEMPERATURE_HIGH_CHANNEL = "battery_temperature_high_channel"
 
         @JvmStatic
-        val BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID = 111
+        val BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID = 1111
         @JvmStatic
-        val BATTERY_LEVEL_LOW_CHANNEL_NOTIFICATION_ID = 222
+        val BATTERY_LEVEL_LOW_CHANNEL_NOTIFICATION_ID = 2121
         @JvmStatic
-        val BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID = 333
+        val BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID = 3131
         @JvmStatic
-        val BATTERY_TEMPERATURE_HIGH_CHANNEL_NOTIFICATION_ID = 444
+        val BATTERY_TEMPERATURE_HIGH_CHANNEL_NOTIFICATION_ID = 4141
 
         @JvmStatic
         fun createBatteryNotificationTitleString(context: Context, batteryProfile: BatteryProfile?): String {

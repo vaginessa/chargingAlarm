@@ -30,10 +30,6 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
     override fun doWork(): Result {
         AppInjector.init(this)
 
-//        val sendIntent = Intent(applicationContext, HomeActivity::class.java)
-//        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//        getApplicationContext().startActivity(sendIntent)
-
         Log.d("CALLED - BUW", "CALLED")
         val lBatteryProfile = updateBatteryProfile()
         lBatteryProfile?.isCharging?.apply {
@@ -47,7 +43,6 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
             }
         }
 
-//        outputData = getBatteryProfileData()
         return Result.SUCCESS
     }
 
@@ -60,14 +55,13 @@ class BatteryUpdateWorker(context: Context, workerParams: WorkerParameters) : Wo
             lBatteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(batteryIntent, applicationContext)
 
             lBatteryProfile?.let {
-//                mNotificationHelper.apply {
-//                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, it), ""))
-//                }
+
 
                 mAppExecutors.diskIO().execute {
                     mBatteryProfileDaoWrapper.insert(it)
                 }
                 batteryAlarmManager.checkAlarmTypeAndStartAlarm(it)
+                batteryAlarmManager.checkStopAlarmTypeAndStopAlarm(it)
                 Log.d("HASHOO - BUW",batteryAlarmManager.hashCode().toString())
 
 

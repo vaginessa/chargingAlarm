@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.chargingwatts.chargingalarm.AlarmActivity
 import com.chargingwatts.chargingalarm.ChargingAlarmApp
 import com.chargingwatts.chargingalarm.HomeActivity
 import com.chargingwatts.chargingalarm.di.component.AppComponent
@@ -24,6 +25,7 @@ import dagger.android.support.HasSupportFragmentInjector
 object AppInjector {
     var appComponent: AppComponent? = null
     var mIsAlarmScreenVisible = false
+    var mIsHomeScreenVisible = false
     fun init(chargingAlarmApp: ChargingAlarmApp) {
         appComponent =
                 DaggerAppComponent.builder().applicationContext(chargingAlarmApp)
@@ -43,8 +45,11 @@ object AppInjector {
 
                     override fun onActivityResumed(activity: Activity) {
                         Log.d(AppInjector.javaClass.simpleName, activity.javaClass.simpleName + "- onActivityResumed")
-                        if(activity is HomeActivity){
+                        if(activity is AlarmActivity){
                             mIsAlarmScreenVisible = true
+                        }
+                        else if(activity is HomeActivity){
+                            mIsHomeScreenVisible = true
                         }
 
 
@@ -52,8 +57,11 @@ object AppInjector {
 
                     override fun onActivityPaused(activity: Activity) {
                         Log.d(AppInjector.javaClass.simpleName, activity.javaClass.simpleName + "- onActivityPaused")
-                        if(activity is HomeActivity){
+                        if(activity is AlarmActivity){
                             mIsAlarmScreenVisible = false
+                        }
+                        else if(activity is HomeActivity){
+                            mIsHomeScreenVisible = false
                         }
                     }
 
@@ -79,6 +87,8 @@ object AppInjector {
     }
 
     fun isAlarmScreenVisible() = mIsAlarmScreenVisible
+
+    fun isHomeScreenVisible() = mIsHomeScreenVisible
 
     private fun handleActivity(activity: Activity) {
         if (activity is HasSupportFragmentInjector) {

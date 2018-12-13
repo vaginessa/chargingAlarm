@@ -23,7 +23,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Battery Alarm Pro"
+        android:text="@string/app_name"
         android:textColor="@color/color_white"
         android:textSize="@dimen/text_size_22sp"
         android:textStyle="bold"
@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintVertical_bias="0.5"
-        android:textSize="@dimen/text_size_18"
+        android:textSize="@dimen/text_size_16"
         android:textColor="@color/color_white"
         android:gravity="center"
         android:fontFamily="@font/roboto_regular"/>

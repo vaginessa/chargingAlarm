@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Otex Opm</string>
+    <string name="app_name">Battery Alarm</string>
     <string name="base_api_url">http://private-e8a06-feprofile.apiary-mock.com</string>
     <string name="retry">Retry</string>
     <string name="unknown_error">unknown error</string>
@@ -128,6 +128,15 @@
     <string name="show_contact_us">Contact Us</string>
     <string name="show_communicate">Communicate</string>
     <string name="show_company_name">ChargingWatts</string>
+
+    <!--Alarm Screen Msgs -->
+    <string name="show_full_battery_alarm_msg">Full Battery Alarm is Ringing</string>
+    <string name="show_low_battery_alarm_msg">Low Battery Alarm is Ringing</string>
+    <string name="show_high_temp_battery_alarm_msg">High Temp Battery Alarm is Ringing</string>
+
+
+
+    <string name="show_stop_alarm_msg">Stop Alarm!</string>
 
 
 </resources>

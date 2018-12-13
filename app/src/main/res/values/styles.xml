@@ -16,6 +16,9 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
+    <style name="IntroTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/intro</item>
+    </style>
     <style name="TextViewFont">
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">2</item>

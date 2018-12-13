@@ -21,7 +21,7 @@ const val DEFAULT_BATTERY_HIGH_LEVEL = 100
 const val DEFAULT_BATTERY_LOW_LEVEL = 15
 //keep this temperature between 30 and 45
 const val DEFAULT_BATTERY_HIGH_TEMPERATURE = 42f
-const val DEFAULT_USER_ALARM_PREFERENCE = false
+const val DEFAULT_USER_ALARM_PREFERENCE = true
 const val DEFAULT_IS_VIBRATION_ENABLED = true
 const val DEFAULT_IS_SOUND_ENABLED = true
 const val DEFAULT_RING_IN_SILENT_MODE = true

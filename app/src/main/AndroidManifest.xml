@@ -25,15 +25,19 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-
-        </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".IntroActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".IntroActivity"
+            android:theme="@style/IntroTheme"/>
+
+        <activity android:name=".AlarmActivity"
+            android:theme="@style/SplashTheme">
+
         </activity>
 
         <receiver android:name=".util.battery.PowerConnectionReceiver">
