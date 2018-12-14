@@ -44,11 +44,17 @@ class BatteryMonitoringService : LifecycleService() {
 //        val intentFilter = IntentFilter()
 //        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
 //        val lBatteryProfileIntent = registerReceiver(mBatteryChangeReciever, intentFilter)
-        LoggingHelper.d(AppConstants.LOG_CHARGING_ALARM,BatteryMonitoringService::class.java.simpleName + " - onStartCommand")
+        startForeground(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, mNotificationHelper.getBatteryLevelNotificationBuilder("", "").build())
+
+        LoggingHelper.d(AppConstants.LOG_CHARGING_ALARM, BatteryMonitoringService::class.java.simpleName + " - onStartCommand")
         mBatteryProfileDaoWrapper.findRecentBatteryProfile().observe(this, Observer<BatteryProfile> { lbatteryProfile ->
             lbatteryProfile?.let {
-                startForeground(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, mNotificationHelper.getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, lbatteryProfile), "").build())
+                mNotificationHelper.apply {
+                    //   cancelNotification(BATTERY_LEVEL_LOW_CHANNEL_NOTIFICATION_ID)
+                    notify(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID,
+                            getBatteryLevelNotificationBuilder(NotificationHelper.createBatteryNotificationTitleString(this, lbatteryProfile), ""))
                 }
+            }
         })
 //        lBatteryProfileIntent?.let { it ->
 //            val batteryProfile = BatteryProfileUtils.extractBatteryProfileFromIntent(it, this)
@@ -75,14 +81,14 @@ class BatteryMonitoringService : LifecycleService() {
         super.onDestroy()
         applicationContext?.let {
             mBatteryChangeReciever.unregisterReciever(it)
-    }
+        }
     }
 
 
     companion object {
         @JvmStatic
         fun startInForeground(context: Context) {
-            context.applicationContext?.apply{
+            context.applicationContext?.apply {
                 val serviceIntent = Intent(this, BatteryMonitoringService::class.java)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     startForegroundService(serviceIntent)
@@ -96,8 +102,8 @@ class BatteryMonitoringService : LifecycleService() {
 
         @JvmStatic
         fun stopService(context: Context) {
-            context.applicationContext?.apply{
-                stopService(Intent(this,BatteryMonitoringService::class.java))
+            context.applicationContext?.apply {
+                stopService(Intent(this, BatteryMonitoringService::class.java))
             }
         }
 

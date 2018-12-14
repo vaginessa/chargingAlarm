@@ -41,43 +41,30 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
 
 
     private fun initateAlarm(@IntegerDefinitions.ALARM_TYPE alarmType: Int, batteryProfile: BatteryProfile) {
-
-        when (alarmType) {
-            BATTERY_HIGH_LEVEL_ALARM -> {
-                val settingsProfile = settingsManager.getSettingsProfile()
-                if (settingsProfile.userAlarmPreference) {
-                    startHighBatteryAlarm(batteryProfile)
-                }
-            }
-            BATTERY_LOW_LEVEL_ALARM -> {
-                startLowBatteryAlarm(batteryProfile)
-            }
-            BATTERY_HIGH_TEMPERATURE_ALARM -> {
-                startHighTemperatureAlarm(batteryProfile)
-            }
-            IntegerDefinitions.ALARM_TYPE.NONE -> {
+        if (alarmType == BATTERY_HIGH_LEVEL_ALARM) {
+            val settingsProfile = settingsManager.getSettingsProfile()
+            if (settingsProfile.userAlarmPreference) {
+                startHighBatteryAlarm(batteryProfile)
             }
         }
+        if (alarmType == BATTERY_LOW_LEVEL_ALARM) {
+            startLowBatteryAlarm(batteryProfile)
+        }
 
+        if (alarmType == BATTERY_HIGH_TEMPERATURE_ALARM) {
+            startHighTemperatureAlarm(batteryProfile)
+        }
     }
 
     private fun stopAlarm(@IntegerDefinitions.STOP_ALARM_EVENT_TYPE stopAlarmType: Int, batteryProfile: BatteryProfile) {
-
-        when (stopAlarmType) {
-            STOP_BATTERY_HIGH_LEVEL_ALARM -> {
-                stopHighBatteryAlarm()
-            }
-            STOP_BATTERY_LOW_LEVEL_ALARM -> {
-                stopLowBatteryAlarm()
-            }
-
-            STOP_BATTERY_HIGH_TEMPERATURE_ALARM -> {
-                stopHighTemperatureAlarm()
-            }
-
-            IntegerDefinitions.STOP_ALARM_EVENT_TYPE.NONE -> {
-            }
-
+        if(stopAlarmType  == STOP_BATTERY_HIGH_LEVEL_ALARM){
+            stopHighBatteryAlarm()
+        }
+        if(stopAlarmType == STOP_BATTERY_LOW_LEVEL_ALARM){
+            stopLowBatteryAlarm()
+        }
+        if(stopAlarmType == STOP_BATTERY_HIGH_TEMPERATURE_ALARM){
+            stopHighTemperatureAlarm()
         }
 
     }
@@ -87,7 +74,7 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
 
         displayAlarmScreen(getString(R.string.show_full_battery_alarm_msg), getString(R.string.show_stop_alarm_msg))
         notificationHelper.apply {
-            cancelNotification(BATTERY_LEVEL_LOW_CHANNEL_NOTIFICATION_ID)
+            //   cancelNotification(BATTERY_LEVEL_LOW_CHANNEL_NOTIFICATION_ID)
             notify(BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID,
                     getHighBatteryNotificationBuilder(createHighBatteryAlarmNotificationTitleString(this, batteryProfile, settingsProfile),
                             createHighBatteryAlarmNotificationBodyString(this, batteryProfile, settingsProfile)))
@@ -148,7 +135,7 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
     }
 
     private fun stopHighBatteryAlarm() {
-        if(AppInjector.isAlarmScreenVisible()){
+        if (AppInjector.isAlarmScreenVisible()) {
             displayHomeScreen()
         }
         notificationHelper.apply {
@@ -160,7 +147,7 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
 
     fun stopLowBatteryAlarm() {
         notificationHelper.apply {
-            cancelNotification(BATTERY_LEVEL_HIGH_CHANNEL_NOTIFICATION_ID)
+            cancelNotification(BATTERY_LEVEL_LOW_CHANNEL_NOTIFICATION_ID)
         }
 //        displayHomeScreen()
 //        stopAlarmTone()
@@ -222,23 +209,18 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
 
     fun checkAlarmTypeAndStartAlarm(batteryProfile: BatteryProfile) {
         val settingsProfile = settingsManager.getSettingsProfile()
-        val alarmType = checkForAlarmType(batteryProfile, settingsProfile)
-        initateAlarm(alarmType, batteryProfile)
-    }
-
-    private fun checkForAlarmType(batteryProfile: BatteryProfile, settingsProfile: SettingsProfile): Int {
-
-        return when {
-            isHighBatteryAlarm(batteryProfile, settingsProfile.batteryHighLevelPercent) ->
-                BATTERY_HIGH_LEVEL_ALARM
-            isLowBatteryAlarm(batteryProfile, settingsProfile.batteryLowLevelPercent) ->
-                BATTERY_LOW_LEVEL_ALARM
-            isHighTemperatureAlarm(batteryProfile.recentBatteryTemperature, settingsProfile.batteryHighTemperature) ->
-                BATTERY_HIGH_TEMPERATURE_ALARM
-
-            else -> IntegerDefinitions.ALARM_TYPE.NONE
+        if(isHighBatteryAlarm(batteryProfile, settingsProfile.batteryHighLevelPercent)){
+            initateAlarm(BATTERY_HIGH_LEVEL_ALARM, batteryProfile)
         }
+        if(isLowBatteryAlarm(batteryProfile, settingsProfile.batteryLowLevelPercent) ){
+            initateAlarm(BATTERY_LOW_LEVEL_ALARM, batteryProfile)
+        }
+        if(isHighTemperatureAlarm(batteryProfile.recentBatteryTemperature, settingsProfile.batteryHighTemperature)){
+            initateAlarm(BATTERY_HIGH_TEMPERATURE_ALARM, batteryProfile)
+        }
+
     }
+
 
     private fun isHighBatteryAlarm(batteryProfile: BatteryProfile, batteryHighLevelPercent: Int): Boolean {
         batteryProfile.let { bProfile ->
@@ -251,7 +233,7 @@ class BatteryAlarmManager @Inject constructor(context: Context, val settingsMana
 
     private fun isLowBatteryAlarm(bProfile: BatteryProfile, batteryLowLevelPercent: Int): Boolean {
         bProfile.apply {
-            if ( remainingPercent != null && remainingPercent <= batteryLowLevelPercent) {
+            if (remainingPercent != null && remainingPercent <= batteryLowLevelPercent) {
                 return true
             }
         }

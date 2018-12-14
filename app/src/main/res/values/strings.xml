@@ -45,11 +45,11 @@
     <string name="battery_full_notification_title">Battery Full Alarm</string>
     <string name="battery_full_notification_body">Battery Full Alarm was set at Battery Level</string>
 
-    <string name="battery_low_notification_title">Battery Low Alarm</string>
-    <string name="battery_low_notification_body">Battery Low Alarm was set at Battery Level</string>
+    <string name="battery_low_notification_title">Battery Low warning</string>
+    <string name="battery_low_notification_body">Battery Low warning was set at Battery Level</string>
 
-    <string name="battery_high_temperature_notification_title">Battery Overheat Alarm</string>
-    <string name="battery_high_temperature_notification_body">Battery Overheat Alarm was set at Battery Temp</string>
+    <string name="battery_high_temperature_notification_title">Battery Overheat warning</string>
+    <string name="battery_high_temperature_notification_body">Battery Overheat warning was set at Battery Temp</string>
 
 
     <string name="show_total_capacity_label">Battery Capacity:</string>
@@ -99,13 +99,13 @@
 
 
     <string name="label_battery_high_level">Full Battery Alarm Level</string>
-    <string name="summary_battery_high_level">Alert at Selected battery level</string>
+    <string name="summary_battery_high_level">Alert at selected battery level</string>
 
-    <string name="label_battery_low_level">Low Battery Level</string>
-    <string name="summary_battery_low_level">Alert at Selected battery level</string>
+    <string name="label_battery_low_level">Low Battery Warning Level</string>
+    <string name="summary_battery_low_level">Warning at selected battery level</string>
 
     <string name="label_battery_high_temperature">Battery Temperature Warning Level</string>
-    <string name="summary_battery_high_temperature">Alert at Selected battery Temperature </string>
+    <string name="summary_battery_high_temperature">Warning at selected battery temperature </string>
 
     <string name="label_alarm_volume">Alarm Volume Settings</string>
     <string name="summary_alarm_volume">Currently Selected Alarm Volume </string>
