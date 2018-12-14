@@ -44,7 +44,7 @@ class BatteryMonitoringService : LifecycleService() {
 //        val intentFilter = IntentFilter()
 //        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
 //        val lBatteryProfileIntent = registerReceiver(mBatteryChangeReciever, intentFilter)
-        startForeground(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, mNotificationHelper.getBatteryLevelNotificationBuilder("", "").build())
+        startForeground(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID, mNotificationHelper.getBatteryLevelNotificationBuilder("Fetching Battery information...", "").build())
 
         LoggingHelper.d(AppConstants.LOG_CHARGING_ALARM, BatteryMonitoringService::class.java.simpleName + " - onStartCommand")
         mBatteryProfileDaoWrapper.findRecentBatteryProfile().observe(this, Observer<BatteryProfile> { lbatteryProfile ->
@@ -82,6 +82,7 @@ class BatteryMonitoringService : LifecycleService() {
         applicationContext?.let {
             mBatteryChangeReciever.unregisterReciever(it)
         }
+        mNotificationHelper.cancelNotification(NotificationHelper.BATTERY_LEVEL_CHANNEL_NOTIFICATION_ID)
     }
 
 
