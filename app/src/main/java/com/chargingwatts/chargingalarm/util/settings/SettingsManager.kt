@@ -37,7 +37,7 @@ class SettingsManager @Inject constructor(context : Context, val preferenceHelpe
                             ContextWrapper(context){
 
      val DEFAULT_ALARM_VOLUME = alarmMediaManager.getMaxVoulume()
-     val DEFAULT_ALARM_TONE_RINGTONE =  "android.resource://$packageName/raw/ultra_alarm"
+     val DEFAULT_ALARM_TONE_RINGTONE =  "android.resource://$packageName/raw/siren"
 
 
     fun getBatteryHighLevelPercentPreferenceLiveData(): SharedPreferenceLiveData<Int> {

@@ -106,8 +106,8 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "ChargingWatts Full Battery Alarm")
-        var extraText = "Let me recommend you this application\n\n"
-        extraText = extraText + "https://play.google.com/store/apps/details?id=the.package.id \n"
+        var extraText = "Save your battery from the damage of overcharging\n\n"
+        extraText = extraText + getString(R.string.playstore_base_url)+ packageName +"\n"
         shareIntent.putExtra(Intent.EXTRA_TEXT, extraText)
         try {
             startActivity(Intent.createChooser(shareIntent, "choose one"))

@@ -66,7 +66,12 @@ class BatteryChangeReciever @Inject constructor(val batteryProfileDaoWrapper: Ba
 
     fun unregisterReciever(context: Context) {
         context.apply {
-            unregisterReceiver(this@BatteryChangeReciever)
+            try{
+                unregisterReceiver(this@BatteryChangeReciever)
+            }
+            catch (exception: Exception){
+
+            }
         }
     }
 

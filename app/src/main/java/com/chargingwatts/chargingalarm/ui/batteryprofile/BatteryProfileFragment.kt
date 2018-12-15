@@ -40,7 +40,6 @@ class BatteryProfileFragment : BaseFragment() {
 
     var binding by autoCleared<FragmentBatteryProfileBinding>()
 
-    var mediaPlayer: MediaPlayer? = null
     var mBatteryProfile: BatteryProfile? = null
     val callback = object : View.OnClickListener {
         override fun onClick(view: View?) {
@@ -115,14 +114,7 @@ class BatteryProfileFragment : BaseFragment() {
         binding.clickListener = callback
 
 
-        mediaPlayer = MediaPlayer.create(context, R.raw.ultra_alarm)
-        mediaPlayer?.isLooping = true
 
-        mediaPlayer?.setOnCompletionListener {
-            MediaPlayer.OnCompletionListener {
-                mediaPlayer?.stop()
-            }
-        }
 
         return binding.root
     }
