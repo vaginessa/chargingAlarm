@@ -18,6 +18,7 @@
         <activity android:name=".HowToUseActivity"
             android:theme="@style/AppActivityDialogTheme"
             android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             ></activity>
         <activity
@@ -31,12 +32,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            />
         <activity android:name=".IntroActivity"
-            android:theme="@style/IntroTheme"/>
+            android:theme="@style/IntroTheme"
+            android:screenOrientation="portrait"
+            />
 
         <activity android:name=".AlarmActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait"
+            >
 
         </activity>
 

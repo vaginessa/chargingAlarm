@@ -136,7 +136,7 @@
 
 
 
-    <string name="show_stop_alarm_msg">Stop Alarm!</string>
+    <string name="show_stop_alarm_msg">Remove charger to stop Alarm! \n Or \n Press Here!</string>
 
     <string name="playstore_base_url">https://play.google.com/store/apps/details?id=</string>
 

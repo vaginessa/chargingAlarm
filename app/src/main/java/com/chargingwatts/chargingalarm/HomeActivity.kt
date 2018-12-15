@@ -106,7 +106,7 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "ChargingWatts Full Battery Alarm")
-        var extraText = "Save your battery from the damage of overcharging\n\n"
+        var extraText = "Protect your Mobile phone battery from the damage of overcharging.\nDownload this app and get notified when battery gets 100% charged.\n"
         extraText = extraText + getString(R.string.playstore_base_url)+ packageName +"\n"
         shareIntent.putExtra(Intent.EXTRA_TEXT, extraText)
         try {
